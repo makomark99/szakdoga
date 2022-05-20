@@ -24,13 +24,16 @@
               src="img\house-door-fill.svg" alt="Főoldal" title="Főoldal"></a>
             </li>';
                 echo '<li class="nav-item ">
-              <a class="nav-link text-light "   href="players.php">Játékosok</a>
+              <a class="nav-link text-light "   href="players.php"><img 
+              src="img\handball.svg" alt="Játékosok" title="Játékosok"></a>
             </li>';
                 echo '<li class="nav-item">
-              <a class="nav-link text-light  "  href="staff.php">Munkatársak</a>
+              <a class="nav-link text-light  "  href="staff.php"><img 
+              src="img\teamwork.svg" alt="Munkatársak" title="Munkatársak"></a>
             </li>';
                 echo '<li class="nav-item">
-              <a class="nav-link text-light "  href="equipment.php">Felszerelések</a>
+              <a class="nav-link text-light "  href="equipment.php"><img 
+              src="img\clothes.svg" alt="Felszerelések" title="Felszerelések"></a>
             </li>';
                 echo '<li class="nav-item ">
               <a class="nav-link text-light"  href="profil.php"><img 
@@ -48,7 +51,8 @@
             </li>';
             } else {
                 echo ' <li class="nav-item ">
-              <a class="nav-link text-light " href="signup.php">Regisztráció</a>
+              <a class="nav-link text-light " href="signup.php"><img 
+              src="img\register.svg" alt="Regisztráció" title="Regisztráció"></a>
             </li>';
                 echo '<li class="nav-item ">
               <a class="nav-link text-light" href="login.php"><img 

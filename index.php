@@ -25,21 +25,21 @@
 </div>
 
 <div class="row no-gutters mt-3">
-  <div class="col-md-6 col-sm-12">
+  <div class="col-md-10 col-lg-6">
     <div class="row">
 
 
       <!-- Button trigger modal -->
-      <button type="button" title="Feladat hozzáadása" class="btn btn-outline-primary col-auto me-5"
+      <button type="button" title="Feladat hozzáadása" class="btn btn-outline-primary col-auto m-2"
         data-bs-toggle="modal" data-bs-target="#addTask">
         <?php include_once 'img/plus-lg.svg' ?>
       </button>
-      <h2 class="text-center col-auto ">Végrehajtandó feladatok</h2>
+      <h2 class="mt-2 text-center col-auto ">Végrehajtandó feladatok</h2>
     </div>
 
 
     <!-- Modal -->
-    <div class="modal  fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content text-dark fs-5">
           <div class="modal-header">
@@ -94,7 +94,7 @@
 
   </div>
   <div class="col-md-6 col-sm-12 bg-success">
-    <h2 class="text-center">Befejezett feladatok</h2>
+    <h2 class="text-center mt-2">Befejezett feladatok</h2>
     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam, nulla laudantium doloribus labore ex ipsa
       id alias deserunt, quis soluta nobis? Ex dolorum consequatur nobis sequi earum doloremque perferendis quae.
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est sint corporis accusamus illum! Nisi quibusdam

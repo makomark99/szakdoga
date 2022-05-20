@@ -18,38 +18,44 @@
       $pl="";
       $trainer="";
       $year="";
+      $sql="SELECT * FROM players P JOIN staff S on P.pTId=S.sId WHERE (P.pIsmember=1) ";
       if (isset($_POST['pL'])&& $_POST['pL']!=""&& $_POST['pL']!=null && $_POST['pL']!="NULL") {
           $pl=$_POST['pL'];
-          $sql="SELECT * FROM players WHERE (pL1='$pl' 
-             OR pL2='$pl' OR pL3='$pl') AND pIsMember=1;";
-          echo "A/az ",$pl," csapat játékosai";
+          $sql.="AND (P.pL1='$pl' OR P.pL2='$pl' OR P.pL3='$pl') ";
+          // $sql="SELECT * FROM players WHERE (pL1='$pl' OR pL2='$pl' OR pL3='$pl') AND pIsMember=1;";
+          echo "A/az ",$pl," csapat játékosa(i)<br>";
       }
       if ($_POST['pL']=="" && $_POST['pL']!="NULL") {
-          $sql="SELECT * FROM players WHERE pL1 is NULL AND pIsMember=1;";
-          echo "A játékengedély nélküli játékosok";
+          $sql.="AND (P.pL1 is NULL) ";
+          // $sql="SELECT * FROM players WHERE pL1 is NULL AND pIsMember=1;";
+          echo "A játékengedély nélküli játékos(ok)<br>";
       }
 
       if (isset($_POST['pTId']) && $_POST['pTId']!="") {
           $trainer=$_POST['pTId'];
-          $sql="SELECT * FROM players P INNER JOIN staff S ON P.pTId=S.sId WHERE P.pTId='$trainer' AND P.pIsMember=1;";
+          $sql.="AND (P.pTId='$trainer')" ;
+          // $sql="SELECT * FROM players P INNER JOIN staff S ON P.pTId=S.sId WHERE P.pTId='$trainer' AND P.pIsMember=1;";
           $r=mysqli_query($conn, $sql);
           $ro=mysqli_fetch_assoc($r);
           $n=$ro['sName'];
-          echo $n, " nevű edző játékosai";
+          echo $n, " nevű edző játékosa(i)<br>";
       } //sId
       if (isset($_POST['year']) && $_POST['year']!="") {
           $year=mysqli_real_escape_string($conn, $_POST['year']);
-          $sql="SELECT * FROM players WHERE pBDate LIKE '$year%' AND pIsMember=1;";
-          echo "A következő évben született játékosok: ",$year;
+          $sql.="AND (P.pBDate LIKE '$year%')" ;
+          // $sql="SELECT * FROM players WHERE pBDate LIKE '$year%' AND pIsMember=1;";
+          echo "A következő évben született játékos(ok): $year<br>";
       }
       if (isset($_POST['pArr']) && $_POST['pArr']!="") {
           $condition=$_POST['pArr'];
           if (isset($_POST['pArrM']) && $_POST['pArrM']!="") {
               $condition=$condition.'-'.$_POST['pArrM'];
           }
-          $sql="SELECT * FROM players WHERE pArrival LIKE '$condition%' AND pIsMember=1;";
-          echo "A következő évben igiazolt játékosok: ",$condition;
+          $sql.="AND (P.pArrival LIKE '$condition%')";
+          // $sql="SELECT * FROM players WHERE pArrival LIKE '$condition%' AND pIsMember=1;";
+          echo "A következő évben igiazolt játékos(ok): $condition<br>";
       }
+      $sql.="ORDER BY P.pName;";
   }
     $result=mysqli_query($conn, $sql);
     $queryResults=mysqli_num_rows($result);
@@ -151,30 +157,31 @@
           </a>
 
           <!-- Modal -->
-          <div class="modal fade" id="delete<?php echo $id; ?>"
-            data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="deleteLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content text-dark fs-5">
-                <div class="modal-header">
-                  <h4 class="modal-title" id="deleteLabel">Játékos törlése</h4>
-                  <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <?php
-                          echo 'Biztosan szeretné <strong>TÖRÖLNI</strong> a következő nevű játkost az adatbázisból: '.$row['pName'].' ?'; ?>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-                  <a href="p_delete.php?id=<?php echo $id; ?>"
-                    class="btn btn-danger">Törlés </a>
-                </div>
-              </div>
-            </div>
-          </div>
+
 
         </td>
       </tr>
+
+      <div class="modal fade" id="delete<?php echo $id; ?>"
+        tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content text-dark fs-5">
+            <div class="modal-header">
+              <h4 class="modal-title" id="deleteLabel">Játékos törlése</h4>
+              <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <?php
+                          echo 'Biztosan szeretné <strong>TÖRÖLNI</strong> a következő nevű játkost az adatbázisból: '.$row['pName'].' ?'; ?>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+              <a href="p_delete.php?id=<?php echo $id; ?>"
+                class="btn btn-danger">Törlés </a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <?php
       }

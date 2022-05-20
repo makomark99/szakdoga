@@ -17,7 +17,7 @@
     if ($queryResults>0) {
         while ($row=mysqli_fetch_assoc($res)) {
             $actId=$row['rId']; ?>
-<div class="col-xl-3 col-lg-4 col-md-6 col-sm-8  mx-auto ">
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-8 col-xs-10 mx-auto ">
     <div class="card mt-5 ms-1 bg-dark text-center">
         <img class="card-img-top mx-auto mt-2" src="img/person-square.svg" alt="Profilkép" style="width: 6rem;">
         <div class="card-body">
@@ -25,7 +25,7 @@
             </h4>
             <p class="card-text">Felhasználónév: <strong> <?php echo $row['usersUid']; ?></strong>
             </p>
-            <div class="mx-auto" style="width: 16rem;">
+            <div class="mx-auto" style="width: 15rem;">
                 <label class="form-label" for="">Jogosultság</label>
                 <select name="roleId" id="" class="form-select">
                     <?php $sql2="SELECT * FROM users S INNER JOIN user_roles U ON S.rId=U.rId WHERE U.rId;";
@@ -57,7 +57,7 @@
                 </a>
 
                 <!-- Modal -->
-                <div class="modal fade"
+                <div class="modal"
                     id="delete<?php echo $row['usersId']; ?>"
                     data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="deleteLabel"
                     aria-hidden="true">
