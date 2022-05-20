@@ -1,0 +1,73 @@
+body{
+    font-family: 'Nunito', sans-serif;
+    background-color: black ;
+    color: white;
+}
+#loginl{
+    text-decoration: none;
+    font-size: 100%;;
+}
+#logo2{
+    width: 200px;
+    height: 200px;
+}
+#logo{
+    width: 50px;
+    height: 50px;
+}
+.red{
+    background-color: red;
+    border-radius: 4px;
+    padding: 7px;
+    margin-top: 0;
+}
+.green{
+    background-color: #5cb85c;
+    border-radius: 4px;
+    padding: 7px;
+    margin-top: 0;
+    
+}
+ul li a{   
+    font-size: 150%;
+}
+ul{
+    text-align: right;
+}
+
+/*.navbar .navbar-nav .nav-link:visited{
+    background-color: black;
+}*/
+
+.navbar{
+    padding: 0;
+}
+.navbar .navbar-nav .nav-link{
+    padding: 0.8em;
+}
+#signup{
+    margin: auto;
+}
+tr[data-href]{
+    cursor: pointer; /*rowclick function*/
+}
+#viewp{
+    height: 20rem;
+    width: 20rem;
+}
+.notm{
+    background-color: rgba(33,37,41,255) !important; 
+}
+input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a görgetőt*/
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none ; 
+            margin: 0 ; 
+}
+.own{
+    background-color: black;
+    border-radius: 10px;
+}
+.notm::placeholder {
+    color: rgba(255, 255, 255, 0.854) !important;
+   
+  }
