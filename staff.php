@@ -4,7 +4,7 @@
   include_once 'auto_logout.php';
   include_once 'includes/dbh.inc.php';
   if (!isset($_SESSION["loggedin"])) {
-      header('location: ../Szakdoga/login.php');
+      header('location:Szakdoga/login.php');
   }
 ?>
 

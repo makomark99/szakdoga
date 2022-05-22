@@ -9,8 +9,8 @@
     }
 ?>
 <h1 class="text-center mb-5">Új játékos rögzítése</h1>
-<form class="row g-3" action="includes/addplayer.inc.php" method="post">
-  <div class="col-md-6 col-lg-3 ">
+<form class="row g-3 " action="includes/addplayer.inc.php" method="post">
+  <div class="col-md-6 col-lg-3">
     <label for="name" class="form-label">Név*</label>
     <input name="pName" type="text" class="form-control" id="name" placeholder="Vezetéknév Keresztnév" required>
   </div>

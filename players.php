@@ -16,12 +16,18 @@
     <a href="detailed.php" title="Szűrő" class="btn btn-outline-primary me-2">
       <?php include "img/filter.svg"?>
     </a>
+    <form class="m-0" action="livesearch.php" method="post">
+      <button class="btn btn-outline-primary me-2 " title=" Távozók" type="submit" name="leavers">
+        <?php include "img/leave.svg"?>
+      </button>
+    </form>
+
     <a href="p_add.php" title="Játékos hozzáadása" class="btn btn-outline-primary me-2">
       <?php include "img/plus-lg.svg"?>
     </a>
   </div>
 </div>
-<div id="output" >
+<div id="output">
 
 </div>
 

@@ -6,12 +6,17 @@
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
   }
-  
+  $leavers=false;
   if (!isset($_POST['name'])) {
       $sql="SELECT * FROM players WHERE pIsMember=1;";
   } else {
       $search=mysqli_real_escape_string($conn, $_POST['name']);
       $sql = "SELECT * FROM players WHERE (pName LIKE '%$search%' OR pCode LIKE '%$search%') AND pIsMember=1 ;";
+  }
+  if (isset($_POST['leavers'])) {
+      include_once 'navbar.php';
+      $leavers=true;
+      $sql="SELECT * FROM players WHERE pIsMember=0;";
   }
   if (isset($_POST['detailed'])) {
       include_once 'navbar.php';
@@ -64,7 +69,8 @@
           echo "<h3 class='mt-2'>A keresésnek $queryResults találata van!</h3>"
       ?>
 <div class="container sm-col-10 mt-4 table-responsive">
-  <h1 class="text-center m-4">Játékosok adatai</h1>
+  <h1 class="text-center m-4"><?php echo $leavers ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
+  </h1>
 
   <table class="table table-dark table-hover">
     <thead class="thead-light ">
@@ -75,7 +81,7 @@
         <th>Születési dátum</th>
         <th>Életkor</th>
         <th>Igazolás dátuma</th>
-        <th>Játékengedélyek</th>
+        <?php echo $leavers ? "<th>Távozás dátuma</th>" : "<th>Játékengedélyek</th>"; ?>
         <th>Érvényes sportorvosi</th>
         <th>Műveletek</th>
       </tr>
@@ -98,15 +104,22 @@
         </td>
         <td class="align-middle"> <?php echo $row['pArrival']; ?>
         </td>
+
         <td class="align-middle">
-          <?php echo $row['pL1'];
-          if ($row['pL2']!="") {
-              echo ";\t";
-              echo $row['pL2'];
-          }
-          if ($row['pL3']!="") {
-              echo ";\t";
-              echo $row['pL3'];
+
+          <?php
+          if (!$leavers) {
+              echo $row['pL1'];
+              if ($row['pL2']!="") {
+                  echo ";\t";
+                  echo $row['pL2'];
+              }
+              if ($row['pL3']!="") {
+                  echo ";\t";
+                  echo $row['pL3'];
+              }
+          } else {
+              echo $row['pDeparture'];
           } ?>
         </td>
         <?php
