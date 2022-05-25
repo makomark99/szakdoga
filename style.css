@@ -71,3 +71,12 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
     color: rgba(255, 255, 255, 0.854) !important;
    
   }
+  .tooltip-inner {
+    color:white !important;
+    background-color: blue;
+    box-shadow: 0px 0px 4px  darkblue;
+    opacity: 1 !important;
+}
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: blue !important;
+}

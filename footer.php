@@ -5,7 +5,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="playersearch.js"></script>
 <script src="staffsearch.js"></script>
-
+<!-- <script>
+  $(document).ready(function() {
+    $("body").tooltip({
+      selector: '[data-toggle=tooltip]'
+    });
+  });
+</script> -->
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+</script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 $GLOBALS['teams'] = array(
     "",
     "U8 I",
@@ -43,4 +43,23 @@ $GLOBALS['sizes'] = array(
     "3XL",
     "4XL"
 );
-?>
+$GLOBALS['categories'] = array(
+    "Egyéb",
+    "Igazolás",
+    "Mosoda",
+    "Sportorvosi",
+    "Buszrendelés",
+    "Hidegcsomag",
+    "Szállás",
+    "Árajánlat",
+    "Felszerelés",
+    "Eszköz",
+    "Játékengedély",
+    "Nyomda",
+    "Csarnokbeosztás",
+    "Megbeszélés",
+    "Tábor",
+    "Edzőmérkőzés",
+    "Időpontegyeztetés",
+    "Adminisztráció"
+);

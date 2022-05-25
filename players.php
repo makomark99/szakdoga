@@ -22,11 +22,81 @@
       </button>
     </form>
 
+    <!-- Button trigger modal -->
+    <a title="Kinevelési költség számítása" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+      data-bs-target="#calculate">
+      <?php include_once 'img/calculator.svg' ?>
+    </a>
+
     <a href="p_add.php" title="Játékos hozzáadása" class="btn btn-outline-primary me-2">
       <?php include "img/plus-lg.svg"?>
     </a>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="calculate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content text-dark fs-5">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Kinevelési költség kalkulátor</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="palyers.php" method="post">
+        <div class="modal-body">
+          <div class="col-auto ">
+            <label class="form-label  " for="">Játékos neve</label>
+            <input name="name " type="text" class="form-control mb-2" placeholder="Vezetéknév Keresztnév">
+          </div>
+          <div class="row g-2 d-flex">
+            <div class="col-md-6">
+              <label class="form-label " for="">Játékos születési dátuma</label>
+              <input name="date" value="" id="d1" type="date"
+                max="<?php echo date("Y-m-d"); ?>"
+                class="form-control mb-2">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label " for="">Előző igazolás dátuma</label>
+              <input name="date" value="" id="d2" type="date"
+                max="<?php echo date("Y-m-d"); ?>"
+                class="form-control mb-2">
+            </div>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Akadémiába igazol
+            </label>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Egyéb sportszervezetbe igazol
+            </label>
+          </div>
+          <table class="table mt-2">
+            <thead>
+              <tr>
+                <th>Nettó összeg</th>
+                <th>Bruttó összeg</th>
+              </tr>
+            </thead>
+            <tr>
+              <td id="out1"> Ft</td>
+              <td id="out2"> Ft</td>
+            </tr>
+          </table>
+
+        </div>
+        <div class="modal-footer ">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+          <button type="button" id="calc" value="submit" onclick="calculate()" class="btn btn-primary">Számítás</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div id="output">
 
 </div>
@@ -35,3 +105,49 @@
   include_once 'footer.php';
 ?>
 <!--<script src="row_click.js"></script> -->
+<script>
+  function calculate() {
+    function numberWithSpaces(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); //reg ex
+    }
+
+    function diffYear(d) {
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+      today = yyyy + '-' + mm + '-' + dd;
+      var currentDate = new Date(today);
+      var inputDate = new Date(d);
+      return Math.round(Math.abs(((currentDate.getTime() - inputDate.getTime()) / (24 * 60 * 60 *
+        1000)) / 365.242199)); // hours*minutes*seconds*milliseconds
+    }
+    var d1 = document.getElementById('d1').value;
+    var d2 = document.getElementById('d2').value;
+    age = diffYear(d1);
+    console.log(age);
+    elapsedYears = diffYear(d2);
+    //akadémiából
+    Cost = 0;
+    if (age >= 10 && age < 13) {
+      Cost = 150000;
+    } else if (age >= 13 && age < 15) {
+      Cost = 200000;
+    } else if (age >= 15 && age < 17) {
+      Cost = 300000;
+    } else if (age >= 17 && age < 19) {
+      Cost = 350000;
+    } else if (age >= 19 && age < 21) {
+      Cost = 400000;
+    } else if (age >= 21 && age < 23) {
+      Cost = 450000;
+    } else Cost = 0;
+
+    if (elapsedYears > 3) {
+      Cost = Cost * Math.pow(1.20, elapsedYears - 3);
+    }
+    document.getElementById("out1").innerHTML = numberWithSpaces(Cost) + " Ft";
+    document.getElementById("out2").innerHTML = numberWithSpaces(Math.round(Cost * 1.27)) + " Ft";
+
+  }
+</script>

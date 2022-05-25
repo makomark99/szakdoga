@@ -98,27 +98,19 @@
     </select>
   </div>
 
-  <div class="col-md-auto text-center">
+  <div class="col-auto">
+    <label class="form-check-label" for="shostel">
+      Kollégista
+    </label>
+    <br>
+    <input class="form-check-input ms-4 mx-auto" type="checkbox" value="" name="shostel" id="shostel">
+
+  </div>
+
+  <div class="col-md-auto text-center mx-auto">
     <br> <button type="submit" name="detailed" class="mt-2 btn btn-primary">Keresés</button>
   </div>
 </form>
 
 <?php
     include 'footer.php';
-?>
-
-<?php /*
-      <div class="col-auto  ">
-        <label class="form-label">Csapat kiválasztása</label>
-        <select name="pL" class="form-select">
-        <option value="NULL">Nincs játékengedély</option>';
-          while($j!=count($teams)){
-            $tmp=$teams[$j]; ?>
-              <option value="<?php echo $tmp;?>">
-
-                <?php if($tmp==""){ echo "Nincs kikérve"; }
-                      else echo $tmp; ?>
-               </option>
-            <?php $j++;
-          }?>
-      */

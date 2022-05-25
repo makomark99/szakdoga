@@ -27,19 +27,15 @@
       if (isset($_POST['pL'])&& $_POST['pL']!=""&& $_POST['pL']!=null && $_POST['pL']!="NULL") {
           $pl=$_POST['pL'];
           $sql.="AND (P.pL1='$pl' OR P.pL2='$pl' OR P.pL3='$pl') ";
-          // $sql="SELECT * FROM players WHERE (pL1='$pl' OR pL2='$pl' OR pL3='$pl') AND pIsMember=1;";
           echo "A/az ",$pl," csapat játékosa(i)<br>";
       }
       if ($_POST['pL']=="" && $_POST['pL']!="NULL") {
           $sql.="AND (P.pL1 is NULL) ";
-          // $sql="SELECT * FROM players WHERE pL1 is NULL AND pIsMember=1;";
           echo "A játékengedély nélküli játékos(ok)<br>";
       }
-
       if (isset($_POST['pTId']) && $_POST['pTId']!="") {
           $trainer=$_POST['pTId'];
           $sql.="AND (P.pTId='$trainer')" ;
-          // $sql="SELECT * FROM players P INNER JOIN staff S ON P.pTId=S.sId WHERE P.pTId='$trainer' AND P.pIsMember=1;";
           $r=mysqli_query($conn, $sql);
           $ro=mysqli_fetch_assoc($r);
           $n=$ro['sName'];
@@ -48,7 +44,6 @@
       if (isset($_POST['year']) && $_POST['year']!="") {
           $year=mysqli_real_escape_string($conn, $_POST['year']);
           $sql.="AND (P.pBDate LIKE '$year%')" ;
-          // $sql="SELECT * FROM players WHERE pBDate LIKE '$year%' AND pIsMember=1;";
           echo "A következő évben született játékos(ok): $year<br>";
       }
       if (isset($_POST['pArr']) && $_POST['pArr']!="") {
@@ -57,8 +52,11 @@
               $condition=$condition.'-'.$_POST['pArrM'];
           }
           $sql.="AND (P.pArrival LIKE '$condition%')";
-          // $sql="SELECT * FROM players WHERE pArrival LIKE '$condition%' AND pIsMember=1;";
           echo "A következő évben igiazolt játékos(ok): $condition<br>";
+      }
+      if (isset($_POST['shostel'])) {
+          $sql.="AND (P.pSH=1) ";
+          echo "Kollégista játékos(ok)<br>";
       }
       $sql.="ORDER BY P.pName;";
   }
