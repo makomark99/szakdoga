@@ -54,6 +54,11 @@
           $sql.="AND (P.pArrival LIKE '$condition%')";
           echo "A következő évben igiazolt játékos(ok): $condition<br>";
       }
+      if (isset($_POST['home'])) {
+          $search2=mysqli_real_escape_string($conn, $_POST['home']);
+          $sql.="AND (P.pHA LIKE '%$search2%') ";
+          echo "Lakhely : $search2<br>";
+      }
       if (isset($_POST['shostel'])) {
           $sql.="AND (P.pSH=1) ";
           echo "Kollégista játékos(ok)<br>";

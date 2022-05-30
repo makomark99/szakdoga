@@ -73,10 +73,10 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
   }
   .tooltip-inner {
     color:white !important;
-    background-color: blue;
-    box-shadow: 0px 0px 4px  darkblue;
+    background-color: #212529;
     opacity: 1 !important;
 }
-.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
-    border-bottom-color: blue !important;
+.tooltip-arrow::before {
+    border-bottom-color: #212529 !important;
+    border-left-color: #212529 !important;
 }
