@@ -100,7 +100,7 @@
 
   <div class="col-auto">
     <label class="form-label">Keresés lakhely alapján</label>
-    <input class="form-control me-2" type="text" name="home" id="home" placeholder="Település">
+    <input class="form-control me-2" value="" type="text" name="home" id="home" placeholder="Település">
   </div>
 
   <div class="col-auto">

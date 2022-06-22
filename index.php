@@ -53,7 +53,10 @@
         target="_blank" class="btn btn-outline-primary btn-sm">Mezszámok</a>
     </div>
   </div>
-
+  <div>
+    <h4 class="my-3">Email rendelések</h4>
+    <a type="button" href="food.php" class="btn btn-outline-primary btn-sm">Hidegcsomag</a>
+  </div>
 </nav>
 <h3 class="mt-3">Feladatok</h3>
 <div class="d-flex align-middle">
@@ -67,61 +70,91 @@
 </div>
 
 <div class="row g-2 mt-3">
-  <div class="col-md-10 col-lg-6 rounded border border-danger">
-    <div class="row">
-
-      <!-- Button trigger modal -->
-      <button type="button" title="Feladat hozzáadása" class="btn btn-outline-primary col-auto m-2"
-        data-bs-toggle="modal" data-bs-target="#addTask">
-        <?php include_once 'img/plus-lg.svg' ?>
-      </button>
-      <h2 class="mt-2 text-center col-auto ">Végrehajtandó feladatok</h2>
+  <div class="col-md-12 col-lg-12 rounded-pill px-3 pt-1 pb-5 border border-5 border-warning mb-2">
+    <div class="row ">
+      <div class="col-auto mx-auto ">
+        <!-- Button trigger modal -->
+        <button type="button" title="Feladat hozzáadása" class="btn btn-outline-primary me-1 my-2"
+          data-bs-toggle="modal" data-bs-target="#addTask">
+          <?php include_once 'img/plus-lg.svg' ?>
+        </button>
+        <h2 class="d-inline my-5">Végrehajtandó feladatok</h2>
+      </div>
     </div>
+    <div class="table-responsive">
+      <table class="table table-dark  rounded table-hover ">
+        <thead class="thead-light ">
+          <tr>
+            <th>Műveletek</th>
+            <th>#</th>
+            <th>Felelős</th>
+            <th>Kategória</th>
+            <th>Feladat leírása</th>
+            <th>Határidő</th>
+            <th>Létrehozó</th>
+            <th>Létrehozva</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="align-conent-center">
+            <td class="align-middle">Kész, Törlés</td>
+            <td class="align-middle">1.</td>
+            <td class="align-middle">Makó Márk</td>
+            <td class="align-middle">Időpontegyeztetés</td>
+            <td class="align-middle">Le kell egyeztetni az ifi,seri időpontokat</td>
+            <td class="align-middle bold"><b>2022.06.09</b> </td>
+            <td class="align-middle">Makó Márk</td>
+            <td class="align-middle">2022.08.15</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog  modal-dialog-centered">
-        <div class="modal-content text-dark fs-5">
-          <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">Végrehajtandó feladat hozzáadása</h3>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <label class="form-label" for="">Feladat leírása</label>
-            <textarea class="form-control mb-2" placeholder="Feladat kifejtése..." name="task" id="" cols="10" rows="5">
+  <!-- Modal -->
+  <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content text-dark fs-5">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Végrehajtandó feladat hozzáadása</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label" for="">Feladat leírása</label>
+          <textarea class="form-control mb-2" placeholder="Feladat kifejtése..." name="task" id="" cols="10" rows="5">
             </textarea>
-            <div class="row g-1 d-flex">
-              <div class="col-md-6">
-                <label class="form-label" size="2" for="">Felelős kiválasztása</label>
-                <select class="form-select mb-2" name="ref" id="">
-                  <option value="">Felelős kiválasztása</option>
-                  <?php   $sql="SELECT * FROM staff ;";
+          <div class="row g-1 d-flex">
+            <div class="col-md-6">
+              <label class="form-label" size="2" for="">Felelős kiválasztása</label>
+              <select class="form-select mb-2" name="ref" id="">
+                <option value="">Felelős kiválasztása</option>
+                <?php   $sql="SELECT * FROM staff ;";
                     $res=mysqli_query($conn, $sql);
                     $queryResults=mysqli_num_rows($res);
                     if ($queryResults>0) {
                         while ($row=mysqli_fetch_assoc($res)) {
                             ?>
-                  <option
-                    value="<?php echo $row['sId']; ?>">
-                    <?php echo $row['sName']; ?>
-                  </option> <?php
+                <option
+                  value="<?php echo $row['sId']; ?>">
+                  <?php echo $row['sName']; ?>
+                </option> <?php
                         }
                     }?>
-                </select>
-
-              </div>
-              <div class="col-md-6">
-                <label class="form-label " for="">Határidő megadása</label>
-                <input name="deadline"
-                  value="<?php echo date("Y-m-d"); ?>"
-                  type="date" max="9999-11-11" class="form-control mb-2">
-              </div>
+              </select>
 
             </div>
-            <label class="form-label " for="category">Kategória kiválasztása</label>
-            <input class="form-control" list="datalistOptions" id="category" placeholder="Kategória kiválasztása...">
-            <datalist id="datalistOptions">
-              <?php
+            <div class="col-md-6">
+              <label class="form-label " for="">Határidő megadása</label>
+              <input name="deadline"
+                value="<?php echo date("Y-m-d"); ?>"
+                type="date" max="9999-11-11" class="form-control mb-2">
+            </div>
+
+          </div>
+          <label class="form-label " for="category">Kategória kiválasztása</label>
+          <input class="form-control" list="datalistOptions" id="category" placeholder="Kategória kiválasztása...">
+          <datalist id="datalistOptions">
+            <?php
              $x=0;
           while ($x!=count($categories)) {
               echo '<option value="'.$categories[$x].'"</option>';
@@ -129,23 +162,49 @@
           }
       
       ?>
-            </datalist>
+          </datalist>
 
-          </div>
-          <div class="modal-footer ">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-            <button type="button" class="btn btn-primary">Rögzítés</button>
-          </div>
+        </div>
+        <div class="modal-footer ">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+          <button type="button" class="btn btn-primary">Rögzítés</button>
         </div>
       </div>
     </div>
 
-
-
   </div>
-  <div class="col-md-6 col-sm-12 rounded border border-success">
-    <h2 class="text-center mt-2">Befejezett feladatok</h2>
-    <p>X feladat, kész 2022.05.06</p>
+  <div class="col-md-12 col-sm-12  rounded-pill px-3 pt-1 pb-5 border border-success border-5 mb-2">
+    <h2 class="text-center my-2">Befejezett feladatok</h2>
+    <div class="table-responsive">
+      <table class="table table-dark table-hover ">
+        <thead class="thead-light ">
+          <tr>
+            <th>Műveletek</th>
+            <th>#</th>
+            <th>Felelős</th>
+            <th>Kategória</th>
+            <th>Feladat leírása</th>
+            <th>Határidő</th>
+            <th>Létrehozó</th>
+            <th>Létrehozva</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="align-conent-center">
+            <td class="align-middle">Kész, Törlés</td>
+            <td class="align-middle">1.</td>
+            <td class="align-middle">Makó Márk</td>
+            <td class="align-middle">Időpontegyeztetés</td>
+            <td class="align-middle">Le kell egyeztetni az ifi,seri időpontokat</td>
+            <td class="align-middle bold"><b>2022.06.09</b> </td>
+            <td class="align-middle">Makó Márk</td>
+            <td class="align-middle">2022.08.15</td>
+
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
   </div>
 
 

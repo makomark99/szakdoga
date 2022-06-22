@@ -1,7 +1,6 @@
 <?php
   include_once 'header.php';
   include_once 'navbar.php';
-  include_once 'auto_logout.php';
   include_once 'includes/dbh.inc.php';
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
@@ -51,13 +50,13 @@
           <div class="row g-2 d-flex">
             <div class="col-md-6">
               <label class="form-label " for="">Játékos születési dátuma</label>
-              <input name="date" value="" id="d1" type="date"
+              <input name="date" value="" placeholder="éééé.hh.nn." id="d1" type="text" onfocus="(this.type='date')"
                 max="<?php echo date("Y-m-d"); ?>"
                 class="form-control mb-2">
             </div>
             <div class="col-md-6">
               <label class="form-label " for="">Előző igazolás dátuma</label>
-              <input name="date" value="" id="d2" type="date"
+              <input name="date" value="" placeholder="éééé.hh.nn." id="d2" type="text" onfocus="(this.type='date')"
                 max="<?php echo date("Y-m-d"); ?>"
                 class="form-control mb-2">
             </div>

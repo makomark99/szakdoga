@@ -1,6 +1,7 @@
 <?php include_once 'check_user.php'; ?>
+<!--inside body onload="Javascript:AutoRefresh(120000);"-->
 
-<body onload="Javascript:AutoRefresh(120000);">
+<body>
 
   <nav class=" navbar navbar-expand-md navbar-dark bg-dark mb-5 sticky-top ">
     <div class="container-fluid nav-tabs  ">

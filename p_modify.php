@@ -3,7 +3,7 @@
     include_once 'navbar.php';
     include_once 'includes/dbh.inc.php';
     include_once 'includes/arrays.php';
-    include_once 'auto_logout.php';
+  
     
     if (!isset($_SESSION["loggedin"])) {
         header('location: ../Szakdoga/login.php');
