@@ -12,11 +12,11 @@
 <form class="row g-3 " action="includes/addplayer.inc.php" method="post">
   <div class="col-md-6 col-lg-3">
     <label for="name" class="form-label">Név*</label>
-    <input name="pName" type="text" class="form-control" id="name" placeholder="Vezetéknév Keresztnév" required>
+    <input name="pName" type="text" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" class="form-control" id="name" placeholder="Vezetéknév Keresztnév" required>
   </div>
   <div class="col-md-6 col-lg-3 ">
     <label for="bdp" class="form-label">Születési hely*</label>
-    <input name="pBPlace" type="text" class="form-control" id="bdp" placeholder="Születési hely" required>
+    <input name="pBPlace" type="text" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" class="form-control" id="bdp" placeholder="Születési hely" required>
   </div>
   <div class="col-md-4 col-lg-2">
     <label for="bdate" class="form-label">Születési dátum*</label>
@@ -42,7 +42,7 @@
   </div>
   <div class="col-md-6 col-lg-3 ">
     <label for="mname" class="form-label">Anyja születési neve*</label>
-    <input name="pMsN" type="text" class="form-control" id="mname" placeholder="Vezetéknév Keresztnév" required>
+    <input name="pMsN" type="text" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" class="form-control" id="mname" placeholder="Vezetéknév Keresztnév" required>
   </div>
   <div class="col-md-6 col-lg-3 ">
     <label class="form-label">Edző neve*</label>
@@ -73,11 +73,11 @@
 
   <div class="col-md-4 col-lg-2">
     <label for="mcdate" class="form-label">Sportorvosi időpont</label>
-    <input name="pLMCDate" type="date" title="" min="2010-01-01" max="9999-11-11" class="form-control" id="mcdate">
+    <input name="pLMCDate" type="date" min="2010-01-01" max="9999-11-11" class="form-control" id="mcdate">
   </div>
   <div class="col-md-4 col-lg-2">
     <label for="mc" class="form-label">Sportorvos</label>
-    <input name="pMCD" type="text" class="form-control" id="mc" placeholder="Név / helyszín">
+    <input name="pMCD" type="text" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" class="form-control" id="mc" placeholder="Név / helyszín">
   </div>
 
   <div class="col-md-6 col-lg-3 ">
@@ -155,7 +155,7 @@
 
   <div class="col-md-4 col-lg-2 ">
     <label for="pHA" class="form-label">Lakhely (település)</label>
-    <input name="pHA" placeholder="Lakhely" value="" type="text" class="form-control" id="pHA">
+    <input name="pHA" placeholder="Lakhely" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" type="text" class="form-control" id="pHA">
   </div>
 
   <div class="col-md-4 col-lg-2">

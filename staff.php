@@ -15,7 +15,7 @@
     </div>
 
     <div class="">
-      <a href="p_add.php" title="Munkatárs hozzáadása" class="btn btn-outline-primary me-2">
+      <a href="staff_add.php" title="Munkatárs hozzáadása" class="btn btn-outline-primary me-2">
         <?php include "img/plus-lg.svg"?>
       </a>
       </form>

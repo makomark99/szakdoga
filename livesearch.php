@@ -173,11 +173,8 @@
           </a>
 
           <!-- Modal -->
-
-
         </td>
       </tr>
-
       <div class="modal fade" id="delete<?php echo $id; ?>"
         tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -188,7 +185,7 @@
             </div>
             <div class="modal-body">
               <?php
-                          echo 'Biztosan szeretné <strong>TÖRÖLNI</strong> a következő nevű játkost az adatbázisból: '.$row['pName'].' ?'; ?>
+                echo 'Biztosan szeretné <strong>TÖRÖLNI</strong> a következő nevű játkost az adatbázisból: '.$row['pName'].' ?'; ?>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>

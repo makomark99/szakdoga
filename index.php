@@ -97,7 +97,22 @@
         </thead>
         <tbody>
           <tr class="align-conent-center">
-            <td class="align-middle">Kész, Törlés</td>
+            <td class="align-middle ">
+              <a href="p_modify.php?id=<?php echo $id; ?>"
+                title="Szerkesztés" class="btn btn-outline-success 
+                      <?php if (!$sadmin) {
+                        echo 'disabled';
+                    } ?>">
+                <?php include 'img/check-lg.svg' ?>
+              </a>
+              <a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
+                        echo 'disabled';
+                    } ?>" data-bs-toggle="modal"
+                data-bs-target="#delete<?php echo $id; ?>">
+                <!--egyedi id kell, mert minding az elsőt találta meg-->
+                <?php include 'img/trash.svg' ?>
+              </a>
+            </td>
             <td class="align-middle">1.</td>
             <td class="align-middle">Makó Márk</td>
             <td class="align-middle">Időpontegyeztetés</td>
@@ -112,101 +127,113 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-centered">
-      <div class="modal-content text-dark fs-5">
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLabel">Végrehajtandó feladat hozzáadása</h3>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <label class="form-label" for="">Feladat leírása</label>
-          <textarea class="form-control mb-2" placeholder="Feladat kifejtése..." name="task" id="" cols="10" rows="5">
+  <form action="includes/addtask.inc.php" method="post">
+    <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content text-dark fs-5">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel">Végrehajtandó feladat hozzáadása</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <label class="form-label" for="">Feladat leírása</label>
+            <textarea class="form-control mb-2" placeholder="Feladat kifejtése..." name="task" id="" cols="10" rows="5">
             </textarea>
-          <div class="row g-1 d-flex">
-            <div class="col-md-6">
-              <label class="form-label" size="2" for="">Felelős kiválasztása</label>
-              <select class="form-select mb-2" name="ref" id="">
-                <option value="">Felelős kiválasztása</option>
-                <?php   $sql="SELECT * FROM staff ;";
+            <div class="row g-1 d-flex">
+              <div class="col-md-6">
+                <label class="form-label" size="2" for="">Felelős kiválasztása</label>
+                <select class="form-select mb-2" name="ref" id="">
+                  <option value="">Felelős kiválasztása</option>
+                  <?php   $sql="SELECT * FROM staff ;";
                     $res=mysqli_query($conn, $sql);
                     $queryResults=mysqli_num_rows($res);
                     if ($queryResults>0) {
                         while ($row=mysqli_fetch_assoc($res)) {
                             ?>
-                <option
-                  value="<?php echo $row['sId']; ?>">
-                  <?php echo $row['sName']; ?>
-                </option> <?php
+                  <option
+                    value="<?php echo $row['sId']; ?>">
+                    <?php echo $row['sName']; ?>
+                  </option> <?php
                         }
                     }?>
-              </select>
+                </select>
+
+              </div>
+              <div class="col-md-6">
+                <label class="form-label " for="">Határidő megadása</label>
+                <input name="deadline"
+                  value="<?php echo date("Y-m-d"); ?>"
+                  type="date" max="9999-11-11" class="form-control mb-2">
+              </div>
 
             </div>
-            <div class="col-md-6">
-              <label class="form-label " for="">Határidő megadása</label>
-              <input name="deadline"
-                value="<?php echo date("Y-m-d"); ?>"
-                type="date" max="9999-11-11" class="form-control mb-2">
-            </div>
-
-          </div>
-          <label class="form-label " for="category">Kategória kiválasztása</label>
-          <input class="form-control" list="datalistOptions" id="category" placeholder="Kategória kiválasztása...">
-          <datalist id="datalistOptions">
-            <?php
+            <label class="form-label " for="category">Kategória kiválasztása</label>
+            <input class="form-control" name="category" list="datalistOptions" id="category"
+              placeholder="Kategória kiválasztása...">
+            <datalist id="datalistOptions">
+              <?php
              $x=0;
           while ($x!=count($categories)) {
               echo '<option value="'.$categories[$x].'"</option>';
               $x++;
           }
-      
       ?>
-          </datalist>
-
+            </datalist>
+          </div>
+          <div class="modal-footer ">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+            <button type="submit" name="submit" class="btn btn-primary">Rögzítés</button>
+            <?php
+              if (isset($_GET["error"])) {
+                  if ($_GET["error"]== "stmtfailed") {
+                      echo "<p class='red'>Valami nem stimmel, próbálkozzon újra!</p>";
+                  }
+                  if ($_GET["error"]== "none") {
+                      echo "<p class='green '>Az új feladat adatai sikeresen rögzítésre kerültek!</p>";
+                  }
+              }
+            ?>
+          </div>
         </div>
-        <div class="modal-footer ">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-          <button type="button" class="btn btn-primary">Rögzítés</button>
-        </div>
-      </div>
-    </div>
+  </form>
+</div>
 
+</div>
+<div class="col-md-12 col-sm-12  rounded-pill px-3 pt-1 pb-5 border border-success border-5 mb-2">
+  <h2 class="text-center my-2">Befejezett feladatok</h2>
+  <div class="table-responsive">
+    <table class="table table-dark table-hover ">
+      <thead class="thead-light ">
+        <tr>
+          <th>Műveletek</th>
+          <th>#</th>
+          <th>Felelős</th>
+          <th>Kategória</th>
+          <th>Feladat leírása</th>
+          <th>Határidő</th>
+          <th>Létrehozó</th>
+          <th>Létrehozva</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="align-conent-center">
+          <td class="align-middle">Kész, Törlés</td>
+          <td class="align-middle">1.</td>
+          <td class="align-middle">Makó Márk</td>
+          <td class="align-middle">Időpontegyeztetés</td>
+          <td class="align-middle">Le kell egyeztetni az ifi,seri időpontokat</td>
+          <td class="align-middle bold"><b>2022.06.09</b> </td>
+          <td class="align-middle">Makó Márk</td>
+          <td class="align-middle">2022.08.15</td>
+
+        </tr>
+
+      </tbody>
+    </table>
   </div>
-  <div class="col-md-12 col-sm-12  rounded-pill px-3 pt-1 pb-5 border border-success border-5 mb-2">
-    <h2 class="text-center my-2">Befejezett feladatok</h2>
-    <div class="table-responsive">
-      <table class="table table-dark table-hover ">
-        <thead class="thead-light ">
-          <tr>
-            <th>Műveletek</th>
-            <th>#</th>
-            <th>Felelős</th>
-            <th>Kategória</th>
-            <th>Feladat leírása</th>
-            <th>Határidő</th>
-            <th>Létrehozó</th>
-            <th>Létrehozva</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="align-conent-center">
-            <td class="align-middle">Kész, Törlés</td>
-            <td class="align-middle">1.</td>
-            <td class="align-middle">Makó Márk</td>
-            <td class="align-middle">Időpontegyeztetés</td>
-            <td class="align-middle">Le kell egyeztetni az ifi,seri időpontokat</td>
-            <td class="align-middle bold"><b>2022.06.09</b> </td>
-            <td class="align-middle">Makó Márk</td>
-            <td class="align-middle">2022.08.15</td>
-
-          </tr>
-
-        </tbody>
-      </table>
-    </div>
-  </div>
+</div>
 
 
-  <?php
+<?php
   include_once 'footer.php';
