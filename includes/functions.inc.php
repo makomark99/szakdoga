@@ -350,8 +350,7 @@ function addFood(
     $fEmail3,
     $fIsOrdered
 ) {
-    $sql = "INSERT INTO food (fDate,fDay,fTime,fTeam,fNop,fActivity,fType,fLoc,fEmail1,fEmail2,fEmail3,fIsOrdered) 
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $sql = "INSERT INTO food (fDate,fDay,fTime,fTeam,fNop,fActivity,fType,fLoc,fEmail1,fEmail2,fEmail3,fIsOrdered) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     $stmt=mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../food.php?error=stmtfailed");
@@ -376,5 +375,38 @@ function addFood(
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../food.php?error=none");
+    exit();
+}
+function addTask(
+    $conn,
+    $task,
+    $ref,
+    $deadline,
+    $category,
+    $username,
+    $date,
+    $ready
+) {
+    $sql = "INSERT INTO tasks (taskDesc,taskRef,taskDeadline,taskCategory,taskCreator,taskDate,taskIsReady) 
+            VALUES(?, ?, ?, ?, ?, ?, ?);";
+    $stmt=mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../index.php?error=stmtfailed");
+        exit();
+    }
+    mysqli_stmt_bind_param(
+        $stmt,
+        "sssssss",
+        $task,
+        $ref,
+        $deadline,
+        $category,
+        $username,
+        $date,
+        $ready
+    );
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../index.php?error=none");
     exit();
 }

@@ -11,8 +11,8 @@
 <div class="container-fluid">
     <div class="row ">
         <div class="col-lg-4 col-md-6 col-sm-12">
-            <form id="myForm" action="includes/addfood.inc.php" method="post">
-                <!-- onsubmit="handleFormSubmit(this)" -->
+            <form action="includes/addfood.inc.php" method="post">
+                <!-- id="myForm" onsubmit="handleFormSubmit(this)" -->
                 <h2 class=" text-center">Hidegcsomag rögzítés</h2>
                 <div class="row g-3 my-1">
                     <div class="col-md-6">
@@ -28,8 +28,8 @@
                 </div>
                 <div class="row g-3 my-1">
                     <div class="col-md-4">
-                        <label class="form-label" for="Date">Időpont*</label>
-                        <input type="time" class="form-control" id="Date" name="When" required>
+                        <label class="form-label" for="When">Időpont*</label>
+                        <input type="time" class="form-control" id="When" name="When" required>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label" for="Team">Csapat*</label>
@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label" for="Nop">Fő*</label>
-                        <input type="number" min=1 max=60 class="form-control" value="15" id="nop" name="Nop" required>
+                        <input type="number" min=1 max=60 class="form-control" value="15" id="Nop" name="Nop" required>
                     </div>
                 </div>
                 <div class="row g-3 my-1">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="email" class="form-label">E-mail beszállító*</label>
-                        <input type="email" name="Email" value="roli96@t-online.hu" class="form-control" id="email1"
+                        <input type="email" name="Email1" value="roli96@t-online.hu" class="form-control" id="email1"
                             disabled>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="col-12 mt-4">
-                    <button type="submit" name="addFood" class="btn btn-primary">Rögzítés</button>
+                    <button type="submit" name="addF" class="btn btn-primary">Rögzítés</button>
                 </div>
                 <div class="mt-4 col-md-auto">
                     <?php
@@ -109,6 +109,11 @@
                 </div>
             </form>
         </div>
+        <?php
+            $query="SELECT * FROM food WHERE fIsOrdered=0;";
+            $result=mysqli_query($conn, $query);
+            $queryResults=mysqli_num_rows($result);
+        ?>
         <div class="col-lg-8 col-md-6 col-sm-12 ">
             <h2 class="text-center mb-5">Megrendelendő hidegcsomagok listája</h2>
             <table class="table table-dark table-hover">
@@ -125,22 +130,41 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                    $i=1;
+                    if ($queryResults>0) {
+                        while ($row=mysqli_fetch_assoc($result)) {
+                            ?>
                     <tr>
-                        <td>1.</td>
-                        <td>2022.10.10</td>
-                        <td>Hétfő</td>
-                        <td>13:00</td>
-                        <td>Ifi</td>
-                        <td>16</td>
-                        <td>Hidegcsomag</td>
-                        <td>Példa</td>
+                        <td> <?php echo $i; ?>
+                        </td>
+                        <td><?php echo $row['fDate']; ?>
+                        </td>
+                        <td><?php echo $row['fDay']; ?>
+                        </td>
+                        <td><?php echo $row['fTime']; ?>
+                        </td>
+                        <td><?php echo $row['fTeam']; ?>
+                        </td>
+                        <td><?php echo $row['fNop']; ?>
+                        </td>
+                        <td><?php echo $row['fType']; ?>
+                        </td>
+                        <td><?php echo $row['fLoc']; ?>
+                        </td>
                     </tr>
+                    <?php $i++;
+                        }
+                    }?>
 
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+<?php
+    include 'footer.php';
+?>
 
 <script>
     // function preventFormSubmit() {
