@@ -173,11 +173,8 @@
           </a>
 
           <!-- Modal -->
-
-
         </td>
       </tr>
-
       <div class="modal fade" id="delete<?php echo $id; ?>"
         tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

@@ -14,7 +14,8 @@
         <form action="includes/login.inc.php" method="post">
           <div class="form-group mt-5">
             <label for="Uid">Felhasználónév*</label>
-            <input id="Uid" class="form-control mb-3 fs-5" type="text" name="uid" placeholder="Felhasználónév/E-mail"
+            <input id="Uid" class="form-control mb-3 fs-5" type="text" pattern="^[a-zA-Z0-9]*$" 
+            title="A felhasználónév csak betűket és számokat tartalmazhat!" name="uid" placeholder="Felhasználónév/E-mail"
               required>
           </div>
           <div class="form-group ">
@@ -28,11 +29,8 @@
           <div class="text-center">
             <?php
                 if (isset($_GET["error"])) { //olyan adatot ellenőriz, amit látunk az URL-ben
-                    if ($_GET["error"]== "emptyinput") {
-                        echo "<p class='red'> Töltse ki a fenti mezőket! </p>";
-                    }
                     if ($_GET["error"]== "wronglogin") {
-                        echo "<p class='red'>A megadott felhasználónév, vagy jelszó nem megfelelő!</p>";
+                        echo "<p class='red'>Hibás felhasználónév, vagy jelszó!</p>";
                     }
                 }
               ?>

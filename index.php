@@ -97,7 +97,22 @@
         </thead>
         <tbody>
           <tr class="align-conent-center">
-            <td class="align-middle">Kész, Törlés</td>
+            <td class="align-middle ">
+              <a href="p_modify.php?id=<?php echo $id; ?>"
+                title="Szerkesztés" class="btn btn-outline-success 
+                      <?php if (!$sadmin) {
+                        echo 'disabled';
+                    } ?>">
+                <?php include 'img/check-lg.svg' ?>
+              </a>
+              <a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
+                        echo 'disabled';
+                    } ?>" data-bs-toggle="modal"
+                data-bs-target="#delete<?php echo $id; ?>">
+                <!--egyedi id kell, mert minding az elsőt találta meg-->
+                <?php include 'img/trash.svg' ?>
+              </a>
+            </td>
             <td class="align-middle">1.</td>
             <td class="align-middle">Makó Márk</td>
             <td class="align-middle">Időpontegyeztetés</td>
