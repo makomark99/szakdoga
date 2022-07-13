@@ -112,8 +112,8 @@
 
   </div>
 
-  <div class="col-md-auto text-center mx-auto">
-    <br> <button type="submit" name="detailed" class="mt-2 btn btn-primary">Keresés</button>
+  <div class=" col-md-auto text-center mx-auto">
+    <br> <button type="submit" name="detailed" class=" input group mt-2 btn btn-primary">Keresés</button>
   </div>
 </form>
 

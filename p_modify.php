@@ -106,41 +106,35 @@
   <div class="col-md-4 col-lg-2">
     <label for="mcdate" class="form-label">Sportorvosi időpont</label>
     <input name="pLMCDate" type="text" onfocus="(this.type='date')" max="1999-11-11"
-      value="<?php $row['pLMCDate']; ?>"
-      placeholder="<?php echo $row['pLMCDate']; ?>"
+      value="<?php echo $row['pLMCDate']; ?>"
       class="form-control" id="mcdate">
   </div>
   <div class="col-md-4 col-lg-2">
     <label for="mc" class="form-label">Sportorvos </label>
     <input name="pMCD" type="text"
-      value="<?php $row['pMCD']; ?>"
-      class="form-control" id="mc"
-      placeholder="<?php echo $row['pMCD']; ?>">
+      value="<?php echo $row['pMCD']; ?>"
+      class="form-control" id="mc">
   </div>
 
   <div class="col-md-6 col-lg-3">
     <label for="email1" class="form-label">1. E-mail</label>
     <input name="pPEmail" type="text" class="form-control" id="email1"
-      vlaue="<?php $row['pPEmail']; ?>"
-      placeholder="<?php echo $row['pPEmail']; ?>">
+      vlaue="<?php echo $row['pPEmail']; ?>">
   </div>
   <div class="col-md-6 col-lg-3">
     <label for="email2" class="form-label">2. E-mail</label>
     <input name="pEmail" type="email" class="form-control" id="email2"
-      vlaue="<?php $row['pEmail']; ?>"
-      placeholder="<?php echo $row['pEmail']; ?>">
+      vlaue="<?php echo $row['pEmail']; ?>">
   </div>
   <div class="col-md-4 col-lg-2 ">
     <label for="tel1" class="form-label">1. Telefonszám</label>
     <input name="pPTel" type="text" class="form-control" id="tel1"
-      value="<?php $row['pPTel']; ?>"
-      placeholder="<?php echo $row['pPTel']; ?>">
+      value="<?php echo $row['pPTel']; ?>">
   </div>
   <div class="col-md-4 col-lg-2 ">
     <label for="tel2" class="form-label">2. Telefonszám</label>
     <input name="pTel" type="text" class="form-control" id="tel2"
-      value="<?php $row['pTel']; ?>"
-      placeholder="<?php echo $row['pTel']; ?>">
+      value="<?php echo $row['pTel']; ?>">
   </div>
   <div class="col-md-2 col-lg-1">
     <label for="pSH" class="form-label">Kollégista?</label>
@@ -158,7 +152,8 @@
   <div class="col-md-2 col-lg-1">
     <label for="shirtsize" class="form-label">Pólóméret</label>
     <select name="pTSize" id="shirtsize" class="form-select">
-      <option value="<?php $row['pTSize']; ?>">
+      <option
+        value="<?php echo $row['pTSize']; ?>">
         <?php echo $row['pTSize'];
             if ($row["pTSize"]!="") {
                 echo ' (jelenelgi)';
@@ -190,7 +185,7 @@
   <div class="col-md-4 col-lg-2">
     <label class="form-label">Játékengedély <?php echo $x; ?></label>
     <select name="pL<?php echo $x; ?>" class="form-select">
-      <option value="<?php $row["pL$x"]; ?>"><?php echo $row["pL$x"];
+      <option value="<?php echo $row["pL$x"]; ?>"><?php echo $row["pL$x"];
                 if ($row["pL$x"]!="") {
                     echo ' (jelenelgi)';
                 } else {
@@ -222,16 +217,14 @@
     <input name="pSsn" type="text"
       value="<?php echo $row['pSsn']; ?>"
       class="form-control <?php if ($row['pSsn']!="") { ?> notm <?php } ?> "
-      id="pSsn"
-      placeholder="<?php echo $row['pSsn']; ?>"
-      <?php if ($row['pSsn']!="") { ?>disabled
+      id="pSsn" <?php if ($row['pSsn']!="") { ?>disabled
     <?php } else { ?> <?php } ?> >
   </div>
 
   <div class="col-md-4 col-lg-2 ">
     <label for="pHA" class="form-label">Lakhely (település)</label>
     <input name="pHA" type="text" class="form-control"
-      value="<?php $row['pHA']; ?>" <?php echo $row['pHA']; ?>>
+      value="<?php echo $row['pHA']; ?>">
   </div>
 
   <div class="col-md-4 col-lg-2">
