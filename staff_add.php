@@ -12,23 +12,24 @@
 <form class="row g-3 " action="includes/addplayer.inc.php" method="post">
   <div class="col-md-6 col-lg-3">
     <label for="name" class="form-label">Név*</label>
-    <input name="sName" type="text" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" class="form-control" id="name" placeholder="Vezetéknév Keresztnév" required>
+    <input name="sName" type="text" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z áéíóöőúüűÁÉÍŰÚŐÖÜÓ.]*$"
+      class="form-control" id="name" placeholder="Vezetéknév Keresztnév" required>
   </div>
-  
+
   <div class="col-md-6 col-lg-3 ">
     <label for="sPost" class="form-label">Beosztás/Pozíció*</label>
-    <input name="sPost" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" placeholder="Utánpótlás masszőr" value="" type="text" class="form-control" id="sPost" required>
+    <input name="sPost" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$"
+      placeholder="Utánpótlás masszőr" value="" type="text" class="form-control" id="sPost" required>
+  </div>
+
+  <div class=" col-md-4 col-lg-2">
+    <label for="bdate" class="form-label">Születési dátum</label>
+    <input name="sBDate" type="date" max="9999-11-11" title="" class="form-control" id="bdate">
   </div>
 
   <div class="col-md-4 col-lg-2">
-    <label for="bdate" class="form-label">Születési dátum</label>
-    <input name="sBDate"  type="date" max="9999-11-11" title="" class="form-control" id="bdate" >
-  </div>
-  
-  <div class="col-md-4 col-lg-2">
-    <label for="code" class="form-label">MKSZ Személy kód</label>
-    <input name="sCode" type="number" class="form-control" min=100 max=999999 id="code" placeholder="MKSZ személy kód"
-      >
+    <label for="code" class="form-label">MKSZ személykód</label>
+    <input name="sCode" type="number" class="form-control" min=100 max=999999 id="code" placeholder="MKSZ személykód">
   </div>
   <div class="col-md-4 col-lg-2">
     <label for="pwd" class="form-label">MKSZ jelszó</label>
@@ -36,27 +37,39 @@
   </div>
 
   <div class="col-md-6 col-lg-3 ">
-    <label for="email1" class="form-label">Céges e-mail</label>
-    <input name="sEmail" type="email" class="form-control" id="email1" placeholder="minta@mkcse.hu">
+    <label for="semail1" class="form-label">Céges e-mail (mkcse)</label>
+    <input name="sEmail" type="email" class="form-control" id="semail1" pattern="^[a-z0-9\.]+@mkcse\.hu$"
+      placeholder="minta@mkcse.hu" title="Céges e-mail cím megadásakor csak mkcse mail címet lehet használni!">
   </div>
   <div class="col-md-6 col-lg-3 ">
-    <label for="email2" class="form-label">Magán e-mail</label>
-    <input name="sEmail2" type="email" class="form-control" id="email2" placeholder="minta@gmail.com">
+    <label for="semail2" class="form-label">Magán e-mail (Google mail)</label>
+    <input name="sEmail2" type="email" class="form-control" id="semail2" placeholder="minta@gmail.com"
+      pattern="^[a-z0-9\.]+@gmail\.com$" title="Magán e-mail cím megadásakor csak Google mail címet lehet használni!">
   </div>
 
   <div class="col-md-4 col-lg-2 ">
-    <label for="tel" class="form-label">1. Telefonszám</label>
-    <input name="sTel" type="text" class="form-control" id="tel" placeholder="Telefonszám">
+    <label for="stel" class="form-label">1. Telefonszám</label>
+    <input name="sTel" type="text" class="form-control" id="tel" placeholder="Telefonszám" pattern="^[+ 0-9]*$"
+      title="Telefonszám megadásakor csak '+'-jelet, szóközt és/vagy számokat lehet használni!">
   </div>
 
   <div class="col-md-4 col-lg-2 ">
     <label for="sHA" class="form-label">Lakhely (település)</label>
-    <input name="sHA" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z0-9]*$" placeholder="Lakhely" value="" type="text" class="form-control" id="sHA">
+    <input name="sHA" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z]{3,30}$"
+      title="Lakhely megadásánál csak számokat és betűket használhat!" placeholder="Lakhely" value="" type="text"
+      class="form-control" id="sHA">
   </div>
 
-  <div class="col-md-4 col-lg-2">
+  <div class="  col-md-4 col-lg-2">
+    <label for="sInternal" class="form-label">Belső érintett*</label>
+    <div class="form-check form-switch">
+      <input class="ms-1 mt-2 form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="sInternal" checked>
+    </div>
+  </div>
+
+  <div class="col-auto">
     <label for="foto" class="form-label">Arcképes fotó &nbsp<?php include "img/filetype-jpg.svg"; echo"&nbsp"; include "img/filetype-png.svg"; ?></label>
-    <input name="pPhoto" type="file" class="form-control" id="foto" disabled>
+    <input name="sPhoto" type="file" class="form-control" id="foto" disabled>
   </div>
 
   <div class="col-md-auto mt-4 input-group ">
