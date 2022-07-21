@@ -81,6 +81,12 @@
 				<h2 class="d-inline my-5">Végrehajtandó feladatok</h2>
 			</div>
 		</div>
+		<?php
+        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='0' ORDER BY T.taskDeadline; ";
+        $result=mysqli_query($conn, $sql);
+        $queryResults=mysqli_num_rows($result);
+        $th=1;
+        ?>
 		<div class="table-responsive m-3">
 			<table class="table table-dark  rounded table-hover ">
 				<thead class="thead-light ">
@@ -96,31 +102,43 @@
 					</tr>
 				</thead>
 				<tbody>
+					<?php
+                    while ($row=mysqli_fetch_assoc($result)) {
+                        ?>
 					<tr class="align-conent-center">
 						<td class="align-middle ">
 							<a href="p_modify.php?id=<?php echo $id; ?>"
 								title="Szerkesztés" class="btn btn-outline-success 
                       <?php if (!$sadmin) {
-      echo 'disabled';
-  } ?>">
+                            echo 'disabled';
+                        } ?>">
 								<?php include 'img/check-lg.svg' ?>
 							</a>
 							<a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
-      echo 'disabled';
-  } ?>" data-bs-toggle="modal"
+                            echo 'disabled';
+                        } ?>" data-bs-toggle="modal"
 								data-bs-target="#delete<?php echo $id; ?>">
 								<!--egyedi id kell, mert minding az elsőt találta meg-->
 								<?php include 'img/trash.svg' ?>
 							</a>
 						</td>
-						<td class="align-middle">1.</td>
-						<td class="align-middle">Makó Márk</td>
-						<td class="align-middle">Időpontegyeztetés</td>
-						<td class="align-middle">Le kell egyeztetni az ifi,seri időpontokat</td>
-						<td class="align-middle bold"><b>2022.06.09</b> </td>
-						<td class="align-middle">Makó Márk</td>
-						<td class="align-middle">2022.08.15</td>
+						<td class="align-middle"><?php echo $th++; ?>
+						</td>
+						<td class="align-middle"><?php echo $row['sName']; ?>
+						</td>
+						<td class="align-middle"><?php echo $row['taskCategory']; ?>
+						</td>
+						<td class="align-middle"><?php echo $row['taskDesc']; ?>
+						</td>
+						<td class="align-middle bold"><b><?php echo $row['taskDeadline']; ?></b>
+						</td>
+						<td class="align-middle"><?php echo $row['taskCreator']; ?>
+						</td>
+						<td class="align-middle"><?php echo $row['taskDate']; ?>
+						</td>
 					</tr>
+					<?php
+                    }?>
 				</tbody>
 			</table>
 		</div>
@@ -139,8 +157,7 @@
 
 						<label class="form-label" for="">Feladat leírása</label>
 						<textarea class="form-control mb-2" placeholder="Feladat kifejtése..." name="task" id=""
-							cols="10" rows="5">
-            </textarea>
+							cols="10" rows="5"></textarea>
 						<div class="row g-1 d-flex">
 							<div class="col-md-6">
 								<label class="form-label" size="2" for="">Felelős kiválasztása</label>
