@@ -107,8 +107,8 @@
                         ?>
 					<tr class="align-conent-center">
 						<td class="align-middle ">
-							<a href="p_modify.php?id=<?php echo $id; ?>"
-								title="Szerkesztés" class="btn btn-outline-success 
+							<a href="task_done.php?id=<?php echo $tId; ?>"
+								title="Elkészült" class="btn btn-outline-success 
                       <?php if (!$sadmin) {
                             echo 'disabled';
                         } ?>">
@@ -203,14 +203,14 @@
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
 						<button type="submit" name="submit" class="btn btn-primary">Rögzítés</button>
 						<?php
-              if (isset($_GET["error"])) {
-                  if ($_GET["error"]== "stmtfailed") {
-                      echo "<p class='red'>Valami nem stimmel, próbálkozzon újra!</p>";
-                  }
-                  if ($_GET["error"]== "none") {
-                      echo "<p class='green '>Az új feladat adatai sikeresen rögzítésre kerültek!</p>";
-                  }
-              }
+            //   if (isset($_GET["error"])) {
+            //       if ($_GET["error"]== "stmtfailed") {
+            //           echo "<p class='red'>Valami nem stimmel, próbálkozzon újra!</p>";
+            //       }
+            //       if ($_GET["error"]== "none") {
+            //           echo "<p class='green '>Az új feladat adatai sikeresen rögzítésre kerültek!</p>";
+            //       }
+            //   }
             ?>
 					</div>
 				</div>
@@ -224,8 +224,8 @@
 		<table class="table table-dark table-hover ">
 			<thead class="thead-light ">
 				<tr>
-					<th>Műveletek</th>
 					<th>#</th>
+					<th>Elkészült</th>
 					<th>Felelős</th>
 					<th>Kategória</th>
 					<th>Feladat leírása</th>
@@ -236,8 +236,8 @@
 			</thead>
 			<tbody>
 				<tr class="align-conent-center">
-					<td class="align-middle">Kész, Törlés</td>
 					<td class="align-middle">1.</td>
+					<td class="align-middle">2022.09.02</td>
 					<td class="align-middle">Makó Márk</td>
 					<td class="align-middle">Időpontegyeztetés</td>
 					<td class="align-middle">Le kell egyeztetni az ifi,seri időpontokat</td>

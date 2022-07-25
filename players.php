@@ -64,14 +64,26 @@
 						</div>
 					</div>
 					<div class="form-check mt-2">
-						<input class="form-check-input" type="checkbox" name="" id="" disabled checked>
-						<label class="form-check-label" for="flexRadioDefault1">
+						<input class="form-check-input" type="radio" name="n" id="nb1" checked>
+						<label class="form-check-label" for="nb1">
 							Legmagasabb felnőtt bajnoki osztály: NB I.
 						</label>
 					</div>
 					<div class="form-check mt-2">
-						<input class="form-check-input" type="checkbox" name="" id="" disabled>
-						<label class="form-check-label" for="flexRadioDefault1">
+						<input class="form-check-input" type="radio" name="n" id="nb2">
+						<label class="form-check-label" for="nb2">
+							Legmagasabb felnőtt bajnoki osztály: NB I/B.
+						</label>
+					</div>
+					<div class="form-check mt-2">
+						<input class="form-check-input" type="radio" name="n" id="otherTeam">
+						<label class="form-check-label" for="otherTeam">
+							Legmagasabb felnőtt bajnoki osztály: Egyéb.
+						</label>
+					</div>
+					<div class="form-check mt-2">
+						<input class="form-check-input" type="checkbox" name="" id="international" disabled>
+						<label class="form-check-label" for="international">
 							Válogatottság
 						</label>
 					</div>
@@ -87,7 +99,7 @@
 							Egyéb sportszervezetbe igazol
 						</label>
 					</div>
-					<table class="table mt-2">
+					<table class="table mt-1">
 						<thead>
 							<tr>
 								<th>Nettó összeg</th>
@@ -99,8 +111,20 @@
 							<td id="out2"> Ft</td>
 						</tr>
 					</table>
-
+					<table class="table mt-1">
+						<thead>
+							<tr>
+								<th>Játékos életkora</th>
+								<th>Egyesületben eltöltött évek</th>
+							</tr>
+						</thead>
+						<tr>
+							<td id="out3"> Év</td>
+							<td id="out4"> Év</td>
+						</tr>
+					</table>
 				</div>
+
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
 					<button type="button" id="calc" value="submit" onclick="calculate()"
@@ -134,24 +158,28 @@
 		}
 
 		function diffYear(d) {
-			let today = new Date();
-			let dd = String(today.getDate()).padStart(2, '0');
-			let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-			let yyyy = today.getFullYear();
+			var today = new Date();
+			var dd = String(today.getDate()).padStart(2, '0');
+			var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+			var yyyy = today.getFullYear();
 			today = yyyy + '-' + mm + '-' + dd;
-			let currentDate = new Date(today);
-			let inputDate = new Date(d);
+			var currentDate = new Date(today);
+			var inputDate = new Date(d);
 			return Math.floor(Math.abs(((currentDate.getTime() - inputDate.getTime()) / (24 * 60 * 60 *
 				1000)) / 365.242199)); // hours*minutes*seconds*milliseconds
 		}
-		let d1 = document.getElementById('d1').value;
-		let d2 = document.getElementById('d2').value;
-		let toAcademy = (document.getElementById('ac').checked) ? true : false;
+		var d1 = document.getElementById('d1').value;
+		var d2 = document.getElementById('d2').value;
+		var toAcademy = (document.getElementById('ac').checked) ? true : false;
+		var nb1 = (document.getElementById('nb1').checked) ? true : false;
+		var nb2 = (document.getElementById('nb2').checked) ? true : false;
+		var otherTeam = (document.getElementById('otherTeam').checked) ? true : false;
+
 		age = diffYear(d1);
 		elapsedYears = diffYear(d2);
 		//NB1 -be bárhonnan
 		Cost = 0;
-		if (!toAcademy) {
+		if (!toAcademy && nb1) {
 			if (age >= 10 && age < 13) {
 				Cost = 150000;
 			} else if (age >= 13 && age < 15) {
@@ -164,6 +192,26 @@
 				Cost = 400000;
 			} else if (age >= 21 && age < 23) {
 				Cost = 450000;
+			} else Cost = 0;
+		} else if (!toAcademy && nb2) {
+			if (age >= 10 && age < 13) {
+				Cost = 100000;
+			} else if (age >= 13 && age < 15) {
+				Cost = 120000;
+			} else if (age >= 15 && age < 17) {
+				Cost = 160000;
+			} else if (age >= 17 && age < 19) {
+				Cost = 200000;
+			} else if (age >= 19 && age < 23) {
+				Cost = 250000;
+			} else Cost = 0;
+		} else if (!toAcademy && otherTeam) {
+			if (age >= 10 && age < 13) {
+				Cost = 50000;
+			} else if (age >= 13 && age < 15) {
+				Cost = 70000;
+			} else if (age >= 15 && age < 23) {
+				Cost = 100000;
 			} else Cost = 0;
 		} else { //akadémiába bárhonnan
 			if (age < 15) {
@@ -181,10 +229,7 @@
 		}
 		document.getElementById("out1").innerHTML = numberWithSpaces(Math.round(Cost)) + " Ft";
 		document.getElementById("out2").innerHTML = numberWithSpaces(Math.round(Cost * 1.27)) + " Ft";
+		document.getElementById("out3").innerHTML = age + " Év";
+		document.getElementById("out4").innerHTML = elapsedYears + " Év";
 	}
-
-	let search = document.getElementById("search");
-	setTimeout(() => {
-		search.submit();
-	}, 30)
 </script>
