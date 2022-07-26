@@ -6,7 +6,7 @@
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
   }
-  $leavers=false;
+  $leaver=false;
   if (!isset($_POST['name']) && $_POST['name']!=="") {
       $sql="SELECT * FROM players WHERE pIsMember=1;";
   } else {
@@ -15,7 +15,7 @@
   }
   if (isset($_POST['leavers'])) {
       include_once 'navbar.php';
-      $leavers=true;
+      $leaver=true;
       $sql="SELECT * FROM players WHERE pIsMember=0;";
   }
   if (isset($_POST['detailed'])) {
@@ -72,7 +72,7 @@
           echo "<h3 class='mt-2'>A keresésnek $queryResults találata van!</h3>"
       ?>
 <div class="container sm-col-10 mt-4 table-responsive">
-	<h1 class="text-center m-4"><?php echo $leavers ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
+	<h1 class="text-center m-4"><?php echo $leaver ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
 	</h1>
 
 	<table class="table table-dark table-hover">
@@ -84,9 +84,10 @@
 				<th>Születési dátum</th>
 				<th>Életkor</th>
 				<th>Igazolás dátuma</th>
-				<?php echo $leavers ? "<th>Távozás dátuma</th>" : "<th>Játékengedélyek</th>"; ?>
+				<?php echo $leaver ? "<th>Távozás dátuma</th>" : "<th>Játékengedélyek</th>"; ?>
 				<th>Érvényes sportorvosi</th>
-				<th>Műveletek</th>
+				<?php echo $leaver ? : "<th>Műveletek</th>"; ?>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -111,7 +112,7 @@
 				<td class="align-middle">
 
 					<?php
-          if (!$leavers) {
+          if (!$leaver) {
               echo $row['pL1'];
               if ($row['pL2']!="") {
                   echo ";\t";
@@ -156,22 +157,24 @@
                     include "img/x-square.svg";
                     echo ' Még nem volt! </td>';
                 } ?>
+				<?php
+            if (!$leaver) { ?>
 				<td class="align-middle ">
 					<a href="p_modify.php?id=<?php echo $id; ?>"
 						title="Szerkesztés" class="btn btn-outline-warning 
                   <?php if (!$sadmin) {
-                    echo 'disabled';
-                } ?>">
+                echo 'disabled';
+            } ?>">
 						<?php include 'img/pencil.svg' ?>
 					</a>
 					<a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
-                    echo 'disabled';
-                } ?>" data-bs-toggle="modal"
+                echo 'disabled';
+            } ?>" data-bs-toggle="modal"
 						data-bs-target="#delete<?php echo $id; ?>">
 						<!--egyedi id kell, mert minding az elsőt találta meg-->
 						<?php include 'img/trash.svg' ?>
 					</a>
-
+					<?php } ?>
 					<!-- Modal -->
 				</td>
 			</tr>

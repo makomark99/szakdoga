@@ -12,6 +12,22 @@
     } else {
         echo '<p> <a id="loginl" href="login.php">Ön jelenleg nincs bejeletkezve! A bejelentkezéshez kattintson ide!</a> </p>';
     }
+
+    if (isset($_GET["id"])) {
+        $id=$_GET["id"];
+        $date=date("Y-m-d");
+        $set="UPDATE tasks SET taskIsReady=1, taskDoneDate='$date' WHERE taskId=?;";
+        $stmt=mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $set)) {
+            echo "<h2> class='red' Valami nem stimmel, próbálkozzon újra!</h2>";
+            
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, 's', $id);
+        mysqli_stmt_execute($stmt);
+        echo "<div class='col-md-6 offset-3 text-center'> <h2 class='mt-3 green'>A feladat elkészültként lett berögzíve</h2>";
+    }
+
   ?>
 
 <h1 class='text-center'>Főoldal</h1>
@@ -70,7 +86,7 @@
 </div>
 
 <div class="row g-2 mt-3 ">
-	<div class="col-md-12 col-lg-12 rounded-pill px-3 pt-1 pb-5 border border-5 border-warning mb-2">
+	<div class="col-md-12 col-lg-12 px-3 pt-1 pb-5 border border-5 border-warning mb-2">
 		<div class="row m-3">
 			<div class="col-auto mx-auto ">
 				<!-- Button trigger modal -->
@@ -107,7 +123,7 @@
                         ?>
 					<tr class="align-conent-center">
 						<td class="align-middle ">
-							<a href="task_done.php?id=<?php echo $tId; ?>"
+							<a href="index.php?id=<?php echo $row['taskId']; ?>"
 								title="Elkészült" class="btn btn-outline-success 
                       <?php if (!$sadmin) {
                             echo 'disabled';
@@ -117,7 +133,7 @@
 							<a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
                             echo 'disabled';
                         } ?>" data-bs-toggle="modal"
-								data-bs-target="#delete<?php echo $id; ?>">
+								data-bs-target="#delete<?php echo $row['taskId']; ?>">
 								<!--egyedi id kell, mert minding az elsőt találta meg-->
 								<?php include 'img/trash.svg' ?>
 							</a>
@@ -218,8 +234,14 @@
 </div>
 
 </div>
-<div class="col-md-12 col-sm-12  rounded-pill px-3 pt-1 pb-5 border border-success border-5 mb-2">
+<div class="col-md-12 col-sm-12  px-3 pt-1 pb-5 border border-success border-5 mb-2">
 	<h2 class="text-center my-2">Befejezett feladatok</h2>
+	<?php
+        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate; ";
+        $result=mysqli_query($conn, $sql);
+        $queryResults=mysqli_num_rows($result);
+        $th=1;
+        ?>
 	<div class="table-responsive">
 		<table class="table table-dark table-hover ">
 			<thead class="thead-light ">
@@ -235,22 +257,34 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php
+                    while ($row=mysqli_fetch_assoc($result)) {
+                        ?>
 				<tr class="align-conent-center">
-					<td class="align-middle">1.</td>
-					<td class="align-middle">2022.09.02</td>
-					<td class="align-middle">Makó Márk</td>
-					<td class="align-middle">Időpontegyeztetés</td>
-					<td class="align-middle">Le kell egyeztetni az ifi,seri időpontokat</td>
-					<td class="align-middle bold"><b>2022.06.09</b> </td>
-					<td class="align-middle">Makó Márk</td>
-					<td class="align-middle">2022.08.15</td>
-
+					<td class="align-middle"><?php echo $th++; ?>
+					</td>
+					<td class="align-middle"><?php echo $row['taskDoneDate']; ?>
+					</td>
+					<td class="align-middle"><?php echo $row['sName']; ?>
+					</td>
+					<td class="align-middle"><?php echo $row['taskCategory']; ?>
+					</td>
+					<td class="align-middle"><?php echo $row['taskDesc']; ?>
+					</td>
+					<td class="align-middle bold"><b><?php echo $row['taskDeadline']; ?></b>
+					</td>
+					<td class="align-middle"><?php echo $row['taskCreator']; ?>
+					</td>
+					<td class="align-middle"><?php echo $row['taskDate']; ?>
+					</td>
 				</tr>
-
+				<?php
+                    }?>
 			</tbody>
 		</table>
 	</div>
 </div>
+
 
 
 <?php
