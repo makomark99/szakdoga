@@ -175,7 +175,7 @@
 
 	function calculate() {
 		function numberWithSpaces(x) {
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); //reg ex
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); //reg ex, extra space after 3 chars
 		}
 
 		function diffYear(d) {
@@ -191,10 +191,21 @@
 		}
 		var d1 = document.getElementById('d1').value;
 		var d2 = document.getElementById('d2').value;
+
+		//to academy?
 		var toAcademy = (document.getElementById('ac').checked) ? true : false;
+
+		//next club
 		var nb1 = (document.getElementById('nb1').checked) ? true : false;
 		var nb2 = (document.getElementById('nb1b').checked) ? true : false;
 		var otherTeam = (document.getElementById('otherTeam').checked) ? true : false;
+
+		//international caps
+		var youth = (document.getElementById('ifi').checked) ? true : false;
+		var junior = (document.getElementById('junior').checked) ? true : false;
+		var senior = (document.getElementById('felnott').checked) ? true : false;
+		var YouthSH = (document.getElementById('upsk').checked) ? true : false;
+		var SeniorSH = (document.getElementById('fsk').checked) ? true : false;
 
 		age = diffYear(d1);
 		elapsedYears = diffYear(d2);
@@ -248,6 +259,19 @@
 		if ((!toAcademy) && (elapsedYears > 3)) {
 			Cost = Cost * Math.pow(1.20, elapsedYears - 3);
 		}
+		//international cap odds
+		if (youth) {
+			Cost *= 2;
+		} else if (junior) {
+			Cost *= 3;
+		} else if (senior) {
+			Cost *= 5;
+		} else if (YouthSH) {
+			Cost *= 1.5;
+		} else if (SeniorSH) {
+			Cost *= 3;
+		}
+
 		document.getElementById("out1").innerHTML = numberWithSpaces(Math.round(Cost)) + " Ft";
 		document.getElementById("out2").innerHTML = numberWithSpaces(Math.round(Cost * 1.27)) + " Ft";
 		document.getElementById("out3").innerHTML = age + " Év";
