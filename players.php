@@ -43,9 +43,10 @@
 			</div>
 			<form action="palyers.php" method="post">
 				<div class="modal-body">
-					<div class="col-auto ">
-						<label class="form-label  " for="">Játékos neve</label>
-						<input name="name " type="text" class="form-control mb-2" placeholder="Vezetéknév Keresztnév">
+					<div class="col-auto  ">
+						<label class="form-label" for="name">Játékos neve</label>
+						<input name="name " id="name" type="text" class="form-control mb-2"
+							placeholder="Vezetéknév Keresztnév">
 					</div>
 					<div class="row g-2 d-flex">
 						<div class="col-md-6">
@@ -63,43 +64,63 @@
 								class="form-control mb-2">
 						</div>
 					</div>
-					<div class="form-check mt-2">
-						<input class="form-check-input" type="radio" name="n" id="nb1" checked>
-						<label class="form-check-label" for="nb1">
-							Legmagasabb felnőtt bajnoki osztály: NB I.
-						</label>
+					<hr class="m-2">
+					<div class="text-center">
+						<span>Legmagasabb felnőtt bajnoki osztály kiválasztása</span>
 					</div>
-					<div class="form-check mt-2">
-						<input class="form-check-input" type="radio" name="n" id="nb2">
-						<label class="form-check-label" for="nb2">
-							Legmagasabb felnőtt bajnoki osztály: NB I/B.
-						</label>
+					<div class="text-center">
+						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
+							<input type="radio" class="btn-check" name="btnradio" id="nb1" autocomplete="off"
+								checked="" />
+							<label class="btn btn-sm  btn-outline-primary" for="nb1">NB I</label>
+
+							<input type="radio" class="btn-check" name="btnradio" id="nb1b" autocomplete="off" />
+							<label class="btn btn-sm  btn-outline-primary" for="nb1b">NB I/B</label>
+
+							<input type="radio" class="btn-check" name="btnradio" id="otherTeam" autocomplete="off" />
+							<label class="btn btn-sm  btn-outline-primary" for="otherTeam">Egyéb</label>
+						</div>
 					</div>
-					<div class="form-check mt-2">
-						<input class="form-check-input" type="radio" name="n" id="otherTeam">
-						<label class="form-check-label" for="otherTeam">
-							Legmagasabb felnőtt bajnoki osztály: Egyéb.
-						</label>
+					<hr class="m-2">
+					<div class="text-center">
+						<span>Válogatottság kiválasztása</span>
 					</div>
-					<div class="form-check mt-2">
-						<input class="form-check-input" type="checkbox" name="" id="international" disabled>
-						<label class="form-check-label" for="international">
-							Válogatottság
-						</label>
+					<div class="text-center">
+						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
+							<input type="radio" class="btn-check" name="btnradio2" id="none" autocomplete="off"
+								checked="" />
+							<label class="btn btn-sm btn-outline-primary" for="none">Nincs</label>
+
+							<input type="radio" class="btn-check" name="btnradio2" id="ifi" autocomplete="off" />
+							<label class="btn btn-sm  btn-outline-primary" for="ifi">Ifjúsági</label>
+
+							<input type="radio" class="btn-check" name="btnradio2" id="junior" autocomplete="off" />
+							<label class="btn btn-sm  btn-outline-primary" for="junior">Junior</label>
+							<input type="radio" class="btn-check" name="btnradio2" id="felnott" autocomplete="off" />
+							<label class="btn btn-sm  btn-outline-primary" for="felnott">Felnőtt</label>
+						</div>
+						<div class="text-center mt-1">
+							<input type="radio" class="btn-check" name="btnradio2" id="upsk" autocomplete="off" />
+							<label class="btn btn-sm btn-outline-primary" for="upsk">Utánpótlás strandkézilabda</label>
+							<input type="radio" class="btn-check" name="btnradio2" id="fsk" autocomplete="off" />
+							<label class="btn btn-sm btn-outline-primary" for="fsk">Felnőtt strandkézilabda</label>
+						</div>
 					</div>
-					<div class="form-check mt-2">
-						<input class="form-check-input" onclick="disable()" type="radio" name="ac" id="ac">
-						<label class="form-check-label" for="ac">
-							Akadémiába igazol
-						</label>
+					<hr class="m-2">
+					<div class="text-center">
+						<span>Sportakadémiába történő igazolás</span>
+						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
+							<input type="radio" class="btn-check" name="btnradio3" id="other" onclick="enable()"
+								checked />
+							<label class="btn btn-sm btn-outline-primary" for="other">Nem</label>
+
+							<input type="radio" class="btn-check" name="btnradio3" id="ac" onclick="disable()"
+								autocomplete="off" />
+							<label class="btn btn-sm btn-outline-primary" for="ac">Igen</label>
+						</div>
 					</div>
-					<div class="form-check mt-2">
-						<input class="form-check-input" onclick="enable()" type="radio" name="ac" id="other" checked>
-						<label class="form-check-label" for="other">
-							Egyéb sportszervezetbe igazol
-						</label>
-					</div>
-					<table class="table mt-1">
+					<hr class="m-2">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>Nettó összeg</th>
@@ -111,7 +132,7 @@
 							<td id="out2"> Ft</td>
 						</tr>
 					</table>
-					<table class="table mt-1">
+					<table class="table m-0 tabe-bordered">
 						<thead>
 							<tr>
 								<th>Játékos életkora</th>
@@ -172,7 +193,7 @@
 		var d2 = document.getElementById('d2').value;
 		var toAcademy = (document.getElementById('ac').checked) ? true : false;
 		var nb1 = (document.getElementById('nb1').checked) ? true : false;
-		var nb2 = (document.getElementById('nb2').checked) ? true : false;
+		var nb2 = (document.getElementById('nb1b').checked) ? true : false;
 		var otherTeam = (document.getElementById('otherTeam').checked) ? true : false;
 
 		age = diffYear(d1);

@@ -1,16 +1,16 @@
 <?php
-if (isset($_POST["addF"])) {
-    $fDate=$_POST["Date"];
-    $fDay=$_POST["Day"];
-    $fTime=$_POST["When"];
-    $fTeam=$_POST["Team"];
-    $fNop=$_POST["Nop"];
-    $fActivity=$_POST["Activity"];
-    $fType=$_POST["What"];
-    $fLoc=$_POST["Where"];
-    $fEmail1=$_POST["Email1"];
-    $fEmail2=$_POST["Email2"];
-    $fEmail3=$_POST["Email3"];
+if (isset($_POST['submit'])) {
+    $fDate=$_POST['fDate'];
+    $fDay=$_POST['fDay'];
+    $fWhen=$_POST['fWhen'];
+    $fTeam=$_POST['fTeam'];
+    $fNop=$_POST['fNop'];
+    $fActivity=$_POST['fActivity'];
+    $fWhat=$_POST['fWhat'];
+    $fWhere=$_POST['fWhere'];
+    $fEmail1=$_POST['fEmail1'];
+    $fEmail2=$_POST['fEmail2'];
+    $fEmail3=$_POST['fEmail3'];
     $fIsOrdered=0;
 
     require_once 'dbh.inc.php';
@@ -20,12 +20,12 @@ if (isset($_POST["addF"])) {
         $conn,
         $fDate,
         $fDay,
-        $fTime,
+        $fWhen,
         $fTeam,
         $fNop,
         $fActivity,
-        $fType,
-        $fLoc,
+        $fWhat,
+        $fWhere,
         $fEmail1,
         $fEmail2,
         $fEmail3,

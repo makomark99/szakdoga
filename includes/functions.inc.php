@@ -329,18 +329,18 @@ function addFood(
     $conn,
     $fDate,
     $fDay,
-    $fTime,
+    $fWhen,
     $fTeam,
     $fNop,
     $fActivity,
-    $fType,
-    $fLoc,
+    $fWhat,
+    $fWhere,
     $fEmail1,
     $fEmail2,
     $fEmail3,
     $fIsOrdered
 ) {
-    $sql = "INSERT INTO food (fDate,fDay,fTime,fTeam,fNop,fActivity,fType,fLoc,fEmail1,fEmail2,fEmail3,fIsOrdered) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $sql = "INSERT INTO food (fDate,fDay,fWhen,fTeam,fNop,fActivity,fWhat,fWhere,fEmail1,fEmail2,fEmail3,fIsOrdered) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     $stmt=mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../food.php?error=stmtfailed");
@@ -351,12 +351,12 @@ function addFood(
         "ssssssssssss",
         $fDate,
         $fDay,
-        $fTime,
+        $fWhen,
         $fTeam,
         $fNop,
         $fActivity,
-        $fType,
-        $fLoc,
+        $fWhat,
+        $fWhere,
         $fEmail1,
         $fEmail2,
         $fEmail3,

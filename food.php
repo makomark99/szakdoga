@@ -17,23 +17,23 @@
                 <div class="row g-3 my-1">
                     <div class="col-md-6">
                         <label class="form-label" for="Date">Dátum*</label>
-                        <input type="date" class="form-control" onchange="getDayName()" id="Date" min=<?php echo date('Y-m-d') ?>
+                        <input type="date" class="form-control" onchange="getDayName()" id="fDate" min=<?php echo date('Y-m-d') ?>
                         max=9999-12-31
-                        name="Date" required>
+                        name="fDate" required>
                     </div>
                     <div class=" col-md-6">
-                        <label class="form-label" for="Day">Nap (auto)</label>
-                        <input type="text" class="form-control" id="Day" name="Day" disabled>
+                        <label class="form-label" for="fDay">Nap (auto)</label>
+                        <input type="text" class="form-control notm text-light" id="fDay" name="fDay" disabled>
                     </div>
                 </div>
                 <div class="row g-3 my-1">
                     <div class="col-md-4">
-                        <label class="form-label" for="When">Időpont*</label>
-                        <input type="time" class="form-control" id="When" name="When" required>
+                        <label class="form-label" for="fWhen">Időpont*</label>
+                        <input type="time" class="form-control" id="fWhen" name="fWhen" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label" for="Team">Csapat*</label>
-                        <select name="Team" id="Team" class="form-select" required>
+                        <label class="form-label" for="fTeam">Csapat*</label>
+                        <select name="fTeam" id="fTeam" class="form-select" required>
                             <option value="U8">U8</option>
                             <option value="U9">U9</option>
                             <option value="U10">U10</option>
@@ -45,26 +45,27 @@
                             <option value="Serdülő">Seri</option>
                             <option value="Ifjúsági">Ifi</option>
                             <option value="NB2">NB2</option>
-                            <option value="other">MKC</option>
+                            <option value="MKC">MKC</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label" for="Nop">Fő*</label>
-                        <input type="number" min=1 max=60 class="form-control" value="15" id="Nop" name="Nop" required>
+                        <label class="form-label" for="fNop">Fő*</label>
+                        <input type="number" min=1 max=60 class="form-control" value="15" id="fNop" name="fNop"
+                            required>
                     </div>
                 </div>
                 <div class="row g-3 my-1">
                     <div class="col-md-5">
-                        <label class="form-label" for="Activity">Tevékenység</label>
-                        <select name="Activity" id="Activity" class="form-select" required>
+                        <label class="form-label" for="fActivity">Tevékenység</label>
+                        <select name="fActivity" id="fActivity" class="form-select" required>
                             <option value="Mérkőzés">Mérkőzés</option>
                             <option value="Torna">Torna</option>
                             <option value="Edzőmérkőzés">Edzőmérkőzés</option>
                         </select>
                     </div>
                     <div class="col-md-7">
-                        <label class="form-label" for="What">Csomag kiválasztása*</label>
-                        <select name="What" id="What" class="form-select">
+                        <label class="form-label" for="fWhat">Csomag kiválasztása*</label>
+                        <select name="fWhat" id="fWhat" class="form-select">
                             <option value="Hidegcsomag">Hidegcsomag</option>
                             <option value="Rántotthúsos szendvics">Rántotthúsos szendvics</option>
                         </select>
@@ -72,28 +73,28 @@
                 </div>
                 <div class="row g-3 my-1">
                     <div class="col-md-6">
-                        <label for="loc" class="form-label">Helyszín*</label>
-                        <input type="text" class="form-control" placeholder="Mérkőzés helyszíne" id="loc" name="Where"
-                            required>
+                        <label for="fWhere" class="form-label">Helyszín*</label>
+                        <input type="text" class="form-control" placeholder="Mérkőzés helyszíne" id="fWhere"
+                            name="fWhere" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="email" class="form-label">E-mail beszállító*</label>
-                        <input type="email" name="Email1" value="roli96@t-online.hu" class="form-control" id="email1"
-                            disabled>
+                        <label for="fEmail1" class="form-label ">E-mail beszállító*</label>
+                        <input type="email" name="fEmail1" value="roli96@t-online.hu"
+                            class="form-control notm text-light" id="fEmail1" disabled>
                     </div>
                 </div>
                 <div class="row g-3 my-1">
                     <div class="col-md-6">
-                        <label for="email2" class="form-label">2. E-mail</label>
-                        <input type="email" name="Email2" value="mark.mako@mkcse.hu" class="form-control" id="email2">
+                        <label for="fEmail2" class="form-label">2. E-mail</label>
+                        <input type="email" name="fEmail2" value="mark.mako@mkcse.hu" class="form-control" id="fEmail2">
                     </div>
                     <div class="col-md-6">
-                        <label for="email3" class="form-label">3. E-mail</label>
-                        <input type="email" name="Email3" class="form-control" id="email3">
+                        <label for="fEmail3" class="form-label">3. E-mail</label>
+                        <input type="email" name="fEmail3" class="form-control" id="fEmail3">
                     </div>
                 </div>
                 <div class="col-12 mt-4">
-                    <button type="submit" name="addF" class="btn btn-primary">Rögzítés</button>
+                    <button type="submit" name="submit" class="btn btn-primary">Rögzítés</button>
                 </div>
                 <div class="mt-4 col-md-auto">
                     <?php
@@ -142,15 +143,15 @@
                         </td>
                         <td><?php echo $row['fDay']; ?>
                         </td>
-                        <td><?php echo $row['fTime']; ?>
+                        <td><?php echo $row['fWhen']; ?>
                         </td>
                         <td><?php echo $row['fTeam']; ?>
                         </td>
                         <td><?php echo $row['fNop']; ?>
                         </td>
-                        <td><?php echo $row['fType']; ?>
+                        <td><?php echo $row['fWhat']; ?>
                         </td>
-                        <td><?php echo $row['fLoc']; ?>
+                        <td><?php echo $row['fWhere']; ?>
                         </td>
                     </tr>
                     <?php $i++;
@@ -183,9 +184,9 @@
     // }
 
     function getDayName() {
-        let _date = document.getElementById('Date').value;
+        let _date = document.getElementById('fDate').value;
         let days = ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'];
         let actual = new Date(_date);
-        document.getElementById('Day').value = days[actual.getDay()];
+        document.getElementById('fDay').value = days[actual.getDay()];
     }
 </script>

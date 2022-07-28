@@ -1,7 +1,6 @@
 <?php
 
-if(isset($_POST["submit"])){
-    
+if (isset($_POST["submit"])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $username = $_POST["uid"];
@@ -12,26 +11,24 @@ if(isset($_POST["submit"])){
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
     
-    if(invalidUid($username)!==false){
+    if (invalidUid($username)!==false) {
         header("location: ../signup.php?error=invaliduid");
         exit();
     }
-    if(pwdMatch($pwd,$pwdrep)!==false){
+    if (pwdMatch($pwd, $pwdrep)!==false) {
         header("location: ../signup.php?error=passworderror");
         exit();
     }
-    if(pwdIsStrong($pwd)!==false){
+    if (pwdIsStrong($pwd)!==false) {
         header("location: ../signup.php?error=weakpassword");
         exit();
     }
-    if(uidExists($conn,$username,$email)!==false){
+    if (uidExists($conn, $username, $email)!==false) {
         header("location: ../signup.php?error=usernametaken");
         exit();
     }
-    createUser($conn,$name,$email,$username,$pwd,$token);
-
-}
-else{
+    createUser($conn, $name, $email, $username, $pwd, $token);
+} else {
     header("location: ../signup.php");
     exit();
 }
