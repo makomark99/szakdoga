@@ -172,12 +172,12 @@
 					<div class="modal-body">
 
 						<label class="form-label" for="">Feladat leírása</label>
-						<textarea class="form-control mb-2" placeholder="Feladat kifejtése..." name="task" id=""
-							cols="10" rows="5"></textarea>
+						<textarea class="form-control mb-2" placeholder="Feladat kifejtése..." required name="task"
+							id="" cols="10" rows="5"></textarea>
 						<div class="row g-1 d-flex">
 							<div class="col-md-6">
 								<label class="form-label" size="2" for="">Felelős kiválasztása</label>
-								<select class="form-select mb-2" name="ref" id="">
+								<select class="form-select mb-2" name="ref" id="" required>
 									<option value="">Felelős kiválasztása</option>
 									<?php   $sql="SELECT * FROM staff ;";
                     $res=mysqli_query($conn, $sql);
@@ -203,7 +203,7 @@
 
 						</div>
 						<label class="form-label " for="category">Kategória kiválasztása</label>
-						<input class="form-control" name="category" list="datalistOptions" id="category"
+						<input class="form-control" name="category" list="datalistOptions" required id="category"
 							placeholder="Kategória kiválasztása...">
 						<datalist id="datalistOptions">
 							<?php
@@ -227,7 +227,7 @@
 <div class="col-md-12 col-sm-12  px-3 pt-1 pb-5  mb-2">
 	<h2 class="text-center my-3">Legutóbb befejezett feladatok</h2>
 	<?php
-        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate LIMIT 5;";
+        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC LIMIT 5;";
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
         $th=1;
@@ -244,7 +244,7 @@
 					<th>Határidő</th>
 					<th>Elkészült</th>
 					<th>Létrehozó</th>
-					<th>Létrehozva</th>
+					<th>Időtartam</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -267,7 +267,8 @@
 					</td>
 					<td class="align-middle"><?php echo $row['taskCreator']; ?>
 					</td>
-					<td class="align-middle"><?php echo $row['taskDate']; ?>
+					<?php $elapsedTime=strtotime($row['taskDoneDate'])-strtotime($row['taskDate']); ?>
+					<td class="align-middle"><?php echo floor($elapsedTime/(60*60*24))." nap"; ?>
 					</td>
 				</tr>
 				<?php

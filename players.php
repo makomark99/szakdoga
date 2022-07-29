@@ -6,6 +6,7 @@
       header('location: ../Szakdoga/login.php');
   }
 ?>
+
 <div class="col-md-12 ">
 	<div class="d-flex justify-content-end ">
 		<div class=" d-flex col-md-4 col-sm-5">
@@ -83,7 +84,13 @@
 					</div>
 					<hr class="m-2">
 					<div class="text-center">
-						<span>Válogatottság kiválasztása</span>
+						<div>Válogatottság kiválasztása
+							<span
+								title="Válogatottság után járó szorzó akkor vehető figyelembe, ha a játékos legalább 3 hivatalos válogatott mérkőzésen szerepelt a jegyzőkönyvvben.">
+								<?php include_once "img/info.svg";?>
+							</span>
+
+						</div>
 					</div>
 					<div class="text-center">
 						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
@@ -166,11 +173,16 @@
 <!--<script src="row_click.js"></script> -->
 <script>
 	function disable() {
-		document.getElementById('d2').setAttribute("disabled", "")
+		document.getElementById('nb1').setAttribute("disabled", "")
+		document.getElementById('nb1b').setAttribute("disabled", "")
+		document.getElementById('otherTeam').setAttribute("disabled", "")
 	}
 
 	function enable() {
-		document.getElementById('d2').removeAttribute("disabled", "")
+		document.getElementById('nb1').removeAttribute("disabled", "")
+		document.getElementById('nb1b').removeAttribute("disabled", "")
+		document.getElementById('otherTeam').removeAttribute("disabled", "")
+
 	}
 
 	function calculate() {
@@ -179,33 +191,33 @@
 		}
 
 		function diffYear(d) {
-			var today = new Date();
-			var dd = String(today.getDate()).padStart(2, '0');
-			var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-			var yyyy = today.getFullYear();
+			let today = new Date();
+			let dd = String(today.getDate()).padStart(2, '0');
+			let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+			let yyyy = today.getFullYear();
 			today = yyyy + '-' + mm + '-' + dd;
-			var currentDate = new Date(today);
-			var inputDate = new Date(d);
+			let currentDate = new Date(today);
+			let inputDate = new Date(d);
 			return Math.floor(Math.abs(((currentDate.getTime() - inputDate.getTime()) / (24 * 60 * 60 *
 				1000)) / 365.242199)); // hours*minutes*seconds*milliseconds
 		}
-		var d1 = document.getElementById('d1').value;
-		var d2 = document.getElementById('d2').value;
+		let d1 = document.getElementById('d1').value;
+		let d2 = document.getElementById('d2').value;
 
 		//to academy?
-		var toAcademy = (document.getElementById('ac').checked) ? true : false;
+		let toAcademy = (document.getElementById('ac').checked) ? true : false;
 
 		//next club
-		var nb1 = (document.getElementById('nb1').checked) ? true : false;
-		var nb2 = (document.getElementById('nb1b').checked) ? true : false;
-		var otherTeam = (document.getElementById('otherTeam').checked) ? true : false;
+		let nb1 = (document.getElementById('nb1').checked) ? true : false;
+		let nb2 = (document.getElementById('nb1b').checked) ? true : false;
+		let otherTeam = (document.getElementById('otherTeam').checked) ? true : false;
 
 		//international caps
-		var youth = (document.getElementById('ifi').checked) ? true : false;
-		var junior = (document.getElementById('junior').checked) ? true : false;
-		var senior = (document.getElementById('felnott').checked) ? true : false;
-		var YouthSH = (document.getElementById('upsk').checked) ? true : false;
-		var SeniorSH = (document.getElementById('fsk').checked) ? true : false;
+		let youth = (document.getElementById('ifi').checked) ? true : false;
+		let junior = (document.getElementById('junior').checked) ? true : false;
+		let senior = (document.getElementById('felnott').checked) ? true : false;
+		let YouthSH = (document.getElementById('upsk').checked) ? true : false;
+		let SeniorSH = (document.getElementById('fsk').checked) ? true : false;
 
 		age = diffYear(d1);
 		elapsedYears = diffYear(d2);
@@ -257,7 +269,9 @@
 			}
 		}
 		if ((!toAcademy) && (elapsedYears > 3)) {
-			Cost = Cost * Math.pow(1.20, elapsedYears - 3);
+			Cost *= Math.pow(1.20, elapsedYears - 3);
+		} else if (toAcademy && elapsedYears < 3) {
+			Cost *= 0.7;
 		}
 		//international cap odds
 		if (youth) {

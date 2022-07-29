@@ -14,9 +14,9 @@
         <form action="includes/login.inc.php" method="post">
           <div class="form-group mt-5">
             <label for="Uid">Felhasználónév*</label>
-            <input id="Uid" class="form-control mb-3 fs-5" type="text" pattern="^[a-zA-Z0-9]*$" 
-            title="A felhasználónév csak betűket és számokat tartalmazhat!" name="uid" placeholder="Felhasználónév/E-mail"
-              required>
+            <input id="Uid" class="form-control mb-3 fs-5" type="text" pattern="^[a-zA-Z0-9 \@]*$"
+              title="A felhasználónév csak betűket, számokat és @ jelet tartalmazhat!" name="uid"
+              placeholder="Felhasználónév/E-mail" required>
           </div>
           <div class="form-group ">
             <label for="Pass">Jelszó*</label>
