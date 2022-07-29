@@ -53,14 +53,15 @@
 						<div class="col-md-6">
 							<label class="form-label " for="">Játékos születési dátuma</label>
 							<input name="date" value="" placeholder="éééé.hh.nn." id="d1" type="text"
-								onfocus="(this.type='date')"
+								onfocus="(this.type='date')" required
 								max="<?php echo date("Y-m-d"); ?>"
 								class="form-control mb-2">
+
 						</div>
 						<div class="col-md-6">
 							<label class="form-label " for="">Előző igazolás dátuma</label>
 							<input name="date" value="" placeholder="éééé.hh.nn." id="d2" type="text"
-								onfocus="(this.type='date')"
+								onfocus="(this.type='date')" required
 								max="<?php echo date("Y-m-d"); ?>"
 								class="form-control mb-2">
 						</div>
@@ -85,11 +86,9 @@
 					<hr class="m-2">
 					<div class="text-center">
 						<div>Válogatottság kiválasztása
-							<span
-								title="Válogatottság után járó szorzó akkor vehető figyelembe, ha a játékos legalább 3 hivatalos válogatott mérkőzésen szerepelt a jegyzőkönyvvben.">
-								<?php include_once "img/info.svg";?>
-							</span>
-
+							<a type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Válogatottság után járó szorzó akkor vehető figyelembe, ha a játékos legalább 3
+								hivatalos válogatott mérkőzésen szerepelt a jegyzőkönyvvben."><?php include "img/info-square.svg";?>
+							</a>
 						</div>
 					</div>
 					<div class="text-center">
@@ -115,7 +114,11 @@
 					</div>
 					<hr class="m-2">
 					<div class="text-center">
-						<span>Sportakadémiába történő igazolás</span>
+						<div>Sportakadémiába történő igazolás
+							<a type="button" data-bs-toggle="tooltip" data-bs-placement="left"
+								data-bs-title="Ha a játékos kevesebb mint 3 évet töltött az előző sportszervezetben, akkor az összeg 70%-a illeti meg az átadó sportszervezetet."><?php include "img/info-square.svg";?>
+							</a>
+						</div>
 						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
 							<input type="radio" class="btn-check" name="btnradio3" id="other" onclick="enable()"
 								checked />
@@ -155,7 +158,7 @@
 
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-					<button type="button" id="calc" value="submit" onclick="calculate()"
+					<button type="submit" id="calc" value="submit" onclick="calculate()"
 						class="btn btn-primary">Számítás</button>
 				</div>
 			</form>
@@ -186,6 +189,7 @@
 	}
 
 	function calculate() {
+
 		function numberWithSpaces(x) {
 			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); //reg ex, extra space after 3 chars
 		}

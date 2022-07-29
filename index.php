@@ -225,7 +225,17 @@
 
 </div>
 <div class="col-md-12 col-sm-12  px-3 pt-1 pb-5  mb-2">
-	<h2 class="text-center my-3">Legutóbb befejezett feladatok</h2>
+	<div class="row m-3">
+		<div class="col-auto mx-auto ">
+			<!-- Button trigger modal -->
+			<button type="button" title="Összes befejezett feladat kilistázása"
+				class="btn btn-outline-primary me-1 my-2" data-bs-toggle="modal" data-bs-target="#showTasks">
+				<?php include_once "img/filter.svg" ?>
+			</button>
+			<h2 class="d-inline my-5">Legutóbb befejezett feladatok</h2>
+		</div>
+	</div>
+
 	<?php
         $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC LIMIT 5;";
         $result=mysqli_query($conn, $sql);
