@@ -80,4 +80,7 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
     border-bottom-color: #212529 !important;
     border-left-color: #212529 !important;
 }
-
+.modal-bg{
+    background-color: black;
+    color: white;
+}

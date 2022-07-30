@@ -288,7 +288,71 @@
 	</div>
 </div>
 
+<!-- Modal -->
 
+<div class="modal fade" id="showTasks" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-fullscreen h-100 modal-dialog-centered">
+		<div class="modal-content bg-dark text-white fs-5">
+			<div class="modal-header">
+				<h3 class="modal-title" id="exampleModalLabel">Befejezett feladatok</h3>
+				<button type="button" class="btn-close  bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<?php
+        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC;";
+        $result=mysqli_query($conn, $sql);
+        $queryResults=mysqli_num_rows($result);
+        $th=1;
+        ?>
+				<div class="table-responsive">
+					<table class="table table-dark table-hover border border-success border-5">
+						<thead class="thead-light ">
+							<tr>
+								<th>#</th>
+
+								<th>Felelős</th>
+								<th>Kategória</th>
+								<th>Feladat leírása</th>
+								<th>Határidő</th>
+								<th>Elkészült</th>
+								<th>Időtartam</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+                    while ($row=mysqli_fetch_assoc($result)) {
+                        ?>
+							<tr class="align-conent-center">
+								<td class="align-middle"><?php echo $th++; ?>
+								</td>
+
+								<td class="align-middle"><?php echo $row['sName']; ?>
+								</td>
+								<td class="align-middle"><?php echo $row['taskCategory']; ?>
+								</td>
+								<td class="align-middle"><?php echo $row['taskDesc']; ?>
+								</td>
+								<td class="align-middle bold"><?php echo $row['taskDeadline']; ?>
+								</td>
+								<td class="align-middle"><b><?php echo $row['taskDoneDate']; ?></b>
+								</td>
+								<?php $elapsedTime=strtotime($row['taskDoneDate'])-strtotime($row['taskDate']); ?>
+								<td class="align-middle"><?php echo floor($elapsedTime/(60*60*24))." nap"; ?>
+								</td>
+							</tr>
+							<?php
+                    }?>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+			<div class="modal-footer ">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <?php
   include_once 'footer.php';
