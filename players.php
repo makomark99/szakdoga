@@ -36,132 +36,137 @@
 
 <!-- Modal -->
 <div class="modal fade" id="calculate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog  modal-dialog-centered">
-		<div class="modal-content text-dark fs-5">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content  text-dark fs-5">
 			<div class="modal-header">
 				<h3 class="modal-title" id="exampleModalLabel">Kinevelési költség kalkulátor</h3>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<form action="palyers.php" method="post">
-				<div class="modal-body">
-					<div class="col-auto  ">
-						<label class="form-label" for="name">Játékos neve</label>
-						<input name="name " id="name" type="text" class="form-control mb-2"
-							placeholder="Vezetéknév Keresztnév">
-					</div>
-					<div class="row g-2 d-flex">
-						<div class="col-md-6">
-							<label class="form-label " for="">Játékos születési dátuma</label>
-							<input name="date" value="" placeholder="éééé.hh.nn." id="d1" type="text"
-								onfocus="(this.type='date')" required
-								max="<?php echo date("Y-m-d"); ?>"
-								class="form-control mb-2">
 
-						</div>
-						<div class="col-md-6">
-							<label class="form-label " for="">Előző igazolás dátuma</label>
-							<input name="date" value="" placeholder="éééé.hh.nn." id="d2" type="text"
-								onfocus="(this.type='date')" required
-								max="<?php echo date("Y-m-d"); ?>"
-								class="form-control mb-2">
-						</div>
-					</div>
-					<hr class="m-2">
-					<div class="text-center">
-						<span>Legmagasabb felnőtt bajnoki osztály kiválasztása</span>
-					</div>
-					<div class="text-center">
-						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
-							<input type="radio" class="btn-check" name="btnradio" id="nb1" autocomplete="off"
-								checked="" />
-							<label class="btn btn-sm  btn-outline-primary" for="nb1">NB I</label>
+			<div class="modal-body ">
+				<div class="col-auto  ">
+					<label class="form-label" for="name">Játékos neve</label>
+					<input name="name " id="name" type="text" class="form-control mb-2"
+						placeholder="Vezetéknév Keresztnév">
+				</div>
+				<div class="row g-2 d-flex">
+					<div class="col-md-6">
+						<label class="form-label " for="">Játékos születési dátuma</label>
+						<input name="date" value="" placeholder="éééé.hh.nn." id="d1" type="text"
+							onfocus="(this.type='date')" required
+							max="<?php echo date("Y-m-d"); ?>"
+							class="form-control mb-2">
 
-							<input type="radio" class="btn-check" name="btnradio" id="nb1b" autocomplete="off" />
-							<label class="btn btn-sm  btn-outline-primary" for="nb1b">NB I/B</label>
-
-							<input type="radio" class="btn-check" name="btnradio" id="otherTeam" autocomplete="off" />
-							<label class="btn btn-sm  btn-outline-primary" for="otherTeam">Egyéb</label>
-						</div>
 					</div>
-					<hr class="m-2">
-					<div class="text-center">
-						<div>Válogatottság kiválasztása
-							<a type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Válogatottság után járó szorzó akkor vehető figyelembe, ha a játékos legalább 3
+					<div class="col-md-6">
+						<label class="form-label " for="">Előző igazolás dátuma</label>
+						<input name="date" value="" placeholder="éééé.hh.nn." id="d2" type="text"
+							onfocus="(this.type='date')" required
+							max="<?php echo date("Y-m-d"); ?>"
+							class="form-control mb-2">
+					</div>
+				</div>
+				<hr class="m-2">
+				<div class="text-center">
+					<span>Legmagasabb felnőtt bajnoki osztály kiválasztása</span>
+				</div>
+				<div class="text-center">
+					<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="btnradio" id="nb1" autocomplete="off" checked="" />
+						<label class="btn btn-sm  btn-outline-primary" for="nb1">NB I</label>
+
+						<input type="radio" class="btn-check" name="btnradio" id="nb1b" autocomplete="off" />
+						<label class="btn btn-sm  btn-outline-primary" for="nb1b">NB I/B</label>
+
+						<input type="radio" class="btn-check" name="btnradio" id="otherTeam" autocomplete="off" />
+						<label class="btn btn-sm  btn-outline-primary" for="otherTeam">Egyéb</label>
+					</div>
+				</div>
+				<hr class="m-2">
+				<div class="text-center">
+					<div>Válogatottság kiválasztása
+						<a type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Válogatottság után járó szorzó akkor vehető figyelembe, ha a játékos legalább 3
 								hivatalos válogatott mérkőzésen szerepelt a jegyzőkönyvvben."><?php include "img/info-square.svg";?>
-							</a>
-						</div>
+						</a>
 					</div>
-					<div class="text-center">
-						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
-							<input type="radio" class="btn-check" name="btnradio2" id="none" autocomplete="off"
-								checked="" />
-							<label class="btn btn-sm btn-outline-primary" for="none">Nincs</label>
-
-							<input type="radio" class="btn-check" name="btnradio2" id="ifi" autocomplete="off" />
-							<label class="btn btn-sm  btn-outline-primary" for="ifi">Ifjúsági</label>
-
-							<input type="radio" class="btn-check" name="btnradio2" id="junior" autocomplete="off" />
-							<label class="btn btn-sm  btn-outline-primary" for="junior">Junior</label>
-							<input type="radio" class="btn-check" name="btnradio2" id="felnott" autocomplete="off" />
-							<label class="btn btn-sm  btn-outline-primary" for="felnott">Felnőtt</label>
-						</div>
-						<div class="text-center mt-1">
-							<input type="radio" class="btn-check" name="btnradio2" id="upsk" autocomplete="off" />
-							<label class="btn btn-sm btn-outline-primary" for="upsk">Utánpótlás strandkézilabda</label>
-							<input type="radio" class="btn-check" name="btnradio2" id="fsk" autocomplete="off" />
-							<label class="btn btn-sm btn-outline-primary" for="fsk">Felnőtt strandkézilabda</label>
-						</div>
-					</div>
-					<hr class="m-2">
-					<div class="text-center">
-						<div>Sportakadémiába történő igazolás
-							<a type="button" data-bs-toggle="tooltip" data-bs-placement="left"
-								data-bs-title="Ha a játékos kevesebb mint 3 évet töltött az előző sportszervezetben, akkor az összeg 70%-a illeti meg az átadó sportszervezetet."><?php include "img/info-square.svg";?>
-							</a>
-						</div>
-						<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
-							<input type="radio" class="btn-check" name="btnradio3" id="other" onclick="enable()"
-								checked />
-							<label class="btn btn-sm btn-outline-primary" for="other">Nem</label>
-
-							<input type="radio" class="btn-check" name="btnradio3" id="ac" onclick="disable()"
-								autocomplete="off" />
-							<label class="btn btn-sm btn-outline-primary" for="ac">Igen</label>
-						</div>
-					</div>
-					<hr class="m-2">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Nettó összeg</th>
-								<th>Bruttó összeg</th>
-							</tr>
-						</thead>
-						<tr>
-							<td id="out1"> Ft</td>
-							<td id="out2"> Ft</td>
-						</tr>
-					</table>
-					<table class="table m-0 tabe-bordered">
-						<thead>
-							<tr>
-								<th>Játékos életkora</th>
-								<th>Egyesületben eltöltött évek</th>
-							</tr>
-						</thead>
-						<tr>
-							<td id="out3"> Év</td>
-							<td id="out4"> Év</td>
-						</tr>
-					</table>
 				</div>
+				<div class="text-center">
+					<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="btnradio2" id="none" autocomplete="off"
+							checked="" />
+						<label class="btn btn-sm btn-outline-primary" for="none">Nincs</label>
 
-				<div class="modal-footer ">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-					<button type="submit" id="calc" value="submit" onclick="calculate()"
-						class="btn btn-primary">Számítás</button>
+						<input type="radio" class="btn-check" name="btnradio2" id="ifi" autocomplete="off" />
+						<label class="btn btn-sm  btn-outline-primary" for="ifi">Ifjúsági</label>
+
+						<input type="radio" class="btn-check" name="btnradio2" id="junior" autocomplete="off" />
+						<label class="btn btn-sm  btn-outline-primary" for="junior">Junior</label>
+						<input type="radio" class="btn-check" name="btnradio2" id="felnott" autocomplete="off" />
+						<label class="btn btn-sm  btn-outline-primary" for="felnott">Felnőtt</label>
+					</div>
+					<div class="text-center mt-1">
+						<input type="radio" class="btn-check" name="btnradio2" id="upsk" autocomplete="off" />
+						<label class="btn btn-sm btn-outline-primary" for="upsk">Utánpótlás strandkézilabda</label>
+						<input type="radio" class="btn-check" name="btnradio2" id="fsk" autocomplete="off" />
+						<label class="btn btn-sm btn-outline-primary" for="fsk">Felnőtt strandkézilabda</label>
+					</div>
 				</div>
-			</form>
+				<hr class="m-2">
+				<div class="text-center">
+					<div>Sportakadémiába történő igazolás
+						<a type="button" data-bs-toggle="tooltip" data-bs-placement="left"
+							data-bs-title="Ha a játékos kevesebb mint 3 évet töltött az előző sportszervezetben, akkor az összeg 70%-a illeti meg az átadó sportszervezetet."><?php include "img/info-square.svg";?>
+						</a>
+					</div>
+					<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="btnradio3" id="other" onclick="enable()" checked />
+						<label class="btn btn-sm btn-outline-primary" for="other">Nem</label>
+
+						<input type="radio" class="btn-check" name="btnradio3" id="ac" onclick="disable()"
+							autocomplete="off" />
+						<label class="btn btn-sm btn-outline-primary" for="ac">Igen</label>
+					</div>
+				</div>
+				<hr class="m-2">
+				<table class="table table-bordered border border-secondary border-1">
+					<thead>
+						<tr>
+							<th>Nettó alapdíj</th>
+							<th>Nettó összeg</th>
+							<th>Bruttó összeg</th>
+						</tr>
+					</thead>
+					<tr>
+						<td id="out0"> Ft</td>
+						<td id="out1"> Ft</td>
+						<td id="out2"> Ft</td>
+					</tr>
+				</table>
+				<table class="table m-0 table-bordered border border-secondary border-1">
+					<thead>
+						<tr>
+							<th>Életkor</th>
+							<th>Egyesületben eltöltött évek</th>
+							<th>Szorzó</th>
+						</tr>
+					</thead>
+					<tr>
+						<td id="out3"> Év</td>
+						<td id="out4"> Év</td>
+						<td id="out5"> </td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="modal-footer ">
+
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+				<button type="submit" id="reset" value="button" onclick="reset()"
+					class="btn btn-danger">Alaphelyzet</button>
+				<button type="submit" id="calc" value="submit" onclick="calculate()"
+					class="btn btn-primary">Számítás</button>
+
+			</div>
 		</div>
 	</div>
 </div>
@@ -272,6 +277,7 @@
 				Cost = 5000000;
 			}
 		}
+		let basicFee = Cost;
 		if ((!toAcademy) && (elapsedYears > 3)) {
 			Cost *= Math.pow(1.20, elapsedYears - 3);
 		} else if (toAcademy && elapsedYears < 3) {
@@ -290,9 +296,12 @@
 			Cost *= 3;
 		}
 
+		document.getElementById("out0").innerHTML = numberWithSpaces(Math.round(basicFee)) + " Ft";
 		document.getElementById("out1").innerHTML = numberWithSpaces(Math.round(Cost)) + " Ft";
 		document.getElementById("out2").innerHTML = numberWithSpaces(Math.round(Cost * 1.27)) + " Ft";
-		document.getElementById("out3").innerHTML = age + " Év";
-		document.getElementById("out4").innerHTML = elapsedYears + " Év";
+		document.getElementById("out3").innerHTML = isNaN(age) ? 0 : age + " Év";
+		document.getElementById("out4").innerHTML = isNaN(elapsedYears) ? 0 : elapsedYears + " Év";
+		document.getElementById("out5").innerHTML = isNaN(elapsedYears) ? 1 : Math.pow(1.20, (elapsedYears - 3)).toFixed(
+			5);
 	}
 </script>

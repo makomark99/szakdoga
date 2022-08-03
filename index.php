@@ -305,7 +305,7 @@
         $th=1;
         ?>
 				<div class="table-responsive">
-					<table class="table table-dark table-hover border border-success border-5">
+					<table class="table table-dark table-hover table-striped border border-success border-5">
 						<thead class="thead-light ">
 							<tr>
 								<th>#</th>
