@@ -23,8 +23,8 @@
 		</form>
 
 		<!-- Button trigger modal -->
-		<a title="Kinevelési költség számítása" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
-			data-bs-target="#calculate">
+		<a title="Kinevelési költség számítása" id="calcModal" class="btn btn-outline-primary me-2"
+			data-bs-toggle="modal" data-bs-target="#calculate">
 			<?php include_once 'img/calculator.svg' ?>
 		</a>
 
@@ -46,24 +46,24 @@
 			<div class="modal-body ">
 				<div class="col-auto  ">
 					<label class="form-label" for="name">Játékos neve</label>
-					<input name="name " id="name" type="text" class="form-control mb-2"
+					<input name="name " id="name" type="text" class="form-control mb-2 calcInput"
 						placeholder="Vezetéknév Keresztnév">
 				</div>
 				<div class="row g-2 d-flex">
 					<div class="col-md-6">
 						<label class="form-label " for="">Játékos születési dátuma</label>
-						<input name="date" value="" placeholder="éééé.hh.nn." id="d1" type="text"
-							onfocus="(this.type='date')" required
+						<input name="birth" value="" placeholder="éééé.hh.nn." id="d1" type="date"
+							onfocus="(this.type='text')" required
 							max="<?php echo date("Y-m-d"); ?>"
-							class="form-control mb-2">
+							class="form-control mb-2 calcInput">
 
 					</div>
 					<div class="col-md-6">
 						<label class="form-label " for="">Előző igazolás dátuma</label>
-						<input name="date" value="" placeholder="éééé.hh.nn." id="d2" type="text"
-							onfocus="(this.type='date')" required
+						<input name="lastConctract" value="" placeholder="éééé.hh.nn." id="d2" type="date"
+							onfocus="(this.type='text')" required
 							max="<?php echo date("Y-m-d"); ?>"
-							class="form-control mb-2">
+							class="form-control mb-2 calcInput">
 					</div>
 				</div>
 				<hr class="m-2">
@@ -72,13 +72,13 @@
 				</div>
 				<div class="text-center">
 					<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
-						<input type="radio" class="btn-check" name="btnradio" id="nb1" autocomplete="off" checked="" />
+						<input type="radio" class="btn-check " name="btnradio" id="nb1" autocomplete="off" checked="" />
 						<label class="btn btn-sm  btn-outline-primary" for="nb1">NB I</label>
 
-						<input type="radio" class="btn-check" name="btnradio" id="nb1b" autocomplete="off" />
+						<input type="radio" class="btn-check " name="btnradio" id="nb1b" autocomplete="off" />
 						<label class="btn btn-sm  btn-outline-primary" for="nb1b">NB I/B</label>
 
-						<input type="radio" class="btn-check" name="btnradio" id="otherTeam" autocomplete="off" />
+						<input type="radio" class="btn-check " name="btnradio" id="otherTeam" autocomplete="off" />
 						<label class="btn btn-sm  btn-outline-primary" for="otherTeam">Egyéb</label>
 					</div>
 				</div>
@@ -137,9 +137,9 @@
 						</tr>
 					</thead>
 					<tr>
-						<td id="out0"> Ft</td>
-						<td id="out1"> Ft</td>
-						<td id="out2"> Ft</td>
+						<td class="info" id="out0"> Ft</td>
+						<td class="info" id="out1"> Ft</td>
+						<td class="info" id="out2"> Ft</td>
 					</tr>
 				</table>
 				<table class="table m-0 table-bordered border border-secondary border-1">
@@ -151,9 +151,9 @@
 						</tr>
 					</thead>
 					<tr>
-						<td id="out3"> Év</td>
-						<td id="out4"> Év</td>
-						<td id="out5"> </td>
+						<td class="info" id="out3"> Év</td>
+						<td class="info" id="out4"> Év</td>
+						<td class="info" id="out5"> </td>
 					</tr>
 				</table>
 			</div>
@@ -178,7 +178,9 @@
 <?php
   include_once 'footer.php';
 ?>
+<script src="test.js"></script>
 <!--<script src="row_click.js"></script> -->
+
 <script>
 	function disable() {
 		document.getElementById('nb1').setAttribute("disabled", "")
@@ -278,22 +280,32 @@
 			}
 		}
 		let basicFee = Cost;
-		if ((!toAcademy) && (elapsedYears > 3)) {
-			Cost *= Math.pow(1.20, elapsedYears - 3);
+		let odds = 1;
+		if ((!toAcademy) && (elapsedYears >= 3)) {
+			odds = Math.pow(1.20, elapsedYears - 2)
+			Cost *= odds;
+
 		} else if (toAcademy && elapsedYears < 3) {
-			Cost *= 0.7;
+			odds = 0.7;
+			Cost *= odds;
 		}
 		//international cap odds
+		icOdds = 1;
 		if (youth) {
-			Cost *= 2;
+			icOdds = 2;
+			Cost *= icOdds;
 		} else if (junior) {
-			Cost *= 3;
+			icOdds = 3;
+			Cost *= icOdds;
 		} else if (senior) {
-			Cost *= 5;
+			icOdds = 5;
+			Cost *= icOdds;
 		} else if (YouthSH) {
-			Cost *= 1.5;
+			icOdds = 1.5;
+			Cost *= icOdds;
 		} else if (SeniorSH) {
-			Cost *= 3;
+			icOdds = 3;
+			Cost *= icOdds;
 		}
 
 		document.getElementById("out0").innerHTML = numberWithSpaces(Math.round(basicFee)) + " Ft";
@@ -301,7 +313,8 @@
 		document.getElementById("out2").innerHTML = numberWithSpaces(Math.round(Cost * 1.27)) + " Ft";
 		document.getElementById("out3").innerHTML = isNaN(age) ? 0 : age + " Év";
 		document.getElementById("out4").innerHTML = isNaN(elapsedYears) ? 0 : elapsedYears + " Év";
-		document.getElementById("out5").innerHTML = isNaN(elapsedYears) ? 1 : Math.pow(1.20, (elapsedYears - 3)).toFixed(
+		document.getElementById("out5").innerHTML = isNaN(elapsedYears) ? 1 : (odds * icOdds).toFixed(
 			5);
+
 	}
 </script>
