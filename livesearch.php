@@ -7,12 +7,13 @@
       header('location: ../Szakdoga/login.php');
   }
   $leaver=false;
-  if (!isset($_POST['name']) && $_POST['name']!=="") {
-      $sql="SELECT * FROM players WHERE pIsMember=1;";
-  } else {
-      $search=mysqli_real_escape_string($conn, $_POST['name']);
-      $sql = "SELECT * FROM players WHERE (pName LIKE '%$search%' OR pCode LIKE '%$search%') AND pIsMember=1 ORDER BY pBDate;";
-  }
+   if (!isset($_POST['name']) || $_POST['name']!=="") {
+       $sql="SELECT * FROM players WHERE pIsMember=1;";
+   }
+   if (isset($_POST['name'])) {
+       $search=mysqli_real_escape_string($conn, $_POST['name']);
+       $sql = "SELECT * FROM players WHERE (pName LIKE '%$search%' OR pCode LIKE '%$search%') AND pIsMember=1 ORDER BY pBDate;";
+   }
   if (isset($_POST['leavers'])) {
       include_once 'navbar.php';
       $leaver=true;

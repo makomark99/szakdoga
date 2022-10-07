@@ -9,7 +9,7 @@ $GLOBALS['teams'] = array(
     "U9 III",
     "U10 I",
     "U10 II",
-    "U11",
+    "U11 ",
     "U12",
     "U13",
     "U14",

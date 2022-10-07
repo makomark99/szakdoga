@@ -27,7 +27,10 @@
 			data-bs-toggle="modal" data-bs-target="#calculate">
 			<?php include_once 'img/calculator.svg' ?>
 		</a>
-
+		<a title="Új játékosok nyilvántartásba vétele" href="players_new.php" id="newPlayers"
+			class="btn btn-outline-primary me-2">
+			<?php include_once 'img/person-plus.svg' ?>
+		</a>
 		<a href="p_add.php" title="Játékos hozzáadása" class="btn btn-outline-primary me-2">
 			<?php include "img/plus-lg.svg"?>
 		</a>
