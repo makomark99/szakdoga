@@ -84,3 +84,13 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
     background-color: black;
     color: white;
 }
+/* .boxes{
+    display: flex;
+    flex-wrap: wrap;
+} */
+.max-h{
+    width:100vw !important;
+    max-width: 100% !important;
+    height:60% !important;
+    margin:0 !important;
+}

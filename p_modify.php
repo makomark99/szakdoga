@@ -23,67 +23,67 @@
             ?>
 <h1 class="text-center mb-5">Játékos adatainak módosítása</h1>
 <form class="row g-3" action="includes/modifyplayer.inc.php" method="post">
-  <div class="col-md-6 col-lg-3 ">
-    <label for="name" class="form-label ">Név*</label>
-    <input name="pName" type="text" class="form-control notm" id="name"
-      placeholder="<?php echo $row['pName']; ?>"
-      disabled>
-  </div>
-  <div class="col-md-6 col-lg-3  ">
-    <label for="bplace" class="form-label ">Születési hely*</label>
-    <input name="pBPlace" type="text" class="form-control notm" id="bplace"
-      placeholder="<?php echo $row['pBPlace']; ?>"
-      disabled>
-  </div>
-  <div class="col-md-4 col-lg-2 ">
-    <label for="bdate" class="form-label ">Születési dátum*</label>
-    <input name="pBDate" type="text" class="form-control notm" id="bdate"
-      placeholder="<?php echo $row['pBDate']; ?>"
-      disabled>
-  </div>
-  <div class="col-md-4 col-lg-2 ">
-    <label for="nat" class="form-label">Nemzetiség*</label>
-    <input name="pNat" id="nat" class="form-select notm"
-      placeholder="<?php echo $row['pNat']; ?>"
-      disabled>
-  </div>
-  <div class="col-md-4 col-lg-2 ">
-    <label for="code" class="form-label ">Személy kód*</label>
-    <input name="pCode" type="text"
-      class="form-control <?php if ($row['pCode']!="") { ?> notm <?php } ?> "
-      id="code"
-      placeholder="<?php echo $row['pCode']; ?>"
-      <?php if ($row['pCode']!="") { ?>disabled
-    <?php } else { ?> <?php } ?> >
-  </div>
+	<div class="col-md-6 col-lg-3 ">
+		<label for="name" class="form-label ">Név*</label>
+		<input name="pName" type="text" class="form-control notm" id="name"
+			placeholder="<?php echo $row['pName']; ?>"
+			disabled>
+	</div>
+	<div class="col-md-6 col-lg-3  ">
+		<label for="bplace" class="form-label ">Születési hely*</label>
+		<input name="pBPlace" type="text" class="form-control notm" id="bplace"
+			placeholder="<?php echo $row['pBPlace']; ?>"
+			disabled>
+	</div>
+	<div class="col-md-4 col-lg-2 ">
+		<label for="bdate" class="form-label ">Születési dátum*</label>
+		<input name="pBDate" type="text" class="form-control notm" id="bdate"
+			placeholder="<?php echo $row['pBDate']; ?>"
+			disabled>
+	</div>
+	<div class="col-md-4 col-lg-2 ">
+		<label for="nat" class="form-label">Nemzetiség*</label>
+		<input name="pNat" id="nat" class="form-select notm"
+			placeholder="<?php echo $row['pNat']; ?>"
+			disabled>
+	</div>
+	<div class="col-md-4 col-lg-2 ">
+		<label for="code" class="form-label ">Személy kód*</label>
+		<input name="pCode" type="text"
+			class="form-control <?php if ($row['pCode']!="") { ?> notm <?php } ?> "
+			id="code"
+			placeholder="<?php echo $row['pCode']; ?>"
+			<?php if ($row['pCode']!="") { ?>disabled
+		<?php } else { ?> <?php } ?> >
+	</div>
 
-  <div class="col-md-6 col-lg-3 ">
-    <label for="mname" class="form-label ">Anyja születési neve*</label>
-    <input name="pMsN" type="text" class="form-control notm" id="mname"
-      placeholder="<?php echo $row['pMsN']; ?>"
-      disabled>
-  </div>
-  <div class="col-md-6 col-lg-3">
-    <?php
+	<div class="col-md-6 col-lg-3 ">
+		<label for="mname" class="form-label ">Anyja születési neve*</label>
+		<input name="pMsN" type="text" class="form-control notm" id="mname"
+			placeholder="<?php echo $row['pMsN']; ?>"
+			disabled>
+	</div>
+	<div class="col-md-6 col-lg-3">
+		<?php
             $sId=$row['pTId'];
             $sql3="SELECT * FROM staff S INNER JOIN players P ON S.sId=P.pTId WHERE S.sId='$sId';";
             $result3=mysqli_query($conn, $sql3);
             $r=mysqli_fetch_assoc($result3); ?>
-    <label class="form-label">Edző neve*</label>
-    <select name="pTId" id="" class="form-select">
-      <option value="<?php if ($r['pTId']!=null) {
+		<label class="form-label">Edző neve*</label>
+		<select name="pTId" id="" class="form-select">
+			<option value="<?php if ($r['pTId']!=null) {
                 echo $r['pTId'];
             } else {
                 echo "";
             } ?>">
-        <?php if ($r['sName']!=null) {
+				<?php if ($r['sName']!=null) {
                 echo $r['sName'];
             } else {
                 echo 'Nincs megadva';
             } ?>
-        (jelenelgi)
-      </option>
-      <?php
+				(jelenelgi)
+			</option>
+			<?php
                 $sql2="SELECT * FROM staff S INNER JOIN trainers T ON S.sId=T.sId WHERE T.tIsCoach=1;";
             $result2=mysqli_query($conn, $sql2);
             $queryResults2=mysqli_num_rows($result2);
@@ -94,149 +94,149 @@
                     }
                 }
             } ?>
-    </select>
-  </div>
-  <div class="col-md-4 col-lg-2">
-    <label for="pArrival" class="form-label">Igazolás időpontja*</label>
-    <input name="pArrival" type="text" class="form-control notm" id="pArrival"
-      placeholder="<?php echo $row['pArrival']; ?>"
-      disabled>
-  </div>
+		</select>
+	</div>
+	<div class="col-md-4 col-lg-2">
+		<label for="pArrival" class="form-label">Igazolás időpontja*</label>
+		<input name="pArrival" type="text" class="form-control notm" id="pArrival"
+			placeholder="<?php echo $row['pArrival']; ?>"
+			disabled>
+	</div>
 
-  <div class="col-md-4 col-lg-2">
-    <label for="mcdate" class="form-label">Sportorvosi időpont</label>
-    <input name="pLMCDate" type="text" onfocus="(this.type='date')" max="1999-11-11"
-      value="<?php echo $row['pLMCDate']; ?>"
-      class="form-control" id="mcdate">
-  </div>
-  <div class="col-md-4 col-lg-2">
-    <label for="mc" class="form-label">Sportorvos </label>
-    <input name="pMCD" type="text"
-      value="<?php echo $row['pMCD']; ?>"
-      class="form-control" id="mc">
-  </div>
+	<div class="col-md-4 col-lg-2">
+		<label for="mcdate" class="form-label">Sportorvosi időpont</label>
+		<input name="pLMCDate" type="text" onfocus="(this.type='date')" max="1999-11-11"
+			value="<?php echo $row['pLMCDate']; ?>"
+			class="form-control" id="mcdate">
+	</div>
+	<div class="col-md-4 col-lg-2">
+		<label for="mc" class="form-label">Sportorvos </label>
+		<input name="pMCD" type="text"
+			value="<?php echo $row['pMCD']; ?>"
+			class="form-control" id="mc">
+	</div>
 
-  <div class="col-md-6 col-lg-3">
-    <label for="email1" class="form-label">1. E-mail</label>
-    <input name="pPEmail" type="text" class="form-control" id="email1"
-      vlaue="<?php echo $row['pPEmail']; ?>">
-  </div>
-  <div class="col-md-6 col-lg-3">
-    <label for="email2" class="form-label">2. E-mail</label>
-    <input name="pEmail" type="email" class="form-control" id="email2"
-      vlaue="<?php echo $row['pEmail']; ?>">
-  </div>
-  <div class="col-md-4 col-lg-2 ">
-    <label for="tel1" class="form-label">1. Telefonszám</label>
-    <input name="pPTel" type="text" class="form-control" id="tel1"
-      value="<?php echo $row['pPTel']; ?>">
-  </div>
-  <div class="col-md-4 col-lg-2 ">
-    <label for="tel2" class="form-label">2. Telefonszám</label>
-    <input name="pTel" type="text" class="form-control" id="tel2"
-      value="<?php echo $row['pTel']; ?>">
-  </div>
-  <div class="col-md-2 col-lg-1">
-    <label for="pSH" class="form-label">Kollégista?</label>
-    <select class="form-select" name="pSH" id="pSH">
-      <?php if ($row['pSH']==0) {
+	<div class="col-md-6 col-lg-3">
+		<label for="email1" class="form-label">1. E-mail</label>
+		<input name="pPEmail" type="text" class="form-control" id="email1"
+			vlaue="<?php echo $row['pPEmail']; ?>">
+	</div>
+	<div class="col-md-6 col-lg-3">
+		<label for="email2" class="form-label">2. E-mail</label>
+		<input name="pEmail" type="email" class="form-control" id="email2"
+			vlaue="<?php echo $row['pEmail']; ?>">
+	</div>
+	<div class="col-md-4 col-lg-2 ">
+		<label for="tel1" class="form-label">1. Telefonszám</label>
+		<input name="pPTel" type="text" class="form-control" id="tel1"
+			value="<?php echo $row['pPTel']; ?>">
+	</div>
+	<div class="col-md-4 col-lg-2 ">
+		<label for="tel2" class="form-label">2. Telefonszám</label>
+		<input name="pTel" type="text" class="form-control" id="tel2"
+			value="<?php echo $row['pTel']; ?>">
+	</div>
+	<div class="col-md-2 col-lg-1">
+		<label for="pSH" class="form-label">Kollégista?</label>
+		<select class="form-select" name="pSH" id="pSH">
+			<?php if ($row['pSH']==0) {
                 echo '<option value="0">Nem</option>
                 <option value="1">Igen</option>';
             } else {
                 echo '<option value="1">Igen</option>
                   <option value="0">Nem</option>';
             } ?>
-    </select>
-  </div>
-  <?php $i=0; ?>
-  <div class="col-md-2 col-lg-1">
-    <label for="shirtsize" class="form-label">Pólóméret</label>
-    <select name="pTSize" id="shirtsize" class="form-select">
-      <option
-        value="<?php echo $row['pTSize']; ?>">
-        <?php echo $row['pTSize'];
+		</select>
+	</div>
+	<?php $i=0; ?>
+	<div class="col-md-2 col-lg-1">
+		<label for="shirtsize" class="form-label">Pólóméret</label>
+		<select name="pTSize" id="shirtsize" class="form-select">
+			<option
+				value="<?php echo $row['pTSize']; ?>">
+				<?php echo $row['pTSize'];
             if ($row["pTSize"]!="") {
                 echo ' (jelenelgi)';
             } else {
                 echo'Nincs megadva ';
             } ?>
-      </option>
-      <?php
+			</option>
+			<?php
               while ($i!=count($sizes)) {
                   if ($row['pTSize']!=$sizes[$i]) {?>
-      <option value="<?php echo $sizes[$i];?>">
-        <?php if ($sizes[$i]=="") {
+			<option value="<?php echo $sizes[$i];?>">
+				<?php if ($sizes[$i]=="") {
                       echo "Nincs megadva";
                   } else {
                       echo $sizes[$i];
                   } ?>
-      </option>
-      <?php }
+			</option>
+			<?php }
                   $i++;
               } ?>
-    </select>
-  </div>
+		</select>
+	</div>
 
-  <?php
+	<?php
             $x=1;
             $y=0;
             while ($x!=4) {
                 ?>
-  <div class="col-md-4 col-lg-2">
-    <label class="form-label">Játékengedély <?php echo $x; ?></label>
-    <select name="pL<?php echo $x; ?>" class="form-select">
-      <option value="<?php echo $row["pL$x"]; ?>"><?php echo $row["pL$x"];
+	<div class="col-md-4 col-lg-2">
+		<label class="form-label">Játékengedély <?php echo $x; ?></label>
+		<select name="pL<?php echo $x; ?>" class="form-select">
+			<option value="<?php echo $row["pL$x"]; ?>"><?php echo $row["pL$x"];
                 if ($row["pL$x"]!="") {
                     echo ' (jelenelgi)';
                 } else {
                     echo'Nincs játékengedély ';
                 } ?>
-      </option>
-      <?php
+			</option>
+			<?php
                     while ($y!=count($teams)) {
                         if ($row["pL$x"]!=$teams[$y]) {?>
-      <option value="<?php echo $teams[$y];?>">
-        <?php if ($teams[$y]=="") {
+			<option value="<?php echo $teams[$y];?>">
+				<?php if ($teams[$y]=="") {
                             echo "Nincs játékengedély";
                         } else {
                             echo $teams[$y];
                         } ?>
-      </option>
-      <?php }
+			</option>
+			<?php }
                         $y++;
                     } ?>
-    </select>
-  </div>
-  <?php
+		</select>
+	</div>
+	<?php
                 $x++;
                 $y=0;
             } ?>
 
-  <div class="col-md-4 col-lg-2 ">
-    <label for="pSsn" class="form-label">Tajszám</label>
-    <input name="pSsn" type="text"
-      value="<?php echo $row['pSsn']; ?>"
-      class="form-control <?php if ($row['pSsn']!="") { ?> notm <?php } ?> "
-      id="pSsn" <?php if ($row['pSsn']!="") { ?>disabled
-    <?php } else { ?> <?php } ?> >
-  </div>
+	<div class="col-md-4 col-lg-2 ">
+		<label for="pSsn" class="form-label">Tajszám</label>
+		<input name="pSsn" type="text"
+			value="<?php echo $row['pSsn']; ?>"
+			class="form-control <?php if ($row['pSsn']!="") { ?> notm <?php } ?> "
+			id="pSsn" <?php if ($row['pSsn']!="") { ?>disabled
+		<?php } else { ?> <?php } ?> >
+	</div>
 
-  <div class="col-md-4 col-lg-2 ">
-    <label for="pHA" class="form-label">Lakhely (település)</label>
-    <input name="pHA" type="text" class="form-control"
-      value="<?php echo $row['pHA']; ?>">
-  </div>
+	<div class="col-md-4 col-lg-2 ">
+		<label for="pHA" class="form-label">Lakhely (település)</label>
+		<input name="pHA" type="text" class="form-control"
+			value="<?php echo $row['pHA']; ?>">
+	</div>
 
-  <div class="col-md-4 col-lg-2">
-    <label for="foto" class="form-label">Arcképes fotó</label>
-    <input name="pPhoto" type="file"
-      value="<?php $row['pPhoto']; ?> "
-      class="form-control" id="foto" disabled>
-  </div>
+	<div class="col-md-4 col-lg-2">
+		<label for="foto" class="form-label">Arcképes fotó</label>
+		<input name="pPhoto" type="file"
+			value="<?php $row['pPhoto']; ?> "
+			class="form-control" id="foto" disabled>
+	</div>
 
-  <div class="col-md-auto mt-4">
-    <button type="submit" name="modify" class="btn btn-primary">Módosít</button>
-  </div>
+	<div class="col-md-auto mt-4">
+		<button type="submit" name="modify" class="btn btn-primary">Módosít</button>
+	</div>
 
 </form>
 

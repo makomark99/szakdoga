@@ -8,35 +8,50 @@
         header('location: ../Szakdoga/login.php');
     }
     if (isset($_SESSION["useruid"])) {
-        echo '<h6 class="animate__animated animate__bounceInLeft">Bejelentkezve <b><i>'.$_SESSION["useruid"].' </i></b> néven.</h6>';
+        echo '<h6">Bejelentkezve <b><i>'.$_SESSION["useruid"].' </i></b> néven.</h6>';
     } else {
         echo '<p> <a id="loginl" href="login.php">Ön jelenleg nincs bejeletkezve! A bejelentkezéshez kattintson ide!</a> </p>';
     }
     $success=0;
     if (isset($_GET["id"])) {
         $id=$_GET["id"];
-        $date=date("Y-m-d");
-        $set="UPDATE tasks SET taskIsReady=1, taskDoneDate='$date' WHERE taskId=?;";
-        $stmt=mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $set)) {
-            $success=1;
-            exit();
-        } else {
-            $success=2;
+        if ($_GET["type"]=="done") {
+            $date=date("Y-m-d");
+            $set="UPDATE tasks SET taskIsReady=1, taskDoneDate='$date' WHERE taskId=?;";
+            $stmt=mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $set)) {
+                $success=1;
+                exit();
+            } else {
+                $success=2;
+            }
+            mysqli_stmt_bind_param($stmt, 's', $id);
+            mysqli_stmt_execute($stmt);
+        } elseif ($_GET["type"]=="delete") {
+            $delete="DELETE FROM tasks WHERE taskId=?;";
+            $stmt2=mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt2, $delete)) {
+                $success=1;
+                exit();
+            }
+            $success=3;
+            if ($_GET["confirmed"]=="approved") {
+                mysqli_stmt_bind_param($stmt2, 's', $id);
+                mysqli_stmt_execute($stmt2);
+            }
         }
-        mysqli_stmt_bind_param($stmt, 's', $id);
-        mysqli_stmt_execute($stmt);
     }
 
   ?>
 
-<h1 class='text-center animate__animated animate__bounceInDown'>Főoldal</h1>
+<h1 class='text-center '>Főoldal</h1>
 
 <nav class=" mt-5 ">
-	<div class="row mt-1 animate__animated animate__bounceInRight ">
-		<div class="col-auto">
-			<h4>Google táblázatok:</h4>
-		</div>
+	<div class="text-center m-3">
+		<h4>Google táblázatok</h4>
+	</div>
+	<div class="boxes row mt-1  ">
+
 		<div class="col-auto mb-2"> <a type="button"
 				href="https://docs.google.com/spreadsheets/d/1BfDUlMre4odPiAt6Rib_FAmUDGvrgp_7VYH5nfUz46g/edit#gid=0"
 				target="_blank" class="btn btn-outline-primary btn">Utánpótlás
@@ -75,7 +90,7 @@
 				target="_blank" class="btn btn-outline-primary btn">Leltár</a>
 		</div>
 	</div>
-	<div class="row mt-5 animate__animated animate__bounceInLeft">
+	<div class="row mt-5 ">
 		<div class="col-auto">
 			<h4>Email rendelések:</h4>
 		</div>
@@ -87,7 +102,7 @@
 
 
 <div class="row g-2 mt-3">
-	<div class="col-md-12 col-lg-12 px-3 pt-1 pb-3  ">
+	<div class="col-md-12 col-lg-12 px-3 pt-1 pb-3   ">
 		<div class="row m-3">
 			<div class="col-auto mx-auto ">
 				<!-- Button trigger modal -->
@@ -103,9 +118,13 @@
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
         $th=1;
-        ?>
-		<div class="table-responsive animate__animated animate__heartBeat">
-			<table class="table table-dark  table-hover border border-5 border-warning ">
+        if ($queryResults<1) {
+            echo "<div class='mx-auto p-0 my-2 w-50 border rounded-pill border-2 border-warning text-center '> <h4 class='my-2'> Jelenleg nincs végrehajtandó feladat</h4> </div>";
+        } else {
+            ?>
+
+		<div class="table-responsive max-h ">
+			<table class="table table-dark table-hover border border-5 border-warning ">
 				<thead class="thead-light ">
 					<tr>
 						<th>Műveletek</th>
@@ -124,7 +143,7 @@
                         ?>
 					<tr class="align-conent-center">
 						<td class="align-middle ">
-							<a href="index.php?id=<?php echo $row['taskId']; ?>"
+							<a href="index.php?type=done&id=<?php echo $row['taskId']; ?>"
 								title="Elkészült" class="btn btn-outline-success 
                       <?php if (!$sadmin) {
                             echo 'disabled';
@@ -132,9 +151,8 @@
 							</a>
 							<a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
                             echo 'disabled';
-                        } ?>" data-bs-toggle="modal"
-								data-bs-target="#delete<?php echo $row['taskId']; ?>">
-								<!--egyedi id kell, mert minding az elsőt találta meg-->
+                        } ?>" id="del-btn"
+								href="index.php?type=delete&id=<?php echo $row['taskId']; ?>">
 								<?php include 'img/trash.svg' ?>
 							</a>
 						</td>
@@ -154,12 +172,13 @@
 						</td>
 					</tr>
 					<?php
-                    }?>
+                    } ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
-
+	<?php
+        } ?>
 	<!-- Modal -->
 	<form action="includes/addtask.inc.php" method="post">
 		<div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -243,11 +262,10 @@
         $th=1;
         ?>
 	<div class="table-responsive">
-		<table class="table table-dark table-hover animate__animated animate__zoomInUp border border-success border-5">
+		<table class="table table-dark table-hover border border-success border-5">
 			<thead class="thead-light ">
 				<tr>
 					<th>#</th>
-
 					<th>Felelős</th>
 					<th>Kategória</th>
 					<th>Feladat leírása</th>
@@ -269,7 +287,7 @@
 					</td>
 					<td class="align-middle"><?php echo $row['taskCategory']; ?>
 					</td>
-					<td class="align-middle"><?php echo $row['taskDesc']; ?>
+					<td class="align-middle "><?php echo $row['taskDesc']; ?>
 					</td>
 					<td class="align-middle bold"><?php echo $row['taskDeadline']; ?>
 					</td>
@@ -387,3 +405,36 @@ if ($success===2) {
 	</script>';
     $success=0;
 }
+// elseif ($success===3) {
+    echo"
+	<script>
+	$('#del-btn').on('click', function(e){
+		e.preventDefault();
+		const href=$(this).attr('href')
+		Swal.fire({
+			title: 'Biztosan törlöd a kijelölt feladatot?',
+			text: 'Ez után nem vonhatod vissza a műveletet!',
+			icon: 'warning',
+			background: '#343a40', 
+			color: '#fff',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Törlés',
+			cancelButtonText: 'Vissza'
+		}).then((result) => {
+			if (result.isConfirmed) {
+			Swal.fire({
+				title:'Törölve!',
+				text:'A kijelöt feladat törölve!',
+				icon: 'success',
+				background: '#343a40',
+				color: '#fff'
+			})
+			document.location.href='confirmed=approved';
+			}
+		})
+	})
+	</script>";
+    $success=0;
+// }
