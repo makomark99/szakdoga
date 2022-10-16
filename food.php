@@ -98,8 +98,10 @@
 						<input type="email" name="data[fEmail3]" class="form-control" id="fEmail3">
 					</div>
 				</div>
-				<div class="col-12 mt-4">
-					<button type="submit" name="submit" class="btn btn-primary">Rögzítés</button>
+				<div class="col-12 mt-4 ">
+					<button type="submit" name="submit" class="me-5 btn btn-primary">Rögzítés</button>
+					<a target="_blank" href="https://docs.google.com/spreadsheets/d/1LuH9r4tKx77pAaxClUiv08suHrAdQiWE76L1plFjRRA/edit#gid=40044938"
+						class="ms-3 btn btn-primary">Hidegcsomagok megrendelése</a>
 				</div>
 				<div class="mt-4 col-md-auto">
 					<?php
@@ -165,6 +167,7 @@
 
 				</tbody>
 			</table>
+
 		</div>
 	</div>
 </div>

@@ -2,38 +2,195 @@
   include_once 'header.php';
   include_once 'navbar.php';
   include_once 'includes/dbh.inc.php';
+  include_once 'includes/arrays.php';
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
   }
 ?>
-
-<div class="col-md-12 ">
-	<div class="d-flex justify-content-end ">
-		<div class=" d-flex col-md-4 col-sm-5">
-			<input class="form-control me-2" type="text" name="search" id="search"
-				placeholder="Játékos keresése név, vagy személy kód alapján" autofocus>
+<script defer src="calculate.js"></script>
+<div class="col-md-12  justify-content-end">
+	<div class="d-flex  row">
+		<div class=" d-flex col-lg-5 col-md-2  justify-content-end">
+			<div class="spinner-border d-none text-primary mt-1 p-2" id="spinner" role="status">
+				<span class="visually-hidden">Keresési adatok betöltése...</span>
+			</div>
 		</div>
-		<a href="detailed.php" title="Szűrő" class="btn btn-outline-primary me-2">
-			<?php include "img/filter.svg"?>
-		</a>
-		<form class="m-0" action="livesearch.php" method="post">
-			<button class="btn btn-outline-primary me-2 " title=" Távozók" type="submit" name="leavers">
-				<?php include "img/leave.svg"?>
-			</button>
-		</form>
+		<div class=" d-flex col-lg-7 col-md-10  justify-content-end">
+			<input class="form-control ms-2 me-2" type="text" autocomplete="off" name="search" id="search"
+				placeholder="Játékos keresése név, vagy személy kód alapján" autofocus>
+			<!-- Button trigger modal -->
+			<a title="Szűrő" data-bs-toggle="modal" data-bs-target="#detail" class="btn btn-outline-primary me-2">
+				<?php include "img/filter.svg"?>
+			</a>
+			<!-- Modal -->
+			<div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg modal-dialog-centered">
+					<div class="modal-content text-dark">
+						<form action="livesearch.php" method="post">
+							<div class="modal-header">
+								<h1 class="modal-title fs-3" id="">Részletes játékos kereső</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="row g-2 d-flex">
+									<div class="col-md-6 mb-3">
+										<?php
+    $sql5="SELECT DISTINCT pL1 as pl FROM players WHERE pIsMember=1 ORDER BY pl";
+    $result5=mysqli_query($conn, $sql5);
+    $qres5=mysqli_num_rows($result5);
+    ?>
+										<label class="form-label">Csapat kiválasztása (<?php echo $qres5-1; ?> csapat
+											közül)</label>
+										<select name="pL" class="form-select">
+											<option value="NULL">Nincs játékengedély kiválasztva</option>';
+											<?php
+          if ($qres5>0) {
+              while ($row5=mysqli_fetch_assoc($result5)) {
+                  echo '<option value="'.$row5['pl'].'">';
+                  if ($row5['pl']=="") {
+                      echo "Nincs kikérve";
+                  } else {
+                      echo $row5['pl'];
+                  } ?>
+											</option>
+											<?php
+              }
+          }
+          ?>
+										</select>
+									</div>
+									<div class="col-md-6 mb-3">
+										<?php
+            $sql="SELECT * FROM staff S INNER JOIN trainers T ON S.sId= T.sId
+            WHERE tIsCoach=1;";
+            $result=mysqli_query($conn, $sql);
+            $queryResults=mysqli_num_rows($result); ?>
+										<label class="form-label"> Edző kiválasztása (<?php echo $queryResults;?>
+											edző
+											közül)</label>
+										<select name="pTId" class="form-select">
+											<option value="">Nincs edző kiválasztva</option>
+											<?php
+            if ($queryResults>0) {
+                while ($row=mysqli_fetch_assoc($result)) {
+                    echo '<option value='.$row['sId'].'>'.$row['sName'].'</option>';
+                }
+            }
+            ?>
+										</select>
+									</div>
+									<div class="col-md-6 mb-3">
+										<?php $sql2="SELECT DISTINCT YEAR(pBDate) AS MYR FROM players ORDER BY MYR; ";
+         $result2=mysqli_query($conn, $sql2);
+         $qres=mysqli_num_rows($result2);
+        ?>
+										<label class="form-label">Keresés születési év alapján (<?php echo $qres; ?> közül)
+										</label>
+										<input class="form-control me-2" type="number" name="year" min=<?php echo date("Y")-120;?>
+										max=<?php echo date("Y")-3;?>
+										id="search"
+										placeholder="éééé">
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="form-label">Keresés lakhely alapján</label>
+										<input class="form-control me-2" value="" type="text" name="home" id="home"
+											placeholder="Település">
+									</div>
 
-		<!-- Button trigger modal -->
-		<a title="Kinevelési költség számítása" id="calcModal" class="btn btn-outline-primary me-2"
-			data-bs-toggle="modal" data-bs-target="#calculate">
-			<?php include_once 'img/calculator.svg' ?>
-		</a>
-		<a title="Új játékosok nyilvántartásba vétele" href="players_new.php" id="newPlayers"
-			class="btn btn-outline-primary me-2">
-			<?php include_once 'img/person-plus.svg' ?>
-		</a>
-		<a href="p_add.php" title="Játékos hozzáadása" class="btn btn-outline-primary me-2">
-			<?php include "img/plus-lg.svg"?>
-		</a>
+									<div class="col-md-6 mb-3">
+										<?php $sql3="SELECT DISTINCT YEAR(pArrival) AS ARY FROM players ORDER BY ARY; ";
+         $result3=mysqli_query($conn, $sql3);
+         $qres2=mysqli_num_rows($result3);
+        ?>
+										<label class="form-label">Keresés igazolás dátum alapján (év) </label>
+										<select name="pArr" class="form-select">
+											<option value="">Nincs év kiválasztva</option>
+											<?php
+            if ($qres2>0) {
+                while ($row2=mysqli_fetch_assoc($result3)) {
+                    if ($row2['ARY']!=0) {
+                        echo '<option value='.$row2['ARY'].'>'.$row2['ARY'].'</option>';
+                    }
+                }
+            }
+            ?>
+										</select>
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="form-label">Keresés igazolás dátum alapján (hónap)</label>
+										<select name="pArrM" class="form-select">
+											<option value="">Nincs hónap kiválasztva</option>
+											<?php $m=1;
+              while ($m!=13) {
+                  if ($m<10) {
+                      $m='0'.$m;
+                  } //nem jó a lekérdezés a hónap miatt (5-05)
+                  echo '<option value='.$m.'>'.$m.'</option>';
+                  $m++;
+              }
+            ?>
+										</select>
+									</div>
+
+									<div class="col-md-4 mb-3">
+										<label for="pSH" class="form-label">Kollégista?</label>
+										<select class="form-select" name="pSH" id="pSH">
+											<option value="">Nincs kiválasztva érték</option>
+											<option value="0">Nem</option>
+											<option value="1">Igen</option>
+										</select>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="pSH" class="form-label">Ügyesebb kéz kiválasztása</label>
+										<select class="form-select" name="pWeakHand" id="pWeakHand" disabled>
+											<option value="">Nincs kiválasztva érték</option>
+											<option value="0">Jobb</option>
+											<option value="1">Bal</option>
+										</select>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="pSH" class="form-label">Poszt kiválasztása (7 közül)</label>
+										<select class="form-select" name="pPos" id="pPos" disabled>
+											<option value="">Nincs kiválasztva érték</option>
+											<option value="0">Balátlövő</option>
+											<option value="1">Balszélső</option>
+											<option value="2">Jobbátlövő</option>
+											<option value="3">Jobbszélső</option>
+											<option value="4">Irányító</option>
+											<option value="5">Beálló</option>
+											<option value="6">Kapus</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+								<a><button type="submit" name="detailed" class="btn btn-primary">Keresés</button> </a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<form class="m-0" action="livesearch.php" method="post">
+				<button class="btn btn-outline-primary me-2 " title=" Távozók" type="submit" name="leavers">
+					<?php include "img/leave.svg"?>
+				</button>
+			</form>
+
+			<!-- Button trigger modal -->
+			<a title="Kinevelési költség számítása" id="calcModal" class="btn btn-outline-primary me-2"
+				data-bs-toggle="modal" data-bs-target="#calculate">
+				<?php include_once 'img/calculator.svg' ?>
+			</a>
+			<a title="Új játékosok nyilvántartásba vétele" href="players_new.php" id="newPlayers"
+				class="btn btn-outline-primary me-2">
+				<?php include_once 'img/person-plus.svg' ?>
+			</a>
+			<a href="p_add.php" title="Játékos hozzáadása" class="btn btn-outline-primary ">
+				<?php include "img/plus-lg.svg"?>
+			</a>
+		</div>
 	</div>
 </div>
 
@@ -49,7 +206,7 @@
 			<div class="modal-body ">
 				<div class="col-auto  ">
 					<label class="form-label" for="name">Játékos neve</label>
-					<input name="name " id="name" type="text" class="form-control mb-2 calcInput"
+					<input name="name" id="name" type="text" class="form-control mb-2 calcInput"
 						placeholder="Vezetéknév Keresztnév">
 				</div>
 				<div class="row g-2 d-flex">
@@ -180,144 +337,3 @@
 
 <?php
   include_once 'footer.php';
-?>
-<script src="test.js"></script>
-<!--<script src="row_click.js"></script> -->
-
-<script>
-	function disable() {
-		document.getElementById('nb1').setAttribute("disabled", "")
-		document.getElementById('nb1b').setAttribute("disabled", "")
-		document.getElementById('otherTeam').setAttribute("disabled", "")
-	}
-
-	function enable() {
-		document.getElementById('nb1').removeAttribute("disabled", "")
-		document.getElementById('nb1b').removeAttribute("disabled", "")
-		document.getElementById('otherTeam').removeAttribute("disabled", "")
-
-	}
-
-	function calculate() {
-
-		function numberWithSpaces(x) {
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); //reg ex, extra space after 3 chars
-		}
-
-		function diffYear(d) {
-			let today = new Date();
-			let dd = String(today.getDate()).padStart(2, '0');
-			let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-			let yyyy = today.getFullYear();
-			today = yyyy + '-' + mm + '-' + dd;
-			let currentDate = new Date(today);
-			let inputDate = new Date(d);
-			return Math.floor(Math.abs(((currentDate.getTime() - inputDate.getTime()) / (24 * 60 * 60 *
-				1000)) / 365.242199)); // hours*minutes*seconds*milliseconds
-		}
-		let d1 = document.getElementById('d1').value;
-		let d2 = document.getElementById('d2').value;
-
-		//to academy?
-		let toAcademy = (document.getElementById('ac').checked) ? true : false;
-
-		//next club
-		let nb1 = (document.getElementById('nb1').checked) ? true : false;
-		let nb2 = (document.getElementById('nb1b').checked) ? true : false;
-		let otherTeam = (document.getElementById('otherTeam').checked) ? true : false;
-
-		//international caps
-		let youth = (document.getElementById('ifi').checked) ? true : false;
-		let junior = (document.getElementById('junior').checked) ? true : false;
-		let senior = (document.getElementById('felnott').checked) ? true : false;
-		let YouthSH = (document.getElementById('upsk').checked) ? true : false;
-		let SeniorSH = (document.getElementById('fsk').checked) ? true : false;
-
-		age = diffYear(d1);
-		elapsedYears = diffYear(d2);
-		//NB1 -be bárhonnan
-		Cost = 0;
-		if (!toAcademy && nb1) {
-			if (age >= 10 && age < 13) {
-				Cost = 150000;
-			} else if (age >= 13 && age < 15) {
-				Cost = 200000;
-			} else if (age >= 15 && age < 17) {
-				Cost = 300000;
-			} else if (age >= 17 && age < 19) {
-				Cost = 350000;
-			} else if (age >= 19 && age < 21) {
-				Cost = 400000;
-			} else if (age >= 21 && age < 23) {
-				Cost = 450000;
-			} else Cost = 0;
-		} else if (!toAcademy && nb2) {
-			if (age >= 10 && age < 13) {
-				Cost = 100000;
-			} else if (age >= 13 && age < 15) {
-				Cost = 120000;
-			} else if (age >= 15 && age < 17) {
-				Cost = 160000;
-			} else if (age >= 17 && age < 19) {
-				Cost = 200000;
-			} else if (age >= 19 && age < 23) {
-				Cost = 250000;
-			} else Cost = 0;
-		} else if (!toAcademy && otherTeam) {
-			if (age >= 10 && age < 13) {
-				Cost = 50000;
-			} else if (age >= 13 && age < 15) {
-				Cost = 70000;
-			} else if (age >= 15 && age < 23) {
-				Cost = 100000;
-			} else Cost = 0;
-		} else { //akadémiába bárhonnan
-			if (age < 15) {
-				Cost = 2000000;
-			} else if (age >= 15 && age < 17) {
-				Cost = 3000000;
-			} else if (age >= 17 && age < 19) {
-				Cost = 4000000;
-			} else if (age >= 19 && age < 21) {
-				Cost = 5000000;
-			}
-		}
-		let basicFee = Cost;
-		let odds = 1;
-		if ((!toAcademy) && (elapsedYears >= 3)) {
-			odds = Math.pow(1.20, elapsedYears - 2)
-			Cost *= odds;
-
-		} else if (toAcademy && elapsedYears < 3) {
-			odds = 0.7;
-			Cost *= odds;
-		}
-		//international cap odds
-		icOdds = 1;
-		if (youth) {
-			icOdds = 2;
-			Cost *= icOdds;
-		} else if (junior) {
-			icOdds = 3;
-			Cost *= icOdds;
-		} else if (senior) {
-			icOdds = 5;
-			Cost *= icOdds;
-		} else if (YouthSH) {
-			icOdds = 1.5;
-			Cost *= icOdds;
-		} else if (SeniorSH) {
-			icOdds = 3;
-			Cost *= icOdds;
-		}
-
-		document.getElementById("out0").innerHTML = numberWithSpaces(Math.round(basicFee)) + " Ft";
-		document.getElementById("out1").innerHTML = numberWithSpaces(Math.round(Cost)) + " Ft";
-		document.getElementById("out2").innerHTML = numberWithSpaces(Math.round(Cost * 1.27)) + " Ft";
-		document.getElementById("out3").innerHTML = isNaN(age) ? 0 : age + " Év";
-		document.getElementById("out4").innerHTML = isNaN(elapsedYears) ? 0 : elapsedYears + " Év";
-		document.getElementById("out5").innerHTML = isNaN(elapsedYears) ? 1 : (odds * icOdds).toFixed(
-			5);
-
-	}
-</script>

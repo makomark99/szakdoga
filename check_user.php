@@ -11,4 +11,9 @@ if (isset($_SESSION["useruid"])) {
     } else {
         $sadmin=false;
     }
+    if ($row['rId']==3) {
+        $gUser=true;
+    } else {
+        $gUser=false;
+    }
 }

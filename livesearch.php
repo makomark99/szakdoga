@@ -6,18 +6,20 @@
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
   }
+ 
+  
   $leaver=false;
    if (!isset($_POST['name']) || $_POST['name']!=="") {
        $sql="SELECT * FROM players WHERE pIsMember=1;";
    }
    if (isset($_POST['name'])) {
        $search=mysqli_real_escape_string($conn, $_POST['name']);
-       $sql = "SELECT * FROM players WHERE (pName LIKE '%$search%' OR pCode LIKE '%$search%') AND pIsMember=1 ORDER BY pBDate;";
+       $sql = "SELECT * FROM players WHERE (pName LIKE '%$search%' OR pCode LIKE '%$search%') AND pIsMember=1 ORDER BY pBDate ";
    }
   if (isset($_POST['leavers'])) {
       include_once 'navbar.php';
       $leaver=true;
-      $sql="SELECT * FROM players WHERE pIsMember=0;";
+      $sql="SELECT * FROM players WHERE pIsMember=0 ";
   }
   if (isset($_POST['detailed'])) {
       include_once 'navbar.php';
@@ -64,7 +66,7 @@
           $sql.="AND (P.pSH=1) ";
           echo "Kollégista játékos(ok)<br>";
       }
-      $sql.="ORDER BY P.pName;";
+      $sql.="ORDER BY P.pName ";
   }
     $result=mysqli_query($conn, $sql);
     $queryResults=mysqli_num_rows($result);
@@ -73,46 +75,84 @@
           echo "<h3 class='mt-2'>A keresésnek $queryResults találata van!</h3>"
       ?>
 <div class="container sm-col-10 mt-4 table-responsive">
-	<h1 class="text-center m-4"><?php echo $leaver ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
-	</h1>
+    <h1 class="text-center m-4"><?php echo $leaver ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
+    </h1>
+    <?php  //Pagination
+        $actualPage=((!isset($_GET["page"])) ? 1 : $_GET["page"]);
+          echo $actualPage;
+          $numPerPage=10;
+          $startFrom=($actualPage-1)*$numPerPage;
+          $sql_limited=$sql."LIMIT $startFrom, $numPerPage";
+          $limited_result=mysqli_query($conn, $sql_limited);
+          $lmited_queryResults=mysqli_num_rows($limited_result); ?>
+    <div class="table-responsive">
+        <nav aria-label="Page  navigation example">
+            <ul class=" pagination justify-content-center">
+                <li class="page-item disabled">
+                    <form method="get"
+                        action="players.php?page=<?php echo $actualPage--; ?>"
+                        class=" navbar-dark bg-dark page-link <?php ($actualPage==1)? 'disabled' : '' ?>">
+                        Előző
+                    </form>
+                </li>
+                <?php
+          $lastPageNum=ceil($queryResults/$numPerPage);
+         
+          for ($x=0;$x<=$lastPageNum;$x++) {
+              ($x==0)?$x++:$x; ?>
 
-	<table class="table table-dark table-hover">
-		<thead class="thead-light ">
-			<tr>
-				<th>#</th>
-				<th>Név</th>
-				<th>Személy kód</th>
-				<th>Születési dátum</th>
-				<th>Életkor</th>
-				<th>Igazolás dátuma</th>
-				<?php echo $leaver ? "<th>Távozás dátuma</th>" : "<th>Játékengedélyek</th>"; ?>
-				<th>Érvényes sportorvosi</th>
-				<?php echo $leaver ? : "<th>Műveletek</th>"; ?>
+                <li class=" page-item ">
+                    <form class=" page-link bg-dark" method="get"
+                        action="players.php?page=<?php echo $x; ?>">
+                        <?php echo $x ; ?>
+                    </form>
+                </li>
+                <?php
+          } ?>
+                <li class="page-item">
+                    <form method="get"
+                        action="players.php?page=<?php echo $actualPage+=2; ?>"
+                        class=" bg-dark page-link">Következő</form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <table class="table table-dark table-hover">
+        <thead class="thead-light ">
+            <tr>
+                <th>#</th>
+                <th>Név</th>
+                <th>Személy kód</th>
+                <th>Születési dátum</th>
+                <th>Életkor</th>
+                <th>Igazolás dátuma</th>
+                <?php echo $leaver ? "<th>Távozás dátuma</th>" : "<th>Játékengedélyek</th>"; ?>
+                <th>Érvényes sportorvosi</th>
+                <?php echo ($leaver||$gUser) ? : "<th>Műveletek</th>"; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($row=mysqli_fetch_assoc($limited_result)) {
+              $time= strtotime($row['pBDate']);
+              $age=floor((time()-$time)/(60*60*24)/365.2425);
+              $id= $row['pId']; ?>
+            <tr data-href="p_view.php?id=<?php echo $id; ?>">
+                <td class="align-middle"> <?php echo $th++; ?>
+                </td>
+                <td class="align-middle"> <?php echo $row['pName']; ?>
+                </td>
+                <td class="align-middle"> <?php echo $row['pCode']; ?>
+                </td>
+                <td class="align-middle"> <?php echo $row['pBDate']; ?>
+                </td>
+                <td class="align-middle"> <?php echo $age; ?>
+                </td>
+                <td class="align-middle"> <?php echo $row['pArrival']; ?>
+                </td>
 
-			</tr>
-		</thead>
-		<tbody>
-			<?php while ($row=mysqli_fetch_assoc($result)) {
-          $time= strtotime($row['pBDate']);
-          $age=floor((time()-$time)/(60*60*24)/365.2425);
-          $id= $row['pId']; ?>
-			<tr data-href="p_view.php?id=<?php echo $id; ?>">
-				<td class="align-middle"> <?php echo $th++; ?>
-				</td>
-				<td class="align-middle"> <?php echo $row['pName']; ?>
-				</td>
-				<td class="align-middle"> <?php echo $row['pCode']; ?>
-				</td>
-				<td class="align-middle"> <?php echo $row['pBDate']; ?>
-				</td>
-				<td class="align-middle"> <?php echo $age; ?>
-				</td>
-				<td class="align-middle"> <?php echo $row['pArrival']; ?>
-				</td>
+                <td class="align-middle">
 
-				<td class="align-middle">
-
-					<?php
+                    <?php
           if (!$leaver) {
               echo $row['pL1'];
               if ($row['pL2']!="") {
@@ -126,8 +166,8 @@
           } else {
               echo $row['pDeparture'];
           } ?>
-				</td>
-				<?php
+                </td>
+                <?php
                 if (($row['pLMCDate'] != "") && ($row['pLMCDate']!=0000-00-00)) {
                     $days=strtotime($row['pLMCDate']);
                     $elapsedDays=floor((time()-$days)/(60*60*24));
@@ -158,57 +198,58 @@
                     include "img/x-square.svg";
                     echo ' Még nem volt! </td>';
                 } ?>
-				<?php
+                <?php
             if (!$leaver) { ?>
-				<td class="align-middle ">
-					<a href="p_modify.php?id=<?php echo $id; ?>"
-						title="Szerkesztés" class="btn btn-outline-warning 
+                <td class="align-middle <?php if ($gUser) {
+                echo 'd-none';
+            } ?>">
+                    <a href="p_modify.php?id=<?php echo $id; ?>"
+                        title="Szerkesztés" class="btn btn-outline-warning 
                   <?php if (!$sadmin) {
                 echo 'disabled';
             } ?>">
-						<?php include 'img/pencil.svg' ?>
-					</a>
-					<a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
-                echo 'disabled';
-            } ?>" data-bs-toggle="modal"
-						data-bs-target="#delete<?php echo $id; ?>">
-						<!--egyedi id kell, mert minding az elsőt találta meg-->
-						<?php include 'img/trash.svg' ?>
-					</a>
-					<?php } ?>
-					<!-- Modal -->
-				</td>
-			</tr>
-			<div class="modal fade" id="delete<?php echo $id; ?>"
-				tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content text-dark fs-5">
-						<div class="modal-header">
-							<h4 class="modal-title" id="deleteLabel">Játékos törlése</h4>
-							<button type="button" class="btn-close " data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<?php
+                        <?php include 'img/pencil.svg' ?>
+                    </a>
+                    <a title="Törlés" class="btn btn-outline-danger " data-bs-toggle="modal"
+                        data-bs-target="#delete<?php echo $id; ?>">
+                        <!--egyedi id kell, mert minding az elsőt találta meg-->
+                        <?php include 'img/trash.svg' ?>
+                    </a>
+                    <?php } ?>
+                    <!-- Modal -->
+                </td>
+            </tr>
+            <div class="modal fade" id="delete<?php echo $id; ?>"
+                tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content text-dark fs-5">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="deleteLabel">Játékos törlése</h4>
+                            <button type="button" class="btn-close " data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <?php
                 echo 'Biztosan szeretné <strong>TÖRÖLNI</strong> a következő nevű játkost az adatbázisból: '.$row['pName'].' ?'; ?>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-							<a href="p_delete.php?id=<?php echo $id; ?>"
-								class="btn btn-danger">Törlés </a>
-						</div>
-					</div>
-				</div>
-			</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+                            <a href="p_delete.php?id=<?php echo $id; ?>"
+                                class="btn btn-danger">Törlés </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-			<?php
-      }
+            <?php
+          }
       } else {
           echo "<h3 class='mt-2'>Nem található a megadott paramétereknek megfelelő személy</h3>";
       }
 ?>
-		</tbody>
-	</table>
+        </tbody>
+    </table>
+
 </div>
 </div>
 <?php include_once 'footer.php'; ?>
