@@ -135,10 +135,10 @@
 
 									<div class="col-md-4 mb-3">
 										<label for="pSH" class="form-label">Kollégista?</label>
-										<select class="form-select" name="pSH" id="pSH">
+										<select class="form-select" name="shostel" id="shostel">
 											<option value="">Nincs kiválasztva érték</option>
-											<option value="0">Nem</option>
-											<option value="1">Igen</option>
+											<option value="1">Nem</option>
+											<option value="2">Igen</option>
 										</select>
 									</div>
 									<div class="col-md-4 mb-3">
@@ -202,11 +202,10 @@
 				<h3 class="modal-title" id="exampleModalLabel">Kinevelési költség kalkulátor</h3>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-
 			<div class="modal-body ">
 				<div class="col-auto  ">
 					<label class="form-label" for="name">Játékos neve</label>
-					<input name="name" id="name" type="text" class="form-control mb-2 calcInput"
+					<input name="name" id="pName" type="text" class="form-control mb-2 calcInput"
 						placeholder="Vezetéknév Keresztnév">
 				</div>
 				<div class="row g-2 d-flex">
@@ -317,15 +316,13 @@
 					</tr>
 				</table>
 			</div>
-
 			<div class="modal-footer ">
 
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-				<button type="submit" id="reset" value="button" onclick="reset()"
+				<button type="submit" id="reset" value="button" onclick="setDefaultPosition()"
 					class="btn btn-danger">Alaphelyzet</button>
 				<button type="submit" id="calc" value="submit" onclick="calculate()"
 					class="btn btn-primary">Számítás</button>
-
 			</div>
 		</div>
 	</div>

@@ -41,7 +41,6 @@
             }
         }
     }
-
   ?>
 
 <h1 class='text-center '>Főoldal</h1>

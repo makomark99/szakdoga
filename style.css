@@ -94,3 +94,13 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
     height:60% !important;
     margin:0 !important;
 }
+#blurTBody{
+    color:transparent;
+    text-shadow: 1px 1px 8px black;
+    transition: .5s all;
+}
+#blurTBody:hover{
+   color:black;
+    transition: 3s all;
+    
+}

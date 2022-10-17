@@ -63,11 +63,19 @@
           echo "Lakhely : $search2<br>";
       }
       if (isset($_POST['shostel'])) {
-          $sql.="AND (P.pSH=1) ";
-          echo "Kollégista játékos(ok)<br>";
+          if ($_POST['shostel']==2) {
+              $sql.="AND (P.pSH=1) ";
+              echo "Kollégista játékos(ok)<br>";
+          }
+          if ($_POST['shostel']==1) {
+              $sql.="AND (P.pSH<>1 OR P.pSH=' ' OR P.pSH IS NULL OR P.pSH='' OR P.pSH=0) ";
+              echo "Nem kollégista játékos(ok)<br>";
+          }
       }
       $sql.="ORDER BY P.pName ";
   }
+
+
     $result=mysqli_query($conn, $sql);
     $queryResults=mysqli_num_rows($result);
     $th=1;
@@ -78,7 +86,7 @@
     <h1 class="text-center m-4"><?php echo $leaver ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
     </h1>
     <?php  //Pagination
-        $actualPage=((!isset($_GET["page"])) ? 1 : $_GET["page"]);
+        $actualPage=((!isset($_POST["pageBTN"])) ? 1 : $_POST["page"]);
           echo $actualPage;
           $numPerPage=10;
           $startFrom=($actualPage-1)*$numPerPage;
@@ -88,32 +96,35 @@
     <div class="table-responsive">
         <nav aria-label="Page  navigation example">
             <ul class=" pagination justify-content-center">
-                <li class="page-item disabled">
-                    <form method="get"
-                        action="players.php?page=<?php echo $actualPage--; ?>"
-                        class=" navbar-dark bg-dark page-link <?php ($actualPage==1)? 'disabled' : '' ?>">
-                        Előző
-                    </form>
-                </li>
+                <!-- <form action="players.php" method="post" class="page-item">
+					<input type="hidden" value=<?php echo $actualPage--; ?>
+                name="page">
+                <button type="submit"
+                    class=" navbar-dark bg-dark page-link <?php ($actualPage==1)? 'disabled' : '' ?>">
+                    Előző
+                </button>
+                </form> -->
                 <?php
           $lastPageNum=ceil($queryResults/$numPerPage);
          
           for ($x=0;$x<=$lastPageNum;$x++) {
               ($x==0)?$x++:$x; ?>
-
-                <li class=" page-item ">
-                    <form class=" page-link bg-dark" method="get"
-                        action="players.php?page=<?php echo $x; ?>">
+                <div class="page-item"
+                    onclick="window.location='players.php?page=<?php echo $x; ?>';">
+                    <!-- <input type="hidden" value=
+                    name="page"> -->
+                    <button type="button" class=" page-link bg-dark">
                         <?php echo $x ; ?>
-                    </form>
-                </li>
+                    </button>
+                </div>
                 <?php
           } ?>
-                <li class="page-item">
-                    <form method="get"
-                        action="players.php?page=<?php echo $actualPage+=2; ?>"
-                        class=" bg-dark page-link">Következő</form>
-                </li>
+                <!-- <form action="players.php" method="post" class="page-item">
+					<input type="hidden" value=<?php echo $actualPage+=2; ?>
+                name="page">
+                <button type="submit" class=" bg-dark page-link">Következő
+                </button>
+                </form> -->
             </ul>
         </nav>
     </div>

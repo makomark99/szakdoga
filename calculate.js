@@ -11,6 +11,18 @@ function enable() {
 
 }
 
+function setDefaultPosition(){
+    document.getElementById('d1').value="";
+    document.getElementById('d2').value="";
+    document.getElementById('pName').value="";
+    document.getElementById("out0").innerHTML = " ";
+    document.getElementById("out1").innerHTML = " ";
+    document.getElementById("out2").innerHTML = " ";
+    document.getElementById("out3").innerHTML = " ";
+    document.getElementById("out4").innerHTML = " ";
+    document.getElementById("out5").innerHTML = " ";
+}
+
 function calculate() {
 
     function numberWithSpaces(x) {

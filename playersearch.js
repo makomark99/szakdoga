@@ -28,3 +28,29 @@ $(document).ready( async function(){
   });
 });
 
+
+
+
+
+//How to paginate AJAX live search results in php?  
+/*$(document).ready(function() {
+  change_page('0');
+});
+
+function change_page(page_id) {
+  //To get the field value
+  var search_val = $("#search_box").val();
+  $(".flash").show();
+  $(".flash").fadeIn(400).html('Loading <img src="ajax-loader.gif" />');
+  var dataString = 'page_id=' + page_id + '&search=' + search_val;
+  $.ajax({
+    type: "POST",
+    url: "paging.php",
+    data: dataString,
+    cache: false,
+    success: function(result) {
+      $(".flash").hide();
+      $("#page_data").html(result);
+    }
+  });
+}*/
