@@ -5,7 +5,7 @@ include_once '../header.php';
 include_once '../navbar.php';
 include_once '../auto_logout.php';
 
-if (isset($_POST["submit"])) {
+if (isset($_POST["addTask"])) {
     $task=mysqli_real_escape_string($conn, $_POST['task']);
     $ref=$_POST['ref'];
     $deadline=$_POST['deadline'];

@@ -6,8 +6,6 @@
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
   }
- 
-  
   $leaver=false;
    if (!isset($_POST['name']) || $_POST['name']!=="") {
        $sql="SELECT * FROM players WHERE pIsMember=1;";
@@ -75,7 +73,6 @@
       $sql.="ORDER BY P.pName ";
   }
 
-
     $result=mysqli_query($conn, $sql);
     $queryResults=mysqli_num_rows($result);
     $th=1;
@@ -83,10 +80,12 @@
           echo "<h3 class='mt-2'>A keresésnek $queryResults találata van!</h3>"
       ?>
 <div class="container sm-col-10 mt-4 table-responsive">
-    <h1 class="text-center m-4"><?php echo $leaver ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
+    <h1 class="text-center m-4">
+        <?php echo $leaver ? "Távozott játékosok adatai" : "Játékosok adatai"; ?>
     </h1>
+
     <?php  //Pagination
-        $actualPage=((!isset($_POST["pageBTN"])) ? 1 : $_POST["page"]);
+        $actualPage=((!isset($_POST["page"])) ? 1 : $_POST["page"]);
           echo $actualPage;
           $numPerPage=10;
           $startFrom=($actualPage-1)*$numPerPage;
@@ -94,37 +93,26 @@
           $limited_result=mysqli_query($conn, $sql_limited);
           $lmited_queryResults=mysqli_num_rows($limited_result); ?>
     <div class="table-responsive">
-        <nav aria-label="Page  navigation example">
+        <nav aria-label="Page navigation example">
             <ul class=" pagination justify-content-center">
-                <!-- <form action="players.php" method="post" class="page-item">
-					<input type="hidden" value=<?php echo $actualPage--; ?>
-                name="page">
-                <button type="submit"
-                    class=" navbar-dark bg-dark page-link <?php ($actualPage==1)? 'disabled' : '' ?>">
-                    Előző
-                </button>
-                </form> -->
+
                 <?php
           $lastPageNum=ceil($queryResults/$numPerPage);
          
           for ($x=0;$x<=$lastPageNum;$x++) {
-              ($x==0)?$x++:$x; ?>
-                <div class="page-item"
-                    onclick="window.location='players.php?page=<?php echo $x; ?>';">
-                    <!-- <input type="hidden" value=
-                    name="page"> -->
-                    <button type="button" class=" page-link bg-dark">
+              ($x==0)?$x++:$x;
+              $actualPage=((!isset($_POST["page"])) ? 1 : $_POST["page"]); ?>
+                <div class="page-item ">
+                    <input type="hidden" autocomplete="off"
+                        value="<?php echo $x ; ?>" name="page"
+                        class="pageTo">
+                    <button type="button"
+                        class=" page-link bg-dark <?php echo ($x==$actualPage)?"bg-black text-white":""; ?>">
                         <?php echo $x ; ?>
                     </button>
-                </div>
-                <?php
+                </div><?php
           } ?>
-                <!-- <form action="players.php" method="post" class="page-item">
-					<input type="hidden" value=<?php echo $actualPage+=2; ?>
-                name="page">
-                <button type="submit" class=" bg-dark page-link">Következő
-                </button>
-                </form> -->
+
             </ul>
         </nav>
     </div>
@@ -150,15 +138,19 @@
             <tr data-href="p_view.php?id=<?php echo $id; ?>">
                 <td class="align-middle"> <?php echo $th++; ?>
                 </td>
-                <td class="align-middle"> <?php echo $row['pName']; ?>
+                <td class="align-middle">
+                    <?php echo $row['pName']; ?>
                 </td>
-                <td class="align-middle"> <?php echo $row['pCode']; ?>
+                <td class="align-middle">
+                    <?php echo $row['pCode']; ?>
                 </td>
-                <td class="align-middle"> <?php echo $row['pBDate']; ?>
+                <td class="align-middle">
+                    <?php echo $row['pBDate']; ?>
                 </td>
                 <td class="align-middle"> <?php echo $age; ?>
                 </td>
-                <td class="align-middle"> <?php echo $row['pArrival']; ?>
+                <td class="align-middle">
+                    <?php echo $row['pArrival']; ?>
                 </td>
 
                 <td class="align-middle">
@@ -265,3 +257,18 @@
 </div>
 <?php include_once 'footer.php'; ?>
 <!-- <script src="row_click.js"></script> -->
+<!-- <form action="players.php" method="post" class="page-item">
+					<input type="hidden" value=<?php echo $actualPage--; ?>
+name="page">
+<button type="submit"
+    class=" navbar-dark bg-dark page-link <?php ($actualPage==1)? 'disabled' : '' ?>">
+    Előző
+</button>
+</form> -->
+
+<!-- <form action="players.php" method="post" class="page-item">
+					<input type="hidden" value=<?php echo $actualPage+=2; ?>
+name="page">
+<button type="submit" class=" bg-dark page-link">Következő
+</button>
+</form> -->

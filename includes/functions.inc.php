@@ -112,7 +112,6 @@ function loginUser($conn, $username, $pwd)
         session_start();
         $_SESSION["userid"]= $uidExists["usersId"];
         $_SESSION["useruid"]= $uidExists["usersUid"];
-        $_SESSION["last_login_time"]=time();
         $_SESSION["loggedin"]=true;
         header("location: ../index.php");
         exit();

@@ -3,6 +3,7 @@
     include_once 'navbar.php';
     include_once 'includes/dbh.inc.php';
     include_once 'includes/arrays.php';
+    include_once 'includes/SweetAlert.php';
   
     
     if (!isset($_SESSION["loggedin"])) {
@@ -54,7 +55,8 @@
 			id="code"
 			placeholder="<?php echo $row['pCode']; ?>"
 			<?php if ($row['pCode']!="") { ?>disabled
-		<?php } else { ?> <?php } ?> >
+		<?php } else { ?>
+		<?php } ?> >
 	</div>
 
 	<div class="col-md-6 col-lg-3 ">
@@ -105,7 +107,7 @@
 
 	<div class="col-md-4 col-lg-2">
 		<label for="mcdate" class="form-label">Sportorvosi időpont</label>
-		<input name="pLMCDate" type="text" onfocus="(this.type='date')" max="1999-11-11"
+		<input name="pLMCDate" type="text" onfocus="(this.type='date')" max="9999-12-31"
 			value="<?php echo $row['pLMCDate']; ?>"
 			class="form-control" id="mcdate">
 	</div>
@@ -183,7 +185,8 @@
             while ($x!=4) {
                 ?>
 	<div class="col-md-4 col-lg-2">
-		<label class="form-label">Játékengedély <?php echo $x; ?></label>
+		<label class="form-label">Játékengedély
+			<?php echo $x; ?></label>
 		<select name="pL<?php echo $x; ?>" class="form-select">
 			<option value="<?php echo $row["pL$x"]; ?>"><?php echo $row["pL$x"];
                 if ($row["pL$x"]!="") {
@@ -217,8 +220,10 @@
 		<input name="pSsn" type="text"
 			value="<?php echo $row['pSsn']; ?>"
 			class="form-control <?php if ($row['pSsn']!="") { ?> notm <?php } ?> "
-			id="pSsn" <?php if ($row['pSsn']!="") { ?>disabled
-		<?php } else { ?> <?php } ?> >
+			id="pSsn"
+			<?php if ($row['pSsn']!="") { ?>disabled
+		<?php } else { ?>
+		<?php } ?> >
 	</div>
 
 	<div class="col-md-4 col-lg-2 ">
@@ -242,34 +247,27 @@
 
 <?php
         }
-    }/*else{
-  echo "<h2 class='red'>  Valami nem stimmel, próbálkozzon újra ELSE!</h2>";
-}*/
-?>
-
-
-
-
-<?php
+    }
     if (isset($_GET["error"])) {
         if ($_GET["error"]== "stmtfailed") {
-            echo "<p class='red'>Valami nem stimmel, próbálkozzon újra!</p>";
+            errorAlert("Valami nem stimmel, próbálkozz újra!", "players.php", true);
         }
         if ($_GET["error"]== "invalidpbdate") {
-            echo "<p class='red'>3 éves kornál fiatalabb játékos nem rögzíthető!</p>";
+            errorAlert("3 éves kornál fiatalabb játékos nem rögzíthető!", "players.php", true);
         }
         if ($_GET["error"]== "invalidpLMCDate") {
-            echo "<p class='red'>Sportorvosi vizsgálathoz kizárólag múltbeli időpont adható meg!</p>";
+            errorAlert("Sportorvosi vizsgálathoz kizárólag múltbeli időpont adható meg!", "players.php", true);
         }
         if ($_GET["error"]== "playerlicensematch") {
-            echo "<p class='red'>A játékengedélyek megadásánál csak különböző értékeket lehet kiválasztani!</p>";
+            errorAlert("A játékengedélyek megadásánál csak különböző értékeket lehet kiválasztani!", "players.php", true);
         }
         if ($_GET["error"]== "invalidssn") {
-            echo "<p class='red'>Érvénytelen tajszámot adott meg</p>";
+            errorAlert("Érvénytelen tajszámot adott meg!", "players.php", true);
         }
         if ($_GET["error"]== "none") {
-            echo "<p class='green '>A kiválasztott játékos adatai sikeresen módosításra kerültek!</p>";
+            errorAlert("A kiválasztott játékos adatai sikeresen módosításra kerültek!!", "players.php", false);
         }
     }
 
 include_once 'footer.php';
+?>

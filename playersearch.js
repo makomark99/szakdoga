@@ -1,6 +1,6 @@
 type="text/javascript">
 
-$(document).ready( async function(){
+$(document).ready( function(){
   $("#search").keyup(function(){
     let value=$("#search").val().trim();
     function showSpinner(){

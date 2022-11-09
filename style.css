@@ -60,7 +60,7 @@ tr[data-href]{
 }
 input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a görgetőt*/
         input::-webkit-inner-spin-button {
-            -webkit-appearance: none ; 
+            appearance: none ; 
             margin: 0 ; 
 }
 .own{

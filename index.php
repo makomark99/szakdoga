@@ -9,38 +9,73 @@
     }
     if (isset($_SESSION["useruid"])) {
         echo '<h6">Bejelentkezve <b><i>'.$_SESSION["useruid"].' </i></b> néven.</h6>';
+        $tasksToDo=0;
     } else {
         echo '<p> <a id="loginl" href="login.php">Ön jelenleg nincs bejeletkezve! A bejelentkezéshez kattintson ide!</a> </p>';
     }
-    $success=0;
-    if (isset($_GET["id"])) {
-        $id=$_GET["id"];
-        if ($_GET["type"]=="done") {
+        //add task
+        if (isset($_POST["addTask"])) {
+            $task=mysqli_real_escape_string($conn, $_POST['task']);
+            $ref=$_POST['ref'];
+            $deadline=$_POST['deadline'];
+            $category=$_POST['category'];
+            $username=$_SESSION["useruid"];
             $date=date("Y-m-d");
-            $set="UPDATE tasks SET taskIsReady=1, taskDoneDate='$date' WHERE taskId=?;";
+            $ready=0;
+            $sql = "INSERT INTO tasks (taskDesc,taskRef,taskDeadline,taskCategory,taskCreator,taskDate,taskIsReady) 
+            VALUES(?, ?, ?, ?, ?, ?, ?);";
             $stmt=mysqli_stmt_init($conn);
-            if (!mysqli_stmt_prepare($stmt, $set)) {
-                $success=1;
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                echo '<script> location.replace("index.php?addToken=stmtfailed"); </script>';
                 exit();
-            } else {
-                $success=2;
             }
-            mysqli_stmt_bind_param($stmt, 's', $id);
+            mysqli_stmt_bind_param(
+                $stmt,
+                "sssssss",
+                $task,
+                $ref,
+                $deadline,
+                $category,
+                $username,
+                $date,
+                $ready
+            );
             mysqli_stmt_execute($stmt);
-        } elseif ($_GET["type"]=="delete") {
-            $delete="DELETE FROM tasks WHERE taskId=?;";
-            $stmt2=mysqli_stmt_init($conn);
-            if (!mysqli_stmt_prepare($stmt2, $delete)) {
-                $success=1;
-                exit();
-            }
-            $success=3;
-            if ($_GET["confirmed"]=="approved") {
-                mysqli_stmt_bind_param($stmt2, 's', $id);
-                mysqli_stmt_execute($stmt2);
-            }
+            mysqli_stmt_close($stmt);
+            echo '<script> location.replace("index.php?error=none"); </script>';
+            exit();
         }
+        //addtaskend
+
+        // task mark as done
+    if (isset($_POST["taskIsDoneBtn"])) {
+        $id=$_POST["taskIsDone"];
+        $date=date("Y-m-d");
+        $set="UPDATE tasks SET taskIsReady=1, taskDoneDate='$date' WHERE taskId=?;";
+        $stmt=mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $set)) {
+            echo '<script> location.replace("index.php?taskisdone=stmtfailed"); </script>';
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, 's', $id);
+        mysqli_stmt_execute($stmt);
+        echo '<script> location.replace("index.php?taskisdone=none"); </script>';
     }
+    // task mark as done end
+if (isset($_POST["deleteTaskBtn"])) {
+    $id=$_POST["deleteTask"];
+    $delete="DELETE FROM tasks WHERE taskId=?;";
+    $stmt2=mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt2, $delete)) {
+        echo '<script> location.replace("index.php?deletetask=stmtfailed"); </script>';
+        exit();
+    }
+    mysqli_stmt_bind_param($stmt2, 's', $id);
+    mysqli_stmt_execute($stmt2);
+    echo '<script> location.replace("index.php?deletetask=none"); </script>';
+}
+
+
   ?>
 
 <h1 class='text-center '>Főoldal</h1>
@@ -113,11 +148,17 @@
 			</div>
 		</div>
 		<?php
-        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='0' ORDER BY T.taskDeadline; ";
+
+        if ($tasksToDo>=0 && !$sadmin) {
+            $userID=$_SESSION['userid'];
+            $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='0' AND T.taskRef=$userID ORDER BY T.taskDeadline; ";
+        } elseif ($sadmin) {
+            $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='0' ORDER BY T.taskDeadline; ";
+        }
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
         $th=1;
-        if ($queryResults<1) {
+        if ($queryResults<1 || $tasksToDo!=0) {
             echo "<div class='mx-auto p-0 my-2 w-50 border rounded-pill border-2 border-warning text-center '> <h4 class='my-2'> Jelenleg nincs végrehajtandó feladat</h4> </div>";
         } else {
             ?>
@@ -139,35 +180,47 @@
 				<tbody>
 					<?php
                     while ($row=mysqli_fetch_assoc($result)) {
-                        ?>
+                        if ($_SESSION["userid"]==$row['usersId']) {
+                            $tasksToDo++;
+                        } ?>
+
 					<tr class="align-conent-center">
 						<td class="align-middle ">
-							<a href="index.php?type=done&id=<?php echo $row['taskId']; ?>"
-								title="Elkészült" class="btn btn-outline-success 
-                      <?php if (!$sadmin) {
-                            echo 'disabled';
-                        } ?>"> <?php include 'img/check-lg.svg' ?>
-							</a>
-							<a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin) {
-                            echo 'disabled';
-                        } ?>" id="del-btn"
-								href="index.php?type=delete&id=<?php echo $row['taskId']; ?>">
-								<?php include 'img/trash.svg' ?>
-							</a>
+							<form action="index.php" method="post">
+								<button type="submit" name="taskIsDoneBtn" title="Elkészült"
+									class="btn btn-outline-success 
+                      <?php echo (($tasksToDo==0) && (!$sadmin))? 'd-none':''; ?>">
+									<?php include 'img/check-lg.svg' ?>
+								</button>
+								<input type="hidden" name="taskIsDone"
+									value="<?php echo $row['taskId']; ?>">
+								<button type="submit" name="deleteTaskBtn" title="Törlés"
+									class="btn btn-outline-danger <?php echo (!$sadmin)? 'd-none':''; ?>">
+									<?php include 'img/trash.svg' ?>
+								</button>
+								<input type="hidden" name="deleteTask"
+									value="<?php echo $row['taskId']; ?>">
+							</form>
 						</td>
 						<td class="align-middle"><?php echo $th++; ?>
 						</td>
-						<td class="align-middle"><?php echo $row['sName']; ?>
+						<td class="align-middle">
+							<?php echo $row['usersName']; ?>
 						</td>
-						<td class="align-middle"><?php echo $row['taskCategory']; ?>
+						<td class="align-middle">
+							<?php echo $row['taskCategory']; ?>
 						</td>
-						<td class="align-middle"><?php echo $row['taskDesc']; ?>
+						<td class="align-middle">
+							<?php echo $row['taskDesc']; ?>
 						</td>
-						<td class="align-middle bold"><b><?php echo $row['taskDeadline']; ?></b>
+						<td class="align-middle bold">
+							<b><?php echo $row['taskDeadline']; ?></b>
 						</td>
-						<td class="align-middle"><?php echo $row['taskCreator']; ?>
+						<td class="align-middle">
+							<?php echo $row['taskCreator']; ?>
 						</td>
-						<td class="align-middle"><?php echo $row['taskDate']; ?>
+						<td class="align-middle">
+							<?php echo $row['taskDate']; ?>
 						</td>
 					</tr>
 					<?php
@@ -179,7 +232,7 @@
 	<?php
         } ?>
 	<!-- Modal -->
-	<form action="includes/addtask.inc.php" method="post">
+	<form action="index.php" method="post">
 		<div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content text-dark fs-5">
@@ -191,21 +244,21 @@
 
 						<label class="form-label" for="">Feladat leírása</label>
 						<textarea class="form-control mb-2" placeholder="Feladat kifejtése..." required name="task"
-							id="" cols="10" rows="5"></textarea>
+							cols="10" rows="5"></textarea>
 						<div class="row g-1 d-flex">
 							<div class="col-md-6">
 								<label class="form-label" size="2" for="">Felelős kiválasztása</label>
-								<select class="form-select mb-2" name="ref" id="" required>
+								<select class="form-select mb-2" name="ref" required>
 									<option value="">Felelős kiválasztása</option>
-									<?php   $sql="SELECT * FROM staff ;";
+									<?php   $sql="SELECT * FROM users ;";
                     $res=mysqli_query($conn, $sql);
                     $queryResults=mysqli_num_rows($res);
                     if ($queryResults>0) {
                         while ($row=mysqli_fetch_assoc($res)) {
                             ?>
 									<option
-										value="<?php echo $row['sId']; ?>">
-										<?php echo $row['sName']; ?>
+										value="<?php echo $row['usersId']; ?>">
+										<?php echo $row['usersName']; ?>
 									</option> <?php
                         }
                     }?>
@@ -235,7 +288,7 @@
 					</div>
 					<div class="modal-footer ">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
-						<button type="submit" name="submit" class="btn btn-primary">Rögzítés</button>
+						<button type="submit" name="addTask" class="btn btn-primary">Rögzítés</button>
 					</div>
 				</div>
 	</form>
@@ -255,7 +308,7 @@
 	</div>
 
 	<?php
-        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC LIMIT 5;";
+        $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC LIMIT 5;";
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
         $th=1;
@@ -282,20 +335,27 @@
 					<td class="align-middle"><?php echo $th++; ?>
 					</td>
 
-					<td class="align-middle"><?php echo $row['sName']; ?>
+					<td class="align-middle">
+						<?php echo $row['usersName']; ?>
 					</td>
-					<td class="align-middle"><?php echo $row['taskCategory']; ?>
+					<td class="align-middle">
+						<?php echo $row['taskCategory']; ?>
 					</td>
-					<td class="align-middle "><?php echo $row['taskDesc']; ?>
+					<td class="align-middle ">
+						<?php echo $row['taskDesc']; ?>
 					</td>
-					<td class="align-middle bold"><?php echo $row['taskDeadline']; ?>
+					<td class="align-middle bold">
+						<?php echo $row['taskDeadline']; ?>
 					</td>
-					<td class="align-middle"><b><?php echo $row['taskDoneDate']; ?></b>
+					<td class="align-middle">
+						<b><?php echo $row['taskDoneDate']; ?></b>
 					</td>
-					<td class="align-middle"><?php echo $row['taskCreator']; ?>
+					<td class="align-middle">
+						<?php echo $row['taskCreator']; ?>
 					</td>
 					<?php $elapsedTime=strtotime($row['taskDoneDate'])-strtotime($row['taskDate']); ?>
-					<td class="align-middle"><?php echo floor($elapsedTime/(60*60*24))." nap"; ?>
+					<td class="align-middle">
+						<?php echo floor($elapsedTime/(60*60*24))." nap"; ?>
 					</td>
 				</tr>
 				<?php
@@ -316,7 +376,7 @@
 			</div>
 			<div class="modal-body">
 				<?php
-        $sql = "SELECT * FROM tasks T JOIN staff S ON T.taskRef=S.sId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC;";
+        $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC;";
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
         $th=1;
@@ -340,21 +400,28 @@
                     while ($row=mysqli_fetch_assoc($result)) {
                         ?>
 							<tr class="align-conent-center">
-								<td class="align-middle"><?php echo $th++; ?>
+								<td class="align-middle">
+									<?php echo $th++; ?>
 								</td>
 
-								<td class="align-middle"><?php echo $row['sName']; ?>
+								<td class="align-middle">
+									<?php echo $row['usersName']; ?>
 								</td>
-								<td class="align-middle"><?php echo $row['taskCategory']; ?>
+								<td class="align-middle">
+									<?php echo $row['taskCategory']; ?>
 								</td>
-								<td class="align-middle"><?php echo $row['taskDesc']; ?>
+								<td class="align-middle">
+									<?php echo $row['taskDesc']; ?>
 								</td>
-								<td class="align-middle bold"><?php echo $row['taskDeadline']; ?>
+								<td class="align-middle bold">
+									<?php echo $row['taskDeadline']; ?>
 								</td>
-								<td class="align-middle"><b><?php echo $row['taskDoneDate']; ?></b>
+								<td class="align-middle">
+									<b><?php echo $row['taskDoneDate']; ?></b>
 								</td>
 								<?php $elapsedTime=strtotime($row['taskDoneDate'])-strtotime($row['taskDate']); ?>
-								<td class="align-middle"><?php echo floor($elapsedTime/(60*60*24))." nap"; ?>
+								<td class="align-middle">
+									<?php echo floor($elapsedTime/(60*60*24))." nap"; ?>
 								</td>
 							</tr>
 							<?php
@@ -373,67 +440,41 @@
 
 <?php
   include_once 'footer.php';
-if ($success===2) {
-    echo '
-			<script>
-				Swal.fire({
-					position: "center",
-					type: "success",
-					title: "A végrehajtandó feladat befejezettként rögzítve!",
-					showConfirmButton: false,
-					icon: "success",
-    				background: "#343a40",
-    				color: "#fff",
-					timer: 2000
-				})
-			</script>';
-    $success=0;
-} elseif ($success===1) {
-    echo '
-	<script>
-		Swal.fire({
-			position: "center",
-			type: "error",
-			title: "Valami nem stimmel, próbálkozzon újra!",
-			showConfirmButton: false,
-			icon: "error",
-			background: "#343a40",
-			color: "#fff",
-			timer: 1500
-		})
-	</script>';
-    $success=0;
-}
-// elseif ($success===3) {
-    echo"
-	<script>
-	$('#del-btn').on('click', function(e){
-		e.preventDefault();
-		const href=$(this).attr('href')
-		Swal.fire({
-			title: 'Biztosan törlöd a kijelölt feladatot?',
-			text: 'Ez után nem vonhatod vissza a műveletet!',
-			icon: 'warning',
-			background: '#343a40', 
-			color: '#fff',
-			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#3085d6',
-			confirmButtonText: 'Törlés',
-			cancelButtonText: 'Vissza'
-		}).then((result) => {
-			if (result.isConfirmed) {
-			Swal.fire({
-				title:'Törölve!',
-				text:'A kijelöt feladat törölve!',
-				icon: 'success',
-				background: '#343a40',
-				color: '#fff'
-			})
-			document.location.href='confirmed=approved';
-			}
-		})
+  if ($tasksToDo>=1) { ?>
+<script>
+	Swal.fire({
+		position: "center",
+		type: "warning",
+		title: "<?php echo $tasksToDo?> végrehajtandó feladat vár rád!",
+		showConfirmButton: false,
+		icon: "warning",
+		background: "#343a40",
+		color: "#fff",
+		timer: 2500
 	})
-	</script>";
-    $success=0;
-// }
+</script>
+
+<?php
+}
+if (isset($_GET["error"])) {
+    if ($_GET["error"]=="stmtfailed") {
+        errorAlert("Valami nem stimmel, próbálkozz újra!", "index.php", true);
+    } elseif ($_GET["error"]=="none") {
+        errorAlert("A végrehajtandó feladat sikeresen rögzítve!", "index.php", false);
+    }
+}
+  if (isset($_GET["taskisdone"])) {
+      if ($_GET["taskisdone"]=="stmtfailed") {
+          errorAlert("Valami nem stimmel, próbálkozz újra!", "index.php", true);
+      } elseif ($_GET["taskisdone"]=="none") {
+          errorAlert("A végrehajtandó feladat elkészültként rögzítve!", "index.php", false);
+      }
+  }
+if (isset($_GET["deletetask"])) {
+    if ($_GET["deletetask"]=="stmtfailed") {
+        errorAlert("Valami nem stimmel, próbálkozz újra!", "index.php", true);
+    } elseif ($_GET["deletetask"]=="none") {
+        errorAlert("A végrehajtandó feladat sikeresen törölve!", "index.php", false);
+    }
+}
+?>
