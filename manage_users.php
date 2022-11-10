@@ -2,7 +2,6 @@
   include_once 'header.php';
   include_once 'navbar.php';
   include_once 'check_user.php';
-  include_once 'auto_logout.php';
   include_once 'includes/dbh.inc.php';
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
@@ -132,9 +131,11 @@
 			<form action="manage_users.php" method="post">
 				<img class="card-img-top mx-auto mt-2" src="img/person-square.svg" alt="Profilkép" style="width: 6rem;">
 				<div class="card-body">
-					<h4 class="card-title"><?php echo $row['usersName']; ?>
+					<h4 class="card-title">
+						<?php echo $row['usersName']; ?>
 					</h4>
-					<p class="card-text">Felhasználónév: <strong> <?php echo $row['usersUid']; ?></strong>
+					<p class="card-text">Felhasználónév: <strong>
+							<?php echo $row['usersUid']; ?></strong>
 					</p>
 					<div class="mx-auto" style="width: 15rem;">
 						<label class="form-label" for="">Jogosultság</label>
@@ -161,7 +162,8 @@
 						</select>
 					</div>
 					<p class="card-text  m-0 mt-3 p-0">Regisztáció dátuma: </p>
-					<p class="card-text"> <strong><?php echo $row['regDate']; ?></strong>
+					<p class="card-text">
+						<strong><?php echo $row['regDate']; ?></strong>
 					</p>
 
 					<div class="d-flex flex-row-reverse me-3">

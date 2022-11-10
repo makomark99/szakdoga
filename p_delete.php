@@ -2,6 +2,8 @@
 include_once 'navbar.php';
 include_once 'header.php';
 include_once 'includes/dbh.inc.php';
+include_once 'includes/SweetAlert.php';
+
 if (!isset($_SESSION["loggedin"])) {
     header('location: ../Szakdoga/login.php');
 }
@@ -11,11 +13,10 @@ if (isset($_GET["id"])) {
     $set="UPDATE players SET pIsMember=0, pDeparture='$date' WHERE pId=?;";
     $stmt=mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $set)) {
-        echo "<h2> class='red' Valami nem stimmel, próbálkozzon újra!</h2>";
+        errorAlert("Valami nem stimmel, próbálkozz újra!", "players.php", true);
         exit();
     }
     mysqli_stmt_bind_param($stmt, 's', $id);
     mysqli_stmt_execute($stmt);
-    echo "<div class='col-md-6 offset-3 text-center'> <h2 class='mt-3 green'>A játékos törlése sikeresen megtörtént!</h2>";
-    echo '<a href="players.php" class="mt-3 btn btn-outline-primary ">OK</a></div>';
+    errorAlert("A játékos törlése sikeresen megtörtént!", "players.php", false);
 }
