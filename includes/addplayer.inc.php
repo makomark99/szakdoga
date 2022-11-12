@@ -1,20 +1,19 @@
-<?php 
-if(isset($_POST["submit"])){
-    $pName=strtoupper($_POST['pName']);
+<?php
+if (isset($_POST["submit"])) {
+    $pName= mb_strtoupper($_POST['pName'], "UTF-8");
     $pCode=$_POST['pCode'];
-    $pBPlace=strtoupper($_POST['pBPlace']);
+    $pBPlace= mb_strtoupper($_POST['pBPlace'], "UTF-8");
     $pBDate=$_POST['pBDate'];
-    $pMsN=strtoupper($_POST['pMsN']);
+    $pMsN= mb_strtoupper($_POST['pMsN'], "UTF-8");
     $pNat=$_POST['pNat'];
     $pSsn=$_POST['pSsn'];
     $pPTel=$_POST['pPTel'];
     $pTel=$_POST['pTel'];
     $pPEmail=$_POST['pPEmail'];
     $pEmail=$_POST['pEmail'];
-    $pHA=$_POST['pHA'];
+    $pHA= mb_strtoupper($_POST['pHA'], "UTF-8");
     $pSH=$_POST['pSH'];
     $pTSize=$_POST['pTSize'];
-    $pPhoto=$_POST['pPhoto'];
     $pLMCDate=$_POST['pLMCDate'];
     $pMCD=$_POST['pMCD'];
     $pL1=$_POST['pL1'];
@@ -23,42 +22,58 @@ if(isset($_POST["submit"])){
     $pTId=$_POST['pTId'];
     $pArrival=$_POST['pArrival'];
     $pIsMember=1;
+    $pPost=$_POST['pPost'];
+    $pPHand=$_POST['pPHand'];
+    $pPhoto=$_POST['pPhoto'];
+    $pLastModifiedBy=$_POST['pLastModifiedBy'];
+    $pLastModifiedAt=date("Y-m-d");
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
-    if(pCodeExists($conn,$pCode)!==false){
+    if (pCodeExists($conn, $pCode)!==false) {
         header("location: ../p_add.php?error=pcodeexists");
         exit();
     }
-    if(invalidpCode($pCode)!==false){
-        header("location: ../p_add.php?error=invalidpcode");
-        exit();
-    }
-    if(invalidpBDate($pBDate)!==false){
-        header("location: ../p_add.php?error=invalidpbdate");
-        exit();
-    }
-    if(invalidpLMCDate($pLMCDate)!==false){
-        header("location: ../p_add.php?error=invalidpLMCDate");
-        exit();
-    }
-    if(playerLicenseMatch($pL1,$pL2,$pL3)!==false){
+    if (playerLicenseMatch($pL1, $pL2, $pL3)!==false) {
         header("location: ../p_add.php?error=playerlicensematch");
         exit();
     }
-    if(invalidSsn($pSsn)!==false){
+    if (invalidSsn($pSsn)!==false) {
         header("location: ../p_add.php?error=invalidssn");
         exit();
     }
-    addPlayer($conn, $pName, $pCode,$pBPlace,$pBDate,$pMsN,$pNat,
-                 $pSsn,$pPTel,$pTel,$pPEmail,$pEmail,$pTSize,$pPhoto
-                ,$pLMCDate,$pMCD,$pL1,$pL2,$pL3,$pTId,$pIsMember,
-                $pArrival, $pHA, $pSH);
-}
-else{
+    addPlayer(
+        $conn,
+        $pName,
+        $pCode,
+        $pBPlace,
+        $pBDate,
+        $pMsN,
+        $pNat,
+        $pHA,
+        $pSH,
+        $pPTel,
+        $pTel,
+        $pPEmail,
+        $pEmail,
+        $pTSize,
+        $pSsn,
+        $pLMCDate,
+        $pMCD,
+        $pL1,
+        $pL2,
+        $pL3,
+        $pPost,
+        $pPHand,
+        $pPhoto,
+        $pTId,
+        $pIsMember,
+        $pArrival,
+        $pLastModifiedAt,
+        $pLastModifiedBy
+    );
+} else {
     header("location: ../p_add.php");
     exit();
 }
-
-?>

@@ -80,53 +80,7 @@ if (isset($_POST["deleteTaskBtn"])) {
 <h1 class='text-center '>Főoldal</h1>
 
 <nav class=" mt-5 ">
-	<div class="table-responsive">
-		<table class="table table-dark table-hover">
-			<thead>
-				<tr>
-					<th>NB II / U19</th>
-					<th>U17</th>
-					<th>U15</th>
-					<th>U14</th>
-					<th>U13</th>
-					<th>U12</th>
-					<th>U11 I</th>
-					<th>U11 II</th>
 
-					<th>U10 I</th>
-					<th>U10 II</th>
-					<th>U9 I</th>
-					<th>U9 II</th>
-					<th>U8 I</th>
-					<th>U8 II</th>
-					<th>U8 III</th>
-					<th>Óvoda</th>
-
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Bognár Róbert</td>
-					<td>Farkas Veronika</td>
-					<td>Orbán Ákos</td>
-					<td>Farkas Veronika</td>
-					<td>Balogh Sándor</td>
-					<td>Orbán Ákos</td>
-					<td>Halász Kristóf</td>
-					<td>Halász Kristóf</td>
-
-					<td>Bognár-One Evelein</td>
-					<td>Bognár-One Evelein</td>
-					<td>Mayer Rebeka</td>
-					<td>Balogh Sándor</td>
-					<td>Mayer Rebeka</td>
-					<td>Blahovits Eszter</td>
-					<td>Rendi Olívia</td>
-					<td>Bognár-One Evelein</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
 	<div class="text-center m-3">
 		<h4>Google táblázatok</h4>
 	</div>
@@ -482,6 +436,54 @@ if (isset($_POST["deleteTaskBtn"])) {
 			</div>
 		</div>
 	</div>
+
+</div>
+<div class="table-responsive">
+	<table class="table table-dark table-hover">
+		<thead>
+			<tr>
+				<th>NB II / U19</th>
+				<th>U17</th>
+				<th>U15</th>
+				<th>U14</th>
+				<th>U13</th>
+				<th>U12</th>
+				<th>U11 I</th>
+				<th>U11 II</th>
+
+				<th>U10 I</th>
+				<th>U10 II</th>
+				<th>U9 I</th>
+				<th>U9 II</th>
+				<th>U8 I</th>
+				<th>U8 II</th>
+				<th>U8 III</th>
+				<th>Óvoda</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Bognár Róbert</td>
+				<td>Farkas Veronika</td>
+				<td>Orbán Ákos</td>
+				<td>Farkas Veronika</td>
+				<td>Balogh Sándor</td>
+				<td>Orbán Ákos</td>
+				<td>Halász Kristóf</td>
+				<td>Halász Kristóf</td>
+
+				<td>Bognár-One Evelein</td>
+				<td>Bognár-One Evelein</td>
+				<td>Mayer Rebeka</td>
+				<td>Balogh Sándor</td>
+				<td>Mayer Rebeka</td>
+				<td>Blahovits Eszter</td>
+				<td>Rendi Olívia</td>
+				<td>Bognár-One Evelein</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 
 <?php

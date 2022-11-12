@@ -20,10 +20,7 @@ if (isset($_POST["modify"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
    
-    if (invalidpCode($pCode)!==false) {
-        header("location: ../p_modify.php?error=invalidpcode");
-        exit();
-    }
+  
     if (invalidpBDate($pBDate)!==false) {
         header("location: ../p_modify.php?error=invalidpbdate");
         exit();

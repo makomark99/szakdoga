@@ -4,11 +4,43 @@
     include_once 'includes/dbh.inc.php';
     include_once 'includes/arrays.php';
     include_once 'includes/SweetAlert.php';
-  
-    
+
     if (!isset($_SESSION["loggedin"])) {
         header('location: ../Szakdoga/login.php');
     }
+
+    if (isset($_POST["modify"])) {
+        $pTId=$_POST['pTId'];
+        $pLMCDate=$_POST['pLMCDate'];
+        $pMCD=$_POST['pMCD'];
+        $pPEmail=$_POST['pPEmail'];
+        $pEmail=$_POST['pEmail'];
+        $pPTel=$_POST['pPTel'];
+        $pTel=$_POST['pTel'];
+        $pSH=$_POST['pSH'];
+        $pTSize=$_POST['pTSize'];
+        $pL1=$_POST['pL1'];
+        $pL2=$_POST['pL2'];
+        $pL3=$_POST['pL3'];
+        $pSsn=$_POST['pSsn'];
+        $pHA=$_POST['pHA'];
+        //$pPhoto=$_POST['pPhoto'];
+        $id=$_POST['pId'];
+        $sql="UPDATE players SET pTId='$pTId', pLMCDate='$pLMCDate', pMCD='$pMCD', pPEmail='$pPEmail',
+         pEmail='$pEmail', pPTel='$pPTel', pTel='$pTel',pSH='$pSH',pTSize='$pTSize',
+         pL1='$pL1',pL2='$pL2',pL3='$pL3', pSsn='$pSsn',pHA='$pHA' WHERE pId='$id'; ";
+        $stmt=mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            errorAlert("Valami nem stimmel, próbálkozz újra!", "p_modify.php?id=$id", true);
+            exit();
+        }
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        errorAlert("Sikeres módosítás!", "p_modify.php?id=$id", false);
+        exit();
+    }
+
+
     if (isset($_GET['id'])) {
         $id=$_GET['id'];
         $sql="SELECT * FROM players WHERE pId=?;";
@@ -23,7 +55,7 @@
         if ($row=mysqli_fetch_assoc($result)) {
             ?>
 <h1 class="text-center mb-5">Játékos adatainak módosítása</h1>
-<form class="row g-3" action="includes/modifyplayer.inc.php" method="post">
+<form class="row g-3" action="p_modify.php" method="post">
 	<div class="col-md-6 col-lg-3 ">
 		<label for="name" class="form-label ">Név*</label>
 		<input name="pName" type="text" class="form-control notm" id="name"
@@ -240,6 +272,7 @@
 	</div>
 
 	<div class="col-md-auto mt-4">
+		<input type="hidden" value="<?php echo $id?>" name="pId">
 		<button type="submit" name="modify" class="btn btn-primary">Módosít</button>
 	</div>
 

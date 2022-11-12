@@ -68,7 +68,7 @@
 				<div class="modal-header">
 					<h1 class="modal-title fs-3 me-2" id="exampleModalLabel">Elérhető regisztrációs tokenek</h1>
 					<button title="Új token generálása" id="newToken" onclick="generateToken()"
-						class="btn btn-outline-primary ms-2">+
+						class="btn btn-outline-primary ms-2">?
 					</button>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
@@ -102,7 +102,7 @@
 							<div class="col-md-8 me-2">
 								<label for="token" class="form-label">Új token létrehozása</label>
 								<input name="token" maxlength="6" type="text" class="form-control" id="token"
-									placeholder="n3Wt0k-n" required>
+									placeholder="n3Wt0k3n" required>
 							</div>
 						</div>
 					</div>

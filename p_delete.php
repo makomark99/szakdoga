@@ -1,5 +1,4 @@
 <?php
-include_once 'navbar.php';
 include_once 'header.php';
 include_once 'includes/dbh.inc.php';
 include_once 'includes/SweetAlert.php';

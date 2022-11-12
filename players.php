@@ -159,13 +159,13 @@
 										<label for="pSH" class="form-label">Poszt kiválasztása (7 közül)</label>
 										<select class="form-select" name="pPos" id="pPos" disabled>
 											<option value="">Nincs kiválasztva érték</option>
-											<option value="0">Balátlövő</option>
-											<option value="1">Balszélső</option>
-											<option value="2">Jobbátlövő</option>
-											<option value="3">Jobbszélső</option>
-											<option value="4">Irányító</option>
-											<option value="5">Beálló</option>
-											<option value="6">Kapus</option>
+											<option value="Balátlövő">Balátlövő</option>
+											<option value="Balszélső">Balszélső</option>
+											<option value="Jobbátlövő">Jobbátlövő</option>
+											<option value="Jobbszélső">Jobbszélső</option>
+											<option value="Irányító">Irányító</option>
+											<option value="Beálló">Beálló</option>
+											<option value="Kapus">Kapus</option>
 										</select>
 									</div>
 								</div>

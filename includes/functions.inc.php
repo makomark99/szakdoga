@@ -228,28 +228,37 @@ function addPlayer(
     $pBDate,
     $pMsN,
     $pNat,
-    $pSsn,
+    $pHA,
+    $pSH,
     $pPTel,
     $pTel,
     $pPEmail,
     $pEmail,
     $pTSize,
-    $pPhoto,
+    $pSsn,
     $pLMCDate,
     $pMCD,
     $pL1,
     $pL2,
     $pL3,
+    $pPost,
+    $pPHand,
+    $pPhoto,
     $pTId,
     $pIsMember,
     $pArrival,
-    $pHA,
-    $pSH
+    $pLastModifiedAt,
+    $pLastModifiedBy
 ) {
-    $sql = "INSERT INTO players (pName,pCode,pBPlace,pBDate,pMsN,pNat,pSsn,pPTel,pTel,
-            pPEmail,pEmail,pTSize,pPhoto,pLMCDate,pMCD,pL1,pL2,pL3,pTId,pIsMember,
-            pArrival, pHA, pSH) 
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $sql = "INSERT INTO players (pName,pCode,pBPlace,pBDate,pMsN,pNat,pHA,pSH,pPTel,pTel,
+            pPEmail,pEmail,pTSize,pSsn,pLMCDate,pMCD,pL1,pL2,pL3,pPost,pPHand,pPhoto,pTId,pIsMember,
+            pArrival,pLastModifiedAt,pLastModifiedBy) 
+            VALUES(?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?, 
+                    ?, ?);";
     $stmt=mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../p_add.php?error=stmtfailed");
@@ -257,30 +266,34 @@ function addPlayer(
     }
     mysqli_stmt_bind_param(
         $stmt,
-        "sssssssssssssssssssssss",
+        "sssssssssssssssssssssssssss",
         $pName,
         $pCode,
         $pBPlace,
         $pBDate,
         $pMsN,
         $pNat,
-        $pSsn,
+        $pHA,
+        $pSH,
         $pPTel,
         $pTel,
         $pPEmail,
         $pEmail,
         $pTSize,
-        $pPhoto,
+        $pSsn,
         $pLMCDate,
         $pMCD,
         $pL1,
         $pL2,
         $pL3,
+        $pPost,
+        $pPHand,
+        $pPhoto,
         $pTId,
         $pIsMember,
         $pArrival,
-        $pHA,
-        $pSH
+        $pLastModifiedAt,
+        $pLastModifiedBy
     );
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
