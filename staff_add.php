@@ -8,7 +8,7 @@
         header('location: ../Szakdoga/login.php');
     }
 if (isset($_POST["submit"])) {
-    $sName=strtoupper($_POST['sName']);
+    $sName=$_POST['sName'];
     $sPost=$_POST['sPost'];
     $sBDate=$_POST['sBDate'];
     $sCode=$_POST['sCode'];
@@ -19,9 +19,11 @@ if (isset($_POST["submit"])) {
     $sHA=$_POST['sHA'];
     $sInternal=$_POST['sInternal'];
     $sIsActive=1;
+    $sLastModifiedBy=$_POST['sLastModifiedBy'];
+    $sLastModifiedAt=date("Y-m-d");
    
     $sql = "INSERT INTO staff (sName,sCode,sPassword,sEmail,sEmail2,sTel,sPost,
-	sBDate,sHA,sInternal,sIsActive) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	sBDate,sHA,sInternal,sIsActive, sLastModifiedAt, sLastModifiedBy) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     $stmt=mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         echo '<script> location.replace("staff_add.php?addstaff=stmtfailed"); </script>';
@@ -29,7 +31,7 @@ if (isset($_POST["submit"])) {
     }
     mysqli_stmt_bind_param(
         $stmt,
-        "sssssssssss",
+        "sssssssssssss",
         $sName,
         $sPost,
         $sBDate,
@@ -40,7 +42,9 @@ if (isset($_POST["submit"])) {
         $sTel,
         $sHA,
         $sInternal,
-        $sIsActive
+        $sIsActive,
+        $sLastModifiedAt,
+        $sLastModifiedBy
     );
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
@@ -58,8 +62,9 @@ if (isset($_POST["submit"])) {
 
 	<div class="col-md-6 col-lg-3 ">
 		<label for="sPost" class="form-label">Beosztás/Pozíció*</label>
-		<input name="sPost" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z áéíóöőúüűÁÉÍŰÚŐÖÜÓ0-9.]*$$"
-			placeholder="Utánpótlás masszőr" value="" type="text" class="form-control" id="sPost" required>
+		<input name="sPost" title="Csak betűk, szóközök és számok használata lehetséges"
+			pattern="^[a-zA-Z áéíóöőúüűÁÉÍŰÚŐÖÜÓ0-9.]*$$" placeholder="Utánpótlás masszőr" value="" type="text"
+			class="form-control" id="sPost" required>
 	</div>
 
 	<div class=" col-md-4 col-lg-2">
@@ -74,7 +79,7 @@ if (isset($_POST["submit"])) {
 	</div>
 	<div class="col-md-4 col-lg-2">
 		<label for="pwd" class="form-label">MKSZ jelszó</label>
-		<input name="sPassword" type="text" class="form-control" id="pwd" placeholder="">
+		<input name="sPassword" type="text" class="form-control" id="pwd" placeholder="j3L$z0">
 	</div>
 
 	<div class="col-md-6 col-lg-3 ">
@@ -90,7 +95,7 @@ if (isset($_POST["submit"])) {
 	</div>
 
 	<div class="col-md-4 col-lg-2 ">
-		<label for="stel" class="form-label">1. Telefonszám</label>
+		<label for="stel" class="form-label">Telefonszám</label>
 		<input name="sTel" type="text" class="form-control" id="tel" placeholder="Telefonszám" pattern="^[+ 0-9]*$"
 			title="Telefonszám megadásakor csak '+'-jelet, szóközt és számokat lehet használni!">
 	</div>
@@ -118,7 +123,10 @@ if (isset($_POST["submit"])) {
 	</div>
 
 	<div class="col-md-auto mt-4 input-group ">
-		<button type="submit" name="submit" class="btn btn-primary">Rögzítés</button>
+
+		<input type="hidden" name="sLastModifiedBy"
+			value="<?php echo $_SESSION['useruid'];?>">
+		<button type="submit" name="submit" class="btn btn-outline-primary">Rögzítés</button>
 	</div>
 	<div class="mt-4 col-md-auto">
 

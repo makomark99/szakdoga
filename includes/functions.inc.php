@@ -161,65 +161,6 @@ function invalidpCode($pCode)
     return $result;
 }
 
-function invalidpBDate($pBDate)
-{
-    $age=floor((time()-(strtotime($pBDate)))/(60*60*24)/365.2425);
-    $result;
-    if ($age<3) {
-        $result=true;
-    } else {
-        $result=false;
-    }
-    return $result;
-}
-
-function invalidSsn($pSsn)
-{
-    $result;
-    if ($pSsn!="") {
-        if (preg_match('/[-]/', $pSsn)) { //ha tartalmaz kötőjelet
-            if (!preg_match('/^[0-9-]{11}$/', $pSsn)) {
-                $result=true;
-            } else {
-                $result=false;
-            }
-        } elseif (!preg_match('/^[0-9]{9}$/', $pSsn)) { //ha csak számot tartamaz
-            $result=true;
-        } else {
-            $result=false;
-        }
-    } else {
-        $result=false;
-    }
-    return $result;
-}
-
-function invalidpLMCDate($pLMCDate)
-{
-    $result;
-    if (time()-strtotime($pLMCDate)<0) {
-        $result=true;
-    } else {
-        $result=false;
-    }
-    return $result;
-}
-
-function playerLicenseMatch($pL1, $pL2, $pL3)
-{
-    $result=false;
-    if (($pL1!="" && $pL2!="") && ($pL1===$pL2)) {
-        $result=true;
-    } elseif (($pL1!="" && $pL3!="") && ($pL1===$pL3)) {
-        $result=true;
-    } elseif (($pL2!="" && $pL3!="") && ($pL2===$pL3)) {
-        $result=true;
-    } else {
-        $result=false;
-    }
-    return $result;
-}
-
 function addPlayer(
     $conn,
     $pName,

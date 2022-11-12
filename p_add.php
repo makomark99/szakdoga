@@ -8,6 +8,7 @@
         header('location: ../Szakdoga/login.php');
     }
 ?>
+<script src="p_licence_match.js" defer></script>
 <h1 class="text-center mb-5">Új játékos rögzítése</h1>
 <form class="row g-3 " action="includes/addplayer.inc.php" method="post">
 	<div class="col-md-6 col-lg-3">
@@ -167,7 +168,7 @@
         echo '
       <div class="col-md-4 col-lg-2">
         <label class="form-label">Játékengedély '.$i.'</label>
-        <select name="pL'.$i.'" id="" class="form-select">';
+        <select onchange="playerLicenceMath()" name="pL'.$i.'" id="pL'.$i.'" class="form-select">';
         while ($j!=count($teams)) {
             $tmp=$teams[$j]; ?>
 	<option value="<?php echo $tmp; ?>">
@@ -226,7 +227,7 @@
 	<div class="col-md-auto mt-4 ">
 		<input type="hidden" name="pLastModifiedBy"
 			value="<?php echo $_SESSION['useruid'];?>">
-		<button type="submit" name="submit" class="btn btn-outline-primary">Rögzítés</button>
+		<button type="submit" id="btn" name="submit" class="btn btn-outline-primary">Rögzítés</button>
 	</div>
 
 </form>
@@ -247,6 +248,7 @@
         }
     }
   ?>
+
 <?php
     include 'footer.php';
 ?>

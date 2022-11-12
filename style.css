@@ -35,10 +35,6 @@ ul{
     text-align: right;
 }
 
-/*.navbar .navbar-nav .nav-link:visited{
-    background-color: black;
-}*/
-
 .navbar{
     padding: 0;
 }
@@ -57,6 +53,7 @@ tr[data-href]{
 }
 .notm{
     background-color: rgba(33,37,41,255) !important; 
+    color: rgba(255, 255, 255, 0.854) !important;
 }
 input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a görgetőt*/
         input::-webkit-inner-spin-button {
@@ -71,7 +68,8 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
     color: rgba(255, 255, 255, 0.854) !important;
    
   }
-  .tooltip-inner {
+
+  /* .tooltip-inner {
     color:white !important;
     background-color: #212529;
     opacity: 1 !important;
@@ -79,7 +77,7 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
 .tooltip-arrow::before {
     border-bottom-color: #212529 !important;
     border-left-color: #212529 !important;
-}
+} */
 .modal-bg{
     background-color: black;
     color: white;

@@ -35,14 +35,6 @@ if (isset($_POST["submit"])) {
         header("location: ../p_add.php?error=pcodeexists");
         exit();
     }
-    if (playerLicenseMatch($pL1, $pL2, $pL3)!==false) {
-        header("location: ../p_add.php?error=playerlicensematch");
-        exit();
-    }
-    if (invalidSsn($pSsn)!==false) {
-        header("location: ../p_add.php?error=invalidssn");
-        exit();
-    }
     addPlayer(
         $conn,
         $pName,

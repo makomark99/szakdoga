@@ -1,3 +1,4 @@
+<script src="p_licence_match.js" defer></script>
 <?php
     include 'header.php';
     include_once 'navbar.php';
@@ -24,11 +25,13 @@
         $pL3=$_POST['pL3'];
         $pSsn=$_POST['pSsn'];
         $pHA=$_POST['pHA'];
-        //$pPhoto=$_POST['pPhoto'];
+        $pPhoto=$_POST['pPhoto'];
+        $pPHand=$_POST['pPHand'];
+        $pPost=$_POST['pPost'];
         $id=$_POST['pId'];
         $sql="UPDATE players SET pTId='$pTId', pLMCDate='$pLMCDate', pMCD='$pMCD', pPEmail='$pPEmail',
          pEmail='$pEmail', pPTel='$pPTel', pTel='$pTel',pSH='$pSH',pTSize='$pTSize',
-         pL1='$pL1',pL2='$pL2',pL3='$pL3', pSsn='$pSsn',pHA='$pHA' WHERE pId='$id'; ";
+         pL1='$pL1',pL2='$pL2',pL3='$pL3', pSsn='$pSsn',pHA='$pHA', pPhoto='$pPhoto', pPHand='$pPHand', pPost='$pPost' WHERE pId='$id'; ";
         $stmt=mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             errorAlert("Valami nem stimmel, próbálkozz újra!", "p_modify.php?id=$id", true);
@@ -139,20 +142,22 @@
 
 	<div class="col-md-4 col-lg-2">
 		<label for="mcdate" class="form-label">Sportorvosi időpont</label>
-		<input name="pLMCDate" type="text" onfocus="(this.type='date')" max="9999-12-31"
+		<input name="pLMCDate" type="text" onfocus="(this.type='date')"
+			max="<?php echo date("Y-m-d"); ?>"
 			value="<?php echo $row['pLMCDate']; ?>"
 			class="form-control" id="mcdate">
 	</div>
 	<div class="col-md-4 col-lg-2">
-		<label for="mc" class="form-label">Sportorvos </label>
-		<input name="pMCD" type="text"
+		<label for="mc" class="form-label">Sportorvos</label>
+		<input name="pMCD" title="Csak betűk használata lehetséges" pattern="^[a-zA-Z áéíóöőúüűÁÉÍŰÚŐÖÜÓ\s.]*$"
+			type="text"
 			value="<?php echo $row['pMCD']; ?>"
 			class="form-control" id="mc">
 	</div>
 
 	<div class="col-md-6 col-lg-3">
 		<label for="email1" class="form-label">1. E-mail</label>
-		<input name="pPEmail" type="text" class="form-control" id="email1"
+		<input name="pPEmail" type="email" class="form-control" id="email1"
 			vlaue="<?php echo $row['pPEmail']; ?>">
 	</div>
 	<div class="col-md-6 col-lg-3">
@@ -162,28 +167,60 @@
 	</div>
 	<div class="col-md-4 col-lg-2 ">
 		<label for="tel1" class="form-label">1. Telefonszám</label>
-		<input name="pPTel" type="text" class="form-control" id="tel1"
+		<input name="pPTel" type="text" title="Csak számok, vagy szóköz, '+' '/' jelek használata lehetséges!"
+			pattern="^[\d\s\/\+]{9,30}$" class="form-control" id="tel1"
 			value="<?php echo $row['pPTel']; ?>">
 	</div>
 	<div class="col-md-4 col-lg-2 ">
 		<label for="tel2" class="form-label">2. Telefonszám</label>
-		<input name="pTel" type="text" class="form-control" id="tel2"
+		<input name="pTel" type="text" title="Csak számok, vagy szóköz, '+' '/' jelek használata lehetséges!"
+			pattern="^[\d\s\/\+]{9,30}$" class="form-control" id="tel2"
 			value="<?php echo $row['pTel']; ?>">
 	</div>
-	<div class="col-md-2 col-lg-1">
+	<div class="col-md-4 col-lg-2">
 		<label for="pSH" class="form-label">Kollégista?</label>
 		<select class="form-select" name="pSH" id="pSH">
 			<?php if ($row['pSH']==0) {
-                echo '<option value="0">Nem</option>
+                echo '<option value="0">Nem (jelenlegi)</option>
                 <option value="1">Igen</option>';
             } else {
-                echo '<option value="1">Igen</option>
+                echo '<option value="1">Igen (jelenlegi)</option>
                   <option value="0">Nem</option>';
             } ?>
 		</select>
 	</div>
+
+	<div class="col-md-4 col-lg-2">
+		<label for="pPost" class="form-label">Poszt kiválasztása</label>
+		<select class="form-select" name="pPost" id="pPost">
+			<?php $i=0; ?>
+			<option
+				value="<?php echo $row['pPost']; ?>">
+				<?php echo $row['pPost'];
+            if ($row["pPost"]!="") {
+                echo ' (jelenelgi)';
+            } else {
+                echo'Nincs megadva ';
+            } ?>
+			</option>
+			<?php
+              while ($i!=count($posts)) {
+                  if ($row['pPost']!=$posts[$i]) {?>
+			<option value="<?php echo $posts[$i];?>">
+				<?php if ($posts[$i]=="") {
+                      echo "Nincs megadva";
+                  } else {
+                      echo $posts[$i];
+                  } ?>
+			</option>
+			<?php }
+                  $i++;
+              } ?>
+		</select>
+	</div>
+
 	<?php $i=0; ?>
-	<div class="col-md-2 col-lg-1">
+	<div class="col-md-4 col-lg-2">
 		<label for="shirtsize" class="form-label">Pólóméret</label>
 		<select name="pTSize" id="shirtsize" class="form-select">
 			<option
@@ -211,6 +248,17 @@
 		</select>
 	</div>
 
+	<div class="col-md-4 col-lg-2 ">
+		<label for="pSsn" class="form-label">Tajszám</label>
+		<input name="pSsn" pattern='^\d{9}$' title="Pontosan 9 számjegy használható!" type="text"
+			value="<?php echo $row['pSsn']; ?>"
+			class="form-control <?php if ($row['pSsn']!="") { ?> notm <?php } ?> "
+			id="pSsn"
+			<?php if ($row['pSsn']!="") { ?>disabled
+		<?php } else { ?>
+		<?php } ?> >
+	</div>
+
 	<?php
             $x=1;
             $y=0;
@@ -219,7 +267,9 @@
 	<div class="col-md-4 col-lg-2">
 		<label class="form-label">Játékengedély
 			<?php echo $x; ?></label>
-		<select name="pL<?php echo $x; ?>" class="form-select">
+		<select onchange="playerLicenceMath()"
+			id="pL<?php echo $x; ?>"
+			name="pL<?php echo $x; ?>" class="form-select">
 			<option value="<?php echo $row["pL$x"]; ?>"><?php echo $row["pL$x"];
                 if ($row["pL$x"]!="") {
                     echo ' (jelenelgi)';
@@ -247,33 +297,39 @@
                 $y=0;
             } ?>
 
-	<div class="col-md-4 col-lg-2 ">
-		<label for="pSsn" class="form-label">Tajszám</label>
-		<input name="pSsn" type="text"
-			value="<?php echo $row['pSsn']; ?>"
-			class="form-control <?php if ($row['pSsn']!="") { ?> notm <?php } ?> "
-			id="pSsn"
-			<?php if ($row['pSsn']!="") { ?>disabled
-		<?php } else { ?>
-		<?php } ?> >
-	</div>
 
-	<div class="col-md-4 col-lg-2 ">
+	<div class="col-md-8 col-lg-4 ">
 		<label for="pHA" class="form-label">Lakhely (település)</label>
-		<input name="pHA" type="text" class="form-control"
+		<input name="pHA" title="Csak betűk, számok ',' '.' ';' és '/' jelek használata lehetséges!"
+			pattern="^[a-zA-Z0-9 éáűőúöüóíÁÉÍŰÚŐÖÜÓ\s\/\,\.\;]*$" type="text" class="form-control"
 			value="<?php echo $row['pHA']; ?>">
 	</div>
 
+
 	<div class="col-md-4 col-lg-2">
-		<label for="foto" class="form-label">Arcképes fotó</label>
-		<input name="pPhoto" type="file"
-			value="<?php $row['pPhoto']; ?> "
-			class="form-control" id="foto" disabled>
+		<label for="pPHand" class="form-label">Lövő kéz</label>
+		<select class="form-select" name="pPHand" id="pPHand">
+			<?php if ($row['pPHand']=="Jobb") {
+                echo '<option value="Jobb">Jobb (jelenlegi)</option>
+                <option value="Bal">Bal</option>';
+            } else {
+                echo '<option value="Bal">Bal (jelenlegi)</option>
+                  <option value="Jobb">Jobb</option>';
+            } ?>
+		</select>
+	</div>
+	<div class="col-md-12 col-lg-6">
+		<label for="pPhoto" class="form-label">Arcképes fotó</label>
+		<input name="pPhoto"
+			value="<?php echo $row['pPhoto']; ?>"
+			id="pPhoto" type="url" class="form-control" id="foto">
 	</div>
 
 	<div class="col-md-auto mt-4">
 		<input type="hidden" value="<?php echo $id?>" name="pId">
-		<button type="submit" name="modify" class="btn btn-primary">Módosít</button>
+		<input type="hidden" name="pLastModifiedBy"
+			value="<?php echo $_SESSION['useruid']; ?>">
+		<button type="submit" id="btn" name="modify" class="btn btn-outline-primary">Módosít</button>
 	</div>
 
 </form>

@@ -43,6 +43,16 @@ $GLOBALS['sizes'] = array(
     "3XL",
     "4XL"
 );
+$GLOBALS['posts'] = array(
+    "",
+    "Balátlövő",
+    "Balszélső",
+    "Jobbátlövő",
+    "Jobbszélső",
+    "Irányító",
+    "Beálló",
+    "Kapus"
+);
 $GLOBALS['categories'] = array(
     "Egyéb",
     "Igazolás",
