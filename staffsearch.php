@@ -37,84 +37,99 @@
 
 			<tr
 				style='<?php echo (!$sadmin) ?  : "font-size:90%;"; ?>'>
-				<form action="staff.php" method="post">
-
-					<td class="align-middle"> <?php echo $th++; ?>
-					</td>
-					<td class="align-middle">
-						<?php echo $row['sName']; ?>
-					</td>
-					<td
-						class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-						<input name="sCode" style="width:80px;"
-							value="<?php echo $row['sCode']; ?>"
-							class="form-control text-white bg-secondary form-control-sm " min=100 max=999999
-							type="number">
-					</td>
-					<td
-						class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
-						<?php echo $row['sCode']; ?>
-					</td>
-					<td
-						class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-						<input name="sEmail" style="width:180px;"
-							value="<?php echo $row['sEmail']; ?>"
-							class="form-control text-white bg-secondary  form-control-sm " type="text">
-					</td>
-					<td
-						class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
-						<?php echo $row['sEmail']; ?>
-					</td>
-					<td
-						class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-						<input name="sEmail2" style="width:225px;"
-							value="<?php echo $row['sEmail2']; ?>"
-							class="form-control text-white bg-secondary  form-control-sm " type="text">
-					</td>
-					<td
-						class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
-						<?php echo $row['sEmail2']; ?>
-					</td>
-
-					<td
-						class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-						<input name="sTel" style="width:125px;"
-							value="<?php echo $row['sTel']; ?>"
-							class="form-control  text-white bg-secondary  form-control-sm " type="text">
-					</td>
-					<td
-						class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
-						<?php echo $row['sTel']; ?>
-					</td>
 
 
-					<td
-						class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-						<input name="sPost" style="width:225px;"
-							value="<?php echo $row['sPost']; ?>"
-							class="form-control  text-white bg-secondary  form-control-sm " type="text">
-					</td>
-					<td
-						class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
-						<?php echo $row['sPost']; ?>
-					</td>
+				<td class="align-middle"> <?php echo $th++; ?>
+				</td>
+				<td class="align-middle">
+					<?php echo $row['sName']; ?>
+				</td>
+				<td
+					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
+					<input
+						name="sCode<?php echo $row['sId']; ?>"
+						style="width:80px;"
+						value="<?php echo $row['sCode']; ?>"
+						class="form-control text-white bg-secondary form-control-sm " min=100 max=999999 type="number">
+				</td>
+				<td
+					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+					<?php echo $row['sCode']; ?>
+				</td>
+				<td
+					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
+					<input
+						name="sEmail<?php echo $row['sId']; ?>"
+						style="width:180px;"
+						value="<?php echo $row['sEmail']; ?>"
+						class="form-control text-white bg-secondary  form-control-sm " type="text">
+				</td>
+				<td
+					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+					<?php echo $row['sEmail']; ?>
+				</td>
+				<td
+					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
+					<input
+						name="sEmail2<?php echo $row['sId']; ?>"
+						style="width:225px;"
+						value="<?php echo $row['sEmail2']; ?>"
+						class="form-control text-white bg-secondary  form-control-sm " type="text">
+				</td>
+				<td
+					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+					<?php echo $row['sEmail2']; ?>
+				</td>
 
-					<td
-						class="<?php echo ($sadmin)? : 'd-none'; ?>">
+				<td
+					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
+					<input
+						name="sTel<?php echo $row['sId']; ?>"
+						style="width:125px;"
+						value="<?php echo $row['sTel']; ?>"
+						class="form-control  text-white bg-secondary  form-control-sm " type="text">
+				</td>
+				<td
+					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+					<?php echo $row['sTel']; ?>
+				</td>
 
-						<button title="Szerkesztés" type="submit" name="modifyStaff"
-							class="btn btn-sm btn-outline-warning">
-							<?php include 'img/pencil.svg' ?>
-						</button>
-						<input type="hidden" name="modifyID"
-							value="<?php echo $row['sId']; ?>">
-						<a title="Törlés" class="btn btn-sm btn-outline-danger " data-bs-toggle="modal"
-							data-bs-target="#delete<?php echo $row['sId']; ?>">
-							<!--egyedi id kell, mert minding az elsőt találta meg-->
-							<?php include 'img/trash.svg' ?>
-						</a>
-					</td>
-				</form>
+
+				<td
+					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
+					<input
+						name="sPost<?php echo $row['sId']; ?>"
+						style="width:225px;"
+						value="<?php echo $row['sPost']; ?>"
+						class="form-control  text-white bg-secondary  form-control-sm " type="text">
+				</td>
+				<td
+					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+					<?php echo $row['sPost']; ?>
+				</td>
+
+				<td
+					class="<?php echo ($sadmin)? : 'd-none'; ?>">
+					<input type="hidden"
+						name="sLastModifiedBy<?php echo $row['sId']; ?>"
+						value="<?php echo $_SESSION['useruid']; ?>">
+
+					<input type="hidden"
+						name="modifyID<?php echo $row['sId']; ?>"
+						value="<?php echo $row['sId']; ?>">
+					<a href="staff_modify.php?id=<?php echo $row['sId']; ?>"
+						class="btn btn-sm btn-outline-warning">
+						<?php include 'img/pencil.svg' ?>
+					</a>
+
+
+					<a title="Törlés" class="btn btn-sm btn-outline-danger " data-bs-toggle="modal"
+						data-bs-target="#delete<?php echo $row['sId']; ?>">
+						<!--egyedi id kell, mert minding az elsőt találta meg-->
+						<?php include 'img/trash.svg' ?>
+					</a>
+				</td>
+
 			</tr>
 			<div class="modal fade"
 				id="delete<?php echo $row['sId']; ?>"

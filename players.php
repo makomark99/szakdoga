@@ -48,10 +48,13 @@
 											<option value="NULL">Nincs játékengedély kiválasztva</option>';
 											<?php
           if ($qres5>0) {
+              $i=0;
               while ($row5=mysqli_fetch_assoc($result5)) {
                   echo '<option value="'.$row5['pl'].'">';
-                  if ($row5['pl']=="") {
+                  
+                  if (($i==0) && ($row5['pl']==null)) {
                       echo "Nincs kikérve";
+                      $i+=1;
                   } else {
                       echo $row5['pl'];
                   } ?>
@@ -148,16 +151,16 @@
 										</select>
 									</div>
 									<div class="col-md-4 mb-3">
-										<label for="pSH" class="form-label">Ügyesebb kéz kiválasztása</label>
-										<select class="form-select" name="pWeakHand" id="pWeakHand" disabled>
+										<label for="pPHand" class="form-label">Ügyesebb kéz kiválasztása</label>
+										<select class="form-select" name="pPHand" id="pPHand">
 											<option value="">Nincs kiválasztva érték</option>
-											<option value="0">Jobb</option>
-											<option value="1">Bal</option>
+											<option value="Jobb">Jobb</option>
+											<option value="Bal">Bal</option>
 										</select>
 									</div>
 									<div class="col-md-4 mb-3">
-										<label for="pSH" class="form-label">Poszt kiválasztása (7 közül)</label>
-										<select class="form-select" name="pPos" id="pPos" disabled>
+										<label for="pPost" class="form-label">Poszt kiválasztása (7 közül)</label>
+										<select class="form-select" name="pPost" id="pPost">
 											<option value="">Nincs kiválasztva érték</option>
 											<option value="Balátlövő">Balátlövő</option>
 											<option value="Balszélső">Balszélső</option>

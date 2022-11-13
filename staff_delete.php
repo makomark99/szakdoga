@@ -10,7 +10,8 @@
     if (isset($_GET["id"])) {
         $id=$_GET["id"];
         $date=date("Y-m-d");
-        $set="UPDATE staff SET sIsActive=0, sLeavingAt='$date' WHERE sId=?;";
+        $sLastModifiedBy= $_SESSION['useruid'];
+        $set="UPDATE staff SET sIsActive=0, sLeavingAt='$date', sLastModifiedBy=' $sLastModifiedBy', sLastModifiedAt='$date' WHERE sId=?;";
         $stmt=mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $set)) {
             errorAlert("Valami nem stimmel, próbálkozz újra!", "staff.php", true);

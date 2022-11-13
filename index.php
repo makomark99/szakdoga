@@ -308,11 +308,18 @@ if (isset($_POST["deleteTaskBtn"])) {
 	</div>
 
 	<?php
-        $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC LIMIT 5;";
+      if (!$sadmin) {
+          $userID=$_SESSION['userid'];
+          $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' AND T.taskRef=$userID ORDER BY T.taskDoneDate DESC LIMIT 5;";
+      } elseif ($sadmin) {
+          $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate; ";
+      }
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
-        $th=1;
-        ?>
+        if ($queryResults<1 || $tasksToDo!=0) {
+            echo "<div class='mx-auto p-0 my-2 w-50 border rounded-pill border-2 border-warning text-center '> <h4 class='my-2'> Jelenleg nincs általad befejezett feladat</h4> </div>";
+        } else {
+            $th=1; ?>
 	<div class="table-responsive">
 		<table class="table table-dark table-hover border border-success border-5">
 			<thead class="thead-light ">
@@ -359,10 +366,12 @@ if (isset($_POST["deleteTaskBtn"])) {
 					</td>
 				</tr>
 				<?php
-                    }?>
+                    } ?>
 			</tbody>
 		</table>
 	</div>
+	<?php
+        } ?>
 </div>
 
 <!-- Modal -->
@@ -376,7 +385,13 @@ if (isset($_POST["deleteTaskBtn"])) {
 			</div>
 			<div class="modal-body">
 				<?php
-        $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC;";
+                if (!$sadmin) {
+                    $userID=$_SESSION['userid'];
+                    $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' AND T.taskRef=$userID ORDER BY T.taskDoneDate DESC;";
+                } elseif ($sadmin) {
+                    $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC;";
+                }
+       
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
         $th=1;

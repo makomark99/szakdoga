@@ -20,23 +20,30 @@
         $pTel=$_POST['pTel'];
         $pSH=$_POST['pSH'];
         $pTSize=$_POST['pTSize'];
-        $pL1=$_POST['pL1'];
-        $pL2=$_POST['pL2'];
-        $pL3=$_POST['pL3'];
+        $pL1 = ($_POST['pL1']==''||$_POST['pL1']==null)? null: $_POST['pL1'];
+        $pL2 = ($_POST['pL2']==''||$_POST['pL2']==null)? null: $_POST['pL2'];
+        $pL3 = ($_POST['pL3']==''||$_POST['pL3']==null)? null: $_POST['pL3'];
         $pSsn=$_POST['pSsn'];
         $pHA=$_POST['pHA'];
         $pPhoto=$_POST['pPhoto'];
         $pPHand=$_POST['pPHand'];
         $pPost=$_POST['pPost'];
         $id=$_POST['pId'];
+        $pLastModifiedBy= $_SESSION['useruid'];
+        $pLastModifiedAt=date("Y-m-d");
         $sql="UPDATE players SET pTId='$pTId', pLMCDate='$pLMCDate', pMCD='$pMCD', pPEmail='$pPEmail',
          pEmail='$pEmail', pPTel='$pPTel', pTel='$pTel',pSH='$pSH',pTSize='$pTSize',
-         pL1='$pL1',pL2='$pL2',pL3='$pL3', pSsn='$pSsn',pHA='$pHA', pPhoto='$pPhoto', pPHand='$pPHand', pPost='$pPost' WHERE pId='$id'; ";
+         pL1='$pL1',pL2='$pL2',pL3='$pL3', pSsn='$pSsn',pHA='$pHA', pPhoto='$pPhoto', pPHand='$pPHand', pPost='$pPost', 
+		 pLastModifiedAt='$pLastModifiedAt', pLastModifiedBy='$pLastModifiedBy' WHERE pId='$id'; ";
         $stmt=mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             errorAlert("Valami nem stimmel, próbálkozz újra!", "p_modify.php?id=$id", true);
             exit();
         }
+        $sql1="UPDATE players SET pl1=NULL WHERE pL1='';";
+        $sql2="UPDATE players SET pl2=NULL WHERE pL2='';";
+        $sql3="UPDATE players SET pl3=NULL WHERE pL3='';";
+        mysqli_query($conn, $sql1);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         errorAlert("Sikeres módosítás!", "p_modify.php?id=$id", false);
@@ -312,8 +319,12 @@
 			<?php if ($row['pPHand']=="Jobb") {
                 echo '<option value="Jobb">Jobb (jelenlegi)</option>
                 <option value="Bal">Bal</option>';
-            } else {
+            } elseif ($row['pPHand']=="Bal") {
                 echo '<option value="Bal">Bal (jelenlegi)</option>
+                  <option value="Jobb">Jobb</option>';
+            } elseif ($row['pPHand']=="") {
+                echo '<option value="">Nincs megadva</option>
+				<option value="Bal">Bal</option>
                   <option value="Jobb">Jobb</option>';
             } ?>
 		</select>

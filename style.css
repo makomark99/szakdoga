@@ -47,10 +47,6 @@ ul{
 tr[data-href]{
     cursor: pointer; /*rowclick function*/
 }
-#viewp{
-    height: 20rem;
-    width: 20rem;
-}
 .notm{
     background-color: rgba(33,37,41,255) !important; 
     color: rgba(255, 255, 255, 0.854) !important;

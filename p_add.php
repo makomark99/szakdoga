@@ -214,6 +214,7 @@
 	<div class="col-md-4 col-lg-2">
 		<label for="pPHand" class="form-label">Lövő kéz</label>
 		<select class="form-select" name="pPHand" id="pPHand">
+			<option value="">Nincs megadva</option>
 			<option value="Jobb">Jobb</option>
 			<option value="Bal">Bal</option>
 		</select>
@@ -242,6 +243,9 @@
         }
         if ($_GET["error"]== "playerlicensematch") {
             errorAlert("A játékengedélyek megadásánál csak különböző értékeket lehet kiválasztani!", "p_add.php", true);
+        }
+        if ($_GET["error"]== "pssnexists") {
+            errorAlert("A megadott tajszám már tárolva van a rendszerben!", "p_add.php", true);
         }
         if ($_GET["error"]== "none") {
             errorAlert("Az új játékos adatai sikeresen rögzítésre kerültek!", "p_add.php", false);

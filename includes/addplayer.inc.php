@@ -16,9 +16,9 @@ if (isset($_POST["submit"])) {
     $pTSize=$_POST['pTSize'];
     $pLMCDate=$_POST['pLMCDate'];
     $pMCD=$_POST['pMCD'];
-    $pL1=$_POST['pL1'];
-    $pL2=$_POST['pL2'];
-    $pL3=$_POST['pL3'];
+    $pL1 = ($_POST['pL1']=='')? null: $_POST['pL1'];
+    $pL2 = ($_POST['pL2']=='')? null: $_POST['pL2'];
+    $pL3 = ($_POST['pL3']=='')? null: $_POST['pL3'];
     $pTId=$_POST['pTId'];
     $pArrival=$_POST['pArrival'];
     $pIsMember=1;
@@ -33,6 +33,10 @@ if (isset($_POST["submit"])) {
 
     if (pCodeExists($conn, $pCode)!==false) {
         header("location: ../p_add.php?error=pcodeexists");
+        exit();
+    }
+    if (pSsnExists($conn, $pSsn)!==false) {
+        header("location: ../p_add.php?error=pssnexists");
         exit();
     }
     addPlayer(

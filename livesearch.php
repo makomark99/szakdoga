@@ -5,6 +5,12 @@
   if (!isset($_SESSION["loggedin"])) {
       header('location: ../Szakdoga/login.php');
   }
+  function clickToView(int $id)
+  {
+      /*echo 'style="cursor:pointer;"
+    onclick="window.location=`p_view.php?id='.$id.'`"';*/
+      echo ' style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#player_view'.$id.'"';
+  }
   $leaver=false;
    if (!isset($_POST['name']) || $_POST['name']!=="") {
        $sql="SELECT * FROM players WHERE pIsMember=1;";
@@ -69,10 +75,20 @@
               echo "Nem kollégista játékos(ok)<br>";
           }
       }
+      if (isset($_POST['pPost']) && $_POST['pPost']!="") {
+          $post=$_POST['pPost'];
+          $sql.="AND (P.pPost = '$post') " ;
+          echo "A következő poszton játszó játékos(ok): $post<br>";
+      }
+      if (isset($_POST['pPHand']) && $_POST['pPHand']!="") {
+          $hand= $_POST['pPHand'];
+          $sql.="AND (P.pPHand = '$hand')" ;
+          echo ($hand=="Bal")? "A balkezes játékosok: <br>":"A jobbkezes játékosok: <br>";
+      }
       $sql.="ORDER BY P.pName ";
   }
-
-    $result=mysqli_query($conn, $sql);
+  $_SESSION["player_query"]=$sql;
+    $result=mysqli_query($conn, $_SESSION["player_query"]);
     $queryResults=mysqli_num_rows($result);
     $th=1;
       if ($queryResults>0) {
@@ -84,7 +100,7 @@
 	</h1>
 
 	<?php  //Pagination
-        $actualPage=((!isset($_POST["page"])) ? 1 : $_POST["page"]);
+        $actualPage=((!isset($_GET["page"])) ? 1 : $_GET["page"]);
           echo $actualPage;
           $numPerPage=10;
           $startFrom=($actualPage-1)*$numPerPage;
@@ -100,12 +116,13 @@
          
           for ($x=0;$x<=$lastPageNum;$x++) {
               ($x==0)?$x++:$x;
-              $actualPage=((!isset($_POST["page"])) ? 1 : $_POST["page"]); ?>
+              $actualPage=((!isset($_GET["page"])) ? 1 : $_GET["page"]); ?>
 				<div class="page-item ">
 					<input type="hidden" autocomplete="off"
 						value="<?php echo $x ; ?>" name="page"
 						class="pageTo">
 					<button type="button"
+						onclick='window.location="players.php?page=<?php echo $x; ?>"'
 						class=" page-link bg-dark <?php echo ($x==$actualPage)?"bg-black text-white":""; ?>">
 						<?php echo $x ; ?>
 					</button>
@@ -119,13 +136,14 @@
 		<thead class="thead-light ">
 			<tr>
 				<th>#</th>
+				<th>Kép</th>
 				<th>Név</th>
 				<th>Személy kód</th>
 				<th>Születési dátum</th>
 				<th>Életkor</th>
-				<th>Igazolás dátuma</th>
+				<!-- <th>Igazolás dátuma</th> -->
 				<?php echo $leaver ? "<th>Távozás dátuma</th>" : "<th>Játékengedélyek</th>"; ?>
-				<th>Érvényes sportorvosi</th>
+				<th>Sportorvosi engedély</th>
 				<?php echo ($leaver||$gUser) ? : "<th>Műveletek</th>"; ?>
 			</tr>
 		</thead>
@@ -134,42 +152,59 @@
               $time= strtotime($row['pBDate']);
               $age=floor((time()-$time)/(60*60*24)/365.2425);
               $id= $row['pId']; ?>
-			<tr data-href="p_view.php?id=<?php echo $id; ?>">
-				<td class="align-middle"> <?php echo $th++; ?>
-				</td>
-				<td class="align-middle">
-					<?php echo $row['pName']; ?>
-				</td>
-				<td class="align-middle">
-					<?php echo $row['pCode']; ?>
-				</td>
-				<td class="align-middle">
-					<?php echo $row['pBDate']; ?>
-				</td>
-				<td class="align-middle"> <?php echo $age; ?>
-				</td>
-				<td class="align-middle">
-					<?php echo $row['pArrival']; ?>
-				</td>
+			<tr>
+				<a>
 
-				<td class="align-middle">
+					<td <?php clickToView($id); ?> width=2%
+						class="align-middle">
+						<?php echo $th++; ?>
+					</td>
+					<td <?php clickToView($id); ?>
+						width=5% class="align-middle text-center p-0 m-0 ">
+						<img width="70%" class="rounded " style=" margin-top:1px; margin-bottom:1px;"
+							src="<?php echo $row['pPhoto']; ?>">
+					</td>
+					<td <?php clickToView($id); ?>
+						class="align-middle">
+						<?php echo $row['pName']; ?>
+					</td>
+					<td <?php clickToView($id); ?>
+						class="align-middle">
+						<?php echo $row['pCode']; ?>
+					</td>
+					<td <?php clickToView($id); ?>
+						class="align-middle">
+						<?php echo $row['pBDate']; ?>
+					</td>
+					<td <?php clickToView($id); ?>
+						class="align-middle">
+						<?php echo $age; ?>
+					</td>
+					<!-- <td class="align-middle">
+                    <?php echo $row['pArrival']; ?>
+					</td> -->
 
-					<?php
+					<td <?php clickToView($id); ?>
+						class="align-middle">
+
+						<?php
           if (!$leaver) {
-              echo $row['pL1'];
-              if ($row['pL2']!="") {
+              if ($row['pL1']!="" || $row['pL1']!=null) {
+                  echo $row['pL1'];
+              }
+              if ($row['pL2']!="" || $row['pL2']!=null) {
                   echo ";\t";
                   echo $row['pL2'];
               }
-              if ($row['pL3']!="") {
+              if ($row['pL3']!="" || $row['pL3']!=null) {
                   echo ";\t";
                   echo $row['pL3'];
               }
           } else {
               echo $row['pDeparture'];
           } ?>
-				</td>
-				<?php
+					</td>
+					<?php
                 if (($row['pLMCDate'] != "") && ($row['pLMCDate']!=0000-00-00)) {
                     $days=strtotime($row['pLMCDate']);
                     $elapsedDays=floor((time()-$days)/(60*60*24));
@@ -200,8 +235,9 @@
                     include "img/x-square.svg";
                     echo ' Még nem volt! </td>';
                 } ?>
-				<?php
+					<?php
             if (!$leaver) { ?>
+				</a>
 				<td class="align-middle <?php if ($gUser) {
                 echo 'd-none';
             } ?>">
@@ -218,9 +254,9 @@
 						<?php include 'img/trash.svg' ?>
 					</a>
 					<?php } ?>
-					<!-- Modal -->
 				</td>
 			</tr>
+			<!-- Modal -->
 			<div class="modal fade" id="delete<?php echo $id; ?>"
 				tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
@@ -238,6 +274,162 @@
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
 							<a href="p_delete.php?id=<?php echo $id; ?>"
 								class="btn btn-danger">Törlés </a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- player_view modal -->
+			<div class="modal fade"
+				id="player_view<?php echo $id; ?>" tabindex="-1"
+				aria-labelledby="player_view" aria-hidden="true">
+				<div class="modal-dialog modal-fullscreen modal-dialog-centered">
+					<div class="modal-content bg-black text-white fs-5">
+						<div class="modal-header">
+							<h1 class="ms-2" id="player_view">
+								<?php echo mb_convert_case($row['pName'], MB_CASE_TITLE, "UTF-8") ?>
+								adatai
+							</h1>
+							<button type="button" style="color:white;" class="btn-close btn-close-white "
+								data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="card bg-black">
+								<div class="row d-flex">
+									<div class="col-lg-3 col-md-12 text-center me-2 ">
+										<img width="90%" class="mt-3 mb-1 img-thumbnail "
+											src="<?php echo $row["pPhoto"]; ?>"
+											title=" <?php echo mb_convert_case($row['pName'], MB_CASE_TITLE, "UTF-8"); ?>"
+											alt=" <?php echo mb_convert_case($row['pName'], MB_CASE_TITLE, "UTF-8"); ?>">
+									</div>
+
+									<div class="col-lg-9 col-md-12 row d-flex mt-5">
+										<div class="col-lg-3 col-md-6    ">
+											<label> <i>MKSZ Személy kód</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo $row['pCode']; ?>
+											</h4>
+											<label> <i>Születési hely</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo mb_convert_case($row['pBPlace'], MB_CASE_TITLE, "UTF-8"); ?>
+											</h4>
+											<label> <i>Születési dátum</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo $row['pBDate']; ?>
+											</h4>
+											<label> <i>Anyja neve</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo mb_convert_case($row['pMsN'], MB_CASE_TITLE, "UTF-8"); ?>
+											</h4>
+											<label> <i>Nemzetiség</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo $row['pNat']; ?>
+											</h4>
+										</div>
+										<div class="col-lg-3 col-md-6  ">
+											</h4>
+											<label> <i> Sportorvosi dátum</i></label>
+											<h4 class="mb-4 mt-1"><?php if ($row['pLMCDate']!="" && $row['pLMCDate']!=0000-00-00) {
+                    echo $row['pLMCDate'];
+                } else {
+                    echo "Még nem volt vizsgálaton";
+                } ?>
+											</h4>
+											<label> <i>Sportorvos</i> </label>
+											<h4 class="mb-4 mt-1"><?php if ($row['pMCD']!="") {
+                    echo $row['pMCD'];
+                } else {
+                    echo "nincs megadva";
+                } ?>
+											</h4>
+											<label> <i>Edző neve</i> </label>
+											<h4 class="mb-4 mt-1"><?php if ($row['pTId']!="") {
+                    $sql2="SELECT * FROM staff S INNER JOIN trainers T ON S.sId=T.sId WHERE T.tIsCoach=1;";
+                    $result2=mysqli_query($conn, $sql2);
+                    $queryResults2=mysqli_num_rows($result);
+                    if ($queryResults2>0) {
+                        while ($row2=mysqli_fetch_assoc($result2)) {
+                            if ($row['pTId']==$row2['sId']) {
+                                echo $row2['sName'];
+                            }
+                        }
+                    }
+                } else {
+                    echo "nincs megadva";
+                } ?>
+											</h4>
+											<label> <i>Igazolás dátuma</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo $row['pArrival']; ?>
+											</h4>
+											<label> <i>Lakhely</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php if ($row['pHA']!="") {
+                    echo $row['pHA'];
+                    ;
+                } else {
+                    echo "nincs megadva";
+                } ?>
+											</h4>
+										</div>
+										<div class="col-lg-3 col-md-6  ">
+											<label> <i>Kollégista?</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pSH'])?'igen':'nem'; ?>
+											</h4>
+											<label> <i>Telefonszám</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pTel']=='')?'nincs megdva':$row['pTel']; ?>
+											</h4>
+											<label> <i>Szülő elefonszám</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pPTel']=='')?'nincs megdva':$row['pPTel']; ?>
+											</h4>
+											<label> <i>E-mail</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pEmail']=='')?'nincs megdva':$row['pEmail']; ?>
+											</h4>
+											<label> <i>Szülő e-mail</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pPEmail']=='')?'nincs megdva':$row['pPEmail']; ?>
+											</h4>
+										</div>
+										<div class="col-lg-3 col-md-6  ">
+											<label> <i>Pólóméret</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pTSize']=='')?'nincs megdva':$row['pTSize']; ?>
+											</h4>
+											<label> <i>Tajszám</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pSsn']=='')?'nincs megdva':$row['pSsn']; ?>
+											</h4>
+											<label> <i>Ügyesebbik kéz</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pPHand']=='')?'nincs megdva':$row['pPHand']; ?>
+											</h4>
+											<label> <i>Poszt</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php echo ($row['pPost']=='')?'nincs megdva':$row['pPost']; ?>
+											</h4>
+											<label> <i>Játékengedélyek</i> </label>
+											<h4 class="mb-4 mt-1">
+												<?php
+                    echo $row['pL1'];
+              if ($row['pL2']!="") {
+                  echo ";\t ";
+                  echo $row['pL2'];
+              }
+              if ($row['pL3']!="") {
+                  echo ";\t ";
+                  echo $row['pL3'];
+              } ?>
+											</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
 						</div>
 					</div>
 				</div>

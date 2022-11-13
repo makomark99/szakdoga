@@ -1,27 +1,21 @@
 <?php
 $GLOBALS['teams'] = array(
-    "",
+    null,
     "U8 I",
     "U8 II",
     "U8 III",
     "U9 I",
     "U9 II",
-    "U9 III",
     "U10 I",
     "U10 II",
-    "U11 ",
+    "U11",
     "U12",
     "U13",
     "U14",
     "U15",
-    "SER I",
-    "SER II",
-    "SER III",
-    "IFI I",
-    "IFI II",
-    "IFI III",
+    "U17 II",
+    "U19 I",
     "NB II",
-    "NB I/B",
     "NB I"
 );
 $GLOBALS['sizes'] = array(

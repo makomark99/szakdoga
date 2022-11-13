@@ -145,6 +145,33 @@ function pCodeExists($conn, $pCode)
     }
     return $result;
 }
+function pSsnExists($conn, $pSsn)
+{
+    $result;
+    if ($pSsn!="") {
+        $sql = "SELECT * FROM players WHERE pSsn = ?;";
+        $stmt=mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: ../p_add.php?error=stmtfailed");
+            exit();
+        }
+        mysqli_stmt_bind_param($stmt, "s", $pSsn);
+        mysqli_stmt_execute($stmt);
+
+        $resultData=mysqli_stmt_get_result($stmt);
+        $row =mysqli_num_rows($resultData);
+        if ($row>0) {
+            $result=true;
+        } else {
+            $result=false;
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        $result=false;
+    }
+    return $result;
+}
+
 
 function invalidpCode($pCode)
 {

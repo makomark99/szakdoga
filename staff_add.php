@@ -85,7 +85,8 @@ if (isset($_POST["submit"])) {
 	<div class="col-md-6 col-lg-3 ">
 		<label for="semail1" class="form-label">Céges e-mail (mkcse)</label>
 		<input name="sEmail" type="email" class="form-control" id="semail1" pattern="^[a-z0-9-_\.]+@mkcse\.hu$"
-			placeholder="minta@mkcse.hu" title="Céges e-mail cím megadásakor csak mkcse mail címet lehet használni!">
+			placeholder="keresztnev.vezeteknev@mkcse.hu"
+			title="Céges e-mail cím megadásakor csak mkcse mail címet lehet használni!">
 	</div>
 	<div class="col-md-6 col-lg-3 ">
 		<label for="semail2" class="form-label">Magán e-mail (Google mail)</label>

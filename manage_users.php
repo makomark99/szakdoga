@@ -63,19 +63,17 @@
 	</button>
 	<!-- Modal -->
 	<div class="modal fade" id="showTokens" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog  ">
+		<div class="modal-dialog modal-dialog-centered ">
 			<div class="modal-content  text-black">
 				<div class="modal-header">
 					<h1 class="modal-title fs-3 me-2" id="exampleModalLabel">Elérhető regisztrációs tokenek</h1>
-					<button title="Új token generálása" id="newToken" onclick="generateToken()"
-						class="btn btn-outline-primary ms-2">?
-					</button>
+
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<form action="manage_users.php" method="post">
 					<div class="modal-body row g-2">
 
-						<div class="col-md-6 mx-auto text-center ">
+						<div class="col-md-5 mx-auto text-center ">
 							<div class="table-responsive">
 								<table table table-borderless>
 									<thead>
@@ -98,11 +96,16 @@
 								</table>
 							</div>
 						</div>
-						<div class="col-md-6 ">
-							<div class="col-md-8 me-2">
+						<div class="col-md-7 d-flex">
+							<div class="col-md-10 me-1 ">
 								<label for="token" class="form-label">Új token létrehozása</label>
 								<input name="token" maxlength="6" type="text" class="form-control" id="token"
 									placeholder="n3Wt0k3n" required>
+							</div>
+							<div class="col-md-2 mt-3">
+								<button type="button" title="Új token generálása" id="newToken"
+									onclick="generateToken()" class="mt-3 btn btn-outline-primary ms-2">?
+								</button>
 							</div>
 						</div>
 					</div>
@@ -137,18 +140,19 @@
 					<p class="card-text">Felhasználónév: <strong>
 							<?php echo $row['usersUid']; ?></strong>
 					</p>
-					<div class="mx-auto" style="width: 15rem;">
+					<div class="mx-auto" style="width: 100%;">
 						<label class="form-label" for="">Jogosultság</label>
 						<select
 							onchange="enable( <?php echo $row['usersId']; ?>)"
-							name="roleId" id="" class="form-select">
+							id="selectID-<?php echo $row['usersId']; ?>"
+							name="roleId" class="form-select">
 							<?php $sql2="SELECT * FROM users S INNER JOIN user_roles U ON S.rId=U.rId WHERE U.rId;";
               $result2=mysqli_query($conn, $sql2);
               $queryResults2=mysqli_num_rows($result2);
               $x=0;
               while ($row2=mysqli_fetch_assoc($result2)) {
                   if ($actId==$row2['rId'] && $x==0) { //ne jelenjen meg x-szer ugyan az a fióktípus
-                      echo '<option id="opt-'.$row['usersId'].'" value="'.$row2['rId'].'">'.$row2['rDesc'].' (jelenlegi)</option>';
+                      echo '<option id="opt0-'.$row['usersId'].'" value="'.$row2['rId'].'">'.$row2['rDesc'].' (jelenlegi)</option>';
                       $x++;
                   }
               }
@@ -156,7 +160,7 @@
               $result3=mysqli_query($conn, $sql3);
               while ($row3=mysqli_fetch_assoc($result3)) {
                   if ($row3['rId']!=1) {
-                      echo '<option value="'.$row3['rId'].'">'.$row3['rDesc'].'</option>';
+                      echo '<option id="opt1-'.$row['usersId'].'" value="'.$row3['rId'].'">'.$row3['rDesc'].'</option>';
                   }
               } ?>
 						</select>
@@ -250,11 +254,11 @@
 ?>
 <script>
 	function enable(id) {
-
-		modifyBtnCL = document.getElementById('modify-' + id).classList.remove("d-none");
-
-		// actualOption = document.getElementById('opt-' + id).value;
-		// (actualOption != "") ? modifyButton.classList.add("d-none"): modifyButton.classList.remove("d-none");
+		let select = document.getElementById('selectID-' + id);
+		let value = select.options[select.selectedIndex].text;
+		let isActual = value.includes('(');
+		let modifyBtnCL = document.getElementById('modify-' + id).classList;
+		(isActual) ? modifyBtnCL.add("d-none"): modifyBtnCL.remove("d-none");
 	}
 
 	function generateToken() {
