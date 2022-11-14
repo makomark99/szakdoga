@@ -98,3 +98,21 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
     transition: 3s all;
     
 }
+.pagination > li > a, .pagination > li > span{ background-color: black;
+}
+.pagination > li.active > a, .pagination > li.active > span{
+    background-color:#0d6efd;
+    border: 1px solid white;
+}
+.pagination > li.visited > a, .pagination > li.visited > span{
+    background-color:gray!important;
+}
+#ptable_previous > a{
+    background-color: black !important;
+}
+#ptable_next > a{
+    background-color: black !important;
+ }
+ #ptable_ellipsis>a{
+    background-color: black !important;
+ }

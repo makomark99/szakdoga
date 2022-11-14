@@ -25,7 +25,7 @@
         $pL3 = ($_POST['pL3']==''||$_POST['pL3']==null)? null: $_POST['pL3'];
         $pSsn=$_POST['pSsn'];
         $pHA=$_POST['pHA'];
-        $pPhoto=$_POST['pPhoto'];
+        $pPhoto=mysqli_real_escape_string($conn, $_POST['pPhoto']);
         $pPHand=$_POST['pPHand'];
         $pPost=$_POST['pPost'];
         $id=$_POST['pId'];
@@ -43,9 +43,12 @@
         $sql1="UPDATE players SET pl1=NULL WHERE pL1='';";
         $sql2="UPDATE players SET pl2=NULL WHERE pL2='';";
         $sql3="UPDATE players SET pl3=NULL WHERE pL3='';";
-        mysqli_query($conn, $sql1);
+        
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
+        mysqli_query($conn, $sql1);
+        mysqli_query($conn, $sql2);
+        mysqli_query($conn, $sql3);
         errorAlert("Sikeres módosítás!", "p_modify.php?id=$id", false);
         exit();
     }
@@ -261,7 +264,7 @@
 			value="<?php echo $row['pSsn']; ?>"
 			class="form-control <?php if ($row['pSsn']!="") { ?> notm <?php } ?> "
 			id="pSsn"
-			<?php if ($row['pSsn']!="") { ?>disabled
+			<?php if ($row['pSsn']!="") { ?>readonly
 		<?php } else { ?>
 		<?php } ?> >
 	</div>

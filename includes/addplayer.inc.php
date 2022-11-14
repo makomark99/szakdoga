@@ -24,7 +24,7 @@ if (isset($_POST["submit"])) {
     $pIsMember=1;
     $pPost=$_POST['pPost'];
     $pPHand=$_POST['pPHand'];
-    $pPhoto=$_POST['pPhoto'];
+    $pPhoto=mysqli_real_escape_string($conn, $_POST['pPhoto']);
     $pLastModifiedBy=$_POST['pLastModifiedBy'];
     $pLastModifiedAt=date("Y-m-d");
 

@@ -6,17 +6,16 @@
           header('location: ../Szakdoga/login.php');
       }
      
-    $search=mysqli_real_escape_string($conn, $_POST['name']);
-    $sql = "SELECT * FROM staff WHERE sName LIKE '%$search%' AND sIsActive=1";
+    $sql = "SELECT * FROM staff WHERE sIsActive=1";
     $result=mysqli_query($conn, $sql);
     $queryResults=mysqli_num_rows($result);
     $th=1;
-    if ($queryResults>0) {
-        echo "<h3 class='mt-2'>A keresésnek $queryResults találata van!</h3>"; ?>
+
+        ?>
 
 <div class="container-fluid mt-4">
 	<h1 class="text-center m-4">Munkatársak adatai</h1>
-	<table class="table table-dark table-hover">
+	<table id="ptable" class="table table-dark table-hover">
 		<thead class="thead-light">
 			<tr>
 				<th>#</th>
@@ -37,74 +36,32 @@
 
 			<tr
 				style='<?php echo (!$sadmin) ?  : "font-size:90%;"; ?>'>
-
-
 				<td class="align-middle"> <?php echo $th++; ?>
 				</td>
 				<td class="align-middle">
 					<?php echo $row['sName']; ?>
 				</td>
-				<td
-					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-					<input
-						name="sCode<?php echo $row['sId']; ?>"
-						style="width:80px;"
-						value="<?php echo $row['sCode']; ?>"
-						class="form-control text-white bg-secondary form-control-sm " min=100 max=999999 type="number">
-				</td>
-				<td
-					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+
+				<td class="align-middle ">
 					<?php echo $row['sCode']; ?>
 				</td>
-				<td
-					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-					<input
-						name="sEmail<?php echo $row['sId']; ?>"
-						style="width:180px;"
-						value="<?php echo $row['sEmail']; ?>"
-						class="form-control text-white bg-secondary  form-control-sm " type="text">
-				</td>
-				<td
-					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+
+				<td class="align-middle ">
 					<?php echo $row['sEmail']; ?>
 				</td>
-				<td
-					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-					<input
-						name="sEmail2<?php echo $row['sId']; ?>"
-						style="width:225px;"
-						value="<?php echo $row['sEmail2']; ?>"
-						class="form-control text-white bg-secondary  form-control-sm " type="text">
-				</td>
-				<td
-					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+
+				<td class="align-middle ">
 					<?php echo $row['sEmail2']; ?>
 				</td>
 
-				<td
-					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-					<input
-						name="sTel<?php echo $row['sId']; ?>"
-						style="width:125px;"
-						value="<?php echo $row['sTel']; ?>"
-						class="form-control  text-white bg-secondary  form-control-sm " type="text">
-				</td>
-				<td
-					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+
+				<td class="align-middle ">
 					<?php echo $row['sTel']; ?>
 				</td>
 
 
-				<td
-					class=" <?php echo ($sadmin)? : 'd-none'; ?>">
-					<input
-						name="sPost<?php echo $row['sId']; ?>"
-						style="width:225px;"
-						value="<?php echo $row['sPost']; ?>"
-						class="form-control  text-white bg-secondary  form-control-sm " type="text">
-				</td>
-				<td
-					class="align-middle <?php echo (!$sadmin)? : 'd-none'; ?>">
+
+				<td class="align-middle ">
 					<?php echo $row['sPost']; ?>
 				</td>
 
@@ -157,9 +114,7 @@
 			</div>
 			<?php
         }
-    } else {
-        echo "<h3 class='mt-2'>Nem található a megadott paramétereknek megfelelő személy</h3>";
-    }
+    
 ?>
 		</tbody>
 	</table>

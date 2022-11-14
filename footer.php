@@ -11,7 +11,8 @@ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
-<script src="playersearch.js"></script>
+<!-- <script src="playersearch.js"></script> -->
+<script src="datatable.js"></script>
 <script src="staffsearch.js"></script>
 <script>
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
