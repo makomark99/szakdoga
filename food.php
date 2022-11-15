@@ -4,7 +4,8 @@
     include_once 'navbar.php';
     include_once 'includes/arrays.php';
     if (!isset($_SESSION["loggedin"])) {
-        header('location: ../Szakdoga/login.php');
+        echo '<script> location.replace("login.php"); </script>';
+        
     }
 ?>
 <script src="food_dataservice.js" defer></script>

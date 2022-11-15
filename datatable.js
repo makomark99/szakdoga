@@ -5,7 +5,6 @@ $(document).ready(function() {
             "sSearch": "Keresés:",
         },
         "language": {
-            "lengthMenu":     "_MENU_ találat / oldal ",
             "paginate": {
                 "first":      "Első",
                 "last":       "Utolsó",
@@ -13,13 +12,16 @@ $(document).ready(function() {
                 "previous":   "Előző"
             },
             "info": "Mutatva _START_ - _END_-ig a _TOTAL_ találatból",
+            "zeroRecords": "A keresésnek nincs találata",
+            "infoEmpty": "Nincs találat",
+            "lengthMenu": '<select class="ps-1">'+
+      '<option value="5">5</option>'+
+      '<option value="10">10</option>'+
+      '<option value="25">25</option>'+
+      '<option value="50">50</option>'+
+      '<option value="100">100</option>'+
+      '<option value="-1">Össz</option>'+
+      '</select> találat / oldal '
         }
     })
-    //  function getElementByXpath(path) {
-	//  	return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-	// }
-	// getElementByXpath('//*[@id="ptable_filter"]/label/text()') = " találat/oldal";
-    //document.querySelector("#ptable_paginate > ul").classList.add("bg-black text-white");
-    //document.getElementsByClassName('paginate_button').classList.add("bg-black");
-    //document.querySelector("#ptable_filter > label").textContent="Keresés";
 });

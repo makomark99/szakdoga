@@ -1,6 +1,7 @@
 <?php
 include_once 'check_user.php';
 include_once 'includes/SweetAlert.php';
+
 ?>
 
 <body>

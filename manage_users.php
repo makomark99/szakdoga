@@ -4,7 +4,7 @@
   include_once 'check_user.php';
   include_once 'includes/dbh.inc.php';
   if (!isset($_SESSION["loggedin"])) {
-      header('location: ../Szakdoga/login.php');
+      echo '<script> location.replace("login.php"); </script>';
   }
   if ($sadmin) {
       if (isset($_POST["deleteUser"])) {

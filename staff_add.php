@@ -5,7 +5,8 @@
     include_once 'includes/arrays.php';
    
     if (!isset($_SESSION["loggedin"])) {
-        header('location: ../Szakdoga/login.php');
+        echo '<script> location.replace("login.php"); </script>';
+        
     }
 if (isset($_POST["submit"])) {
     $sName=$_POST['sName'];
@@ -95,20 +96,15 @@ if (isset($_POST["submit"])) {
 			title="Magán e-mail cím megadásakor csak Google mail címet lehet használni!">
 	</div>
 
-	<div class="col-md-4 col-lg-2 ">
+	<div class="col-md-6 col-lg-3 ">
 		<label for="stel" class="form-label">Telefonszám</label>
 		<input name="sTel" type="text" class="form-control" id="tel" placeholder="Telefonszám" pattern="^[+ 0-9]*$"
 			title="Telefonszám megadásakor csak '+'-jelet, szóközt és számokat lehet használni!">
 	</div>
 
-	<div class="col-md-4 col-lg-2 ">
-		<label for="sHA" class="form-label">Lakhely (település)</label>
-		<input name="sHA" pattern="^[a-zA-Z0-9éáűőúöüóíÁÉÍŰÚŐÖÜÓ\s\/\,\.\;]*$"
-			title="Csak betűk, számok, ',' '.' ';' és '/' jelek használata lehetséges" placeholder="Lakhely" value=""
-			type="text" class="form-control" id="sHA">
-	</div>
 
-	<div class="col-md-4 col-lg-2">
+
+	<div class="col-md-6 col-lg-3">
 		<label for="sInternal" class="form-label">Belső érintett*</label>
 		<select class="form-select" name="sInternal" id="sInternal">
 			<option value="1">Igen</option>
@@ -116,18 +112,21 @@ if (isset($_POST["submit"])) {
 
 		</select>
 	</div>
-
-	<div class="col-auto">
-		<label for="foto" class="form-label">Arcképes fotó
-			&nbsp<?php include "img/filetype-jpg.svg"; echo"&nbsp"; include "img/filetype-png.svg"; ?></label>
-		<input name="sPhoto" type="file" class="form-control" id="foto" disabled>
+	<div class="col-md-8 col-lg-4 ">
+		<label for="sHA" class="form-label">Lakhely (település)</label>
+		<input name="sHA" pattern="^[a-zA-Z0-9éáűőúöüóíÁÉÍŰÚŐÖÜÓ\s\/\,\.\;]*$"
+			title="Csak betűk, számok, ',' '.' ';' és '/' jelek használata lehetséges" placeholder="Lakhely" value=""
+			type="text" class="form-control" id="sHA">
+	</div>
+	<div class="col-md-8">
+		<label for="foto" class="form-label">Arcképes fotó</label>
+		<input name="sPhoto " type="url" class="form-control notm" id="foto" disabled>
 	</div>
 
 	<div class="col-md-auto mt-4 input-group ">
-
 		<input type="hidden" name="sLastModifiedBy"
 			value="<?php echo $_SESSION['useruid'];?>">
-		<button type="submit" name="submit" class="btn btn-outline-primary">Rögzítés</button>
+		<button type="submit" name="submit" class="btn btn-outline-primary"> Rögzítés </button>
 	</div>
 	<div class="mt-4 col-md-auto">
 

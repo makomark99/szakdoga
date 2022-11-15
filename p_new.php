@@ -5,7 +5,8 @@
     include_once 'includes/arrays.php';
    
     if (!isset($_SESSION["loggedin"])) {
-        header('location: ../Szakdoga/login.php');
+        echo '<script> location.replace("login.php"); </script>';
+        
     }
     if (isset($_POST["submit"])) {
         $npName=mysqli_real_escape_string($conn, $_POST['npName']);

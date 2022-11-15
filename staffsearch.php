@@ -3,8 +3,9 @@
       include_once 'header.php';
       include_once 'check_user.php';
       if (!isset($_SESSION["loggedin"])) {
-          header('location: ../Szakdoga/login.php');
-      }
+        echo '<script> location.replace("login.php"); </script>';
+        
+    }
      
     $sql = "SELECT * FROM staff WHERE sIsActive=1";
     $result=mysqli_query($conn, $sql);

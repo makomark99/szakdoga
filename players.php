@@ -4,7 +4,7 @@
   include_once 'includes/dbh.inc.php';
   include_once 'includes/arrays.php';
   if (!isset($_SESSION["loggedin"])) {
-      header('location: ../Szakdoga/login.php');
+      echo '<script> location.replace("login.php"); </script>';
   }
 ?>
 <script defer src="calculate.js">
@@ -688,13 +688,13 @@ function clickToView(int $id)
 														<?php echo ($row['pPTel']=='')?'nincs megdva':$row['pPTel']; ?>
 													</h4>
 													<label> <i>E-mail</i> </label>
-													<h4 class="mb-4 mt-1">
+													<h5 class="mb-4 mt-1">
 														<?php echo ($row['pEmail']=='')?'nincs megdva':$row['pEmail']; ?>
-													</h4>
+													</h5>
 													<label> <i>Szülő e-mail</i> </label>
-													<h4 class="mb-4 mt-1">
+													<h5 class="mb-4 mt-1">
 														<?php echo ($row['pPEmail']=='')?'nincs megdva':$row['pPEmail']; ?>
-													</h4>
+													</h5>
 												</div>
 												<div class="col-lg-3 col-md-6  ">
 													<label> <i>Pólóméret</i> </label>

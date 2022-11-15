@@ -4,7 +4,7 @@ include_once 'includes/dbh.inc.php';
 include_once 'includes/SweetAlert.php';
 
 if (!isset($_SESSION["loggedin"])) {
-    header('location: ../Szakdoga/login.php');
+    echo '<script> location.replace("login.php"); </script>';
 }
 if (isset($_GET["id"])) {
     $id=$_GET["id"];

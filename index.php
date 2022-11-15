@@ -4,7 +4,7 @@
   include_once 'navbar.php';
   include_once 'includes/arrays.php';
     if (!isset($_SESSION["loggedin"])) {
-        header('location: ../Szakdoga/login.php');
+        echo '<script> location.replace("login.php"); </script>';
     }
     if (isset($_SESSION["useruid"])) {
         echo '<h6">Bejelentkezve <b><i>'.$_SESSION["useruid"].' </i></b> néven.</h6>';
@@ -235,7 +235,7 @@ if (isset($_POST["deleteTaskBtn"])) {
 	<form action="index.php" method="post">
 		<div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content text-dark fs-5">
+				<div class="modal-content  text-dark fs-5">
 					<div class="modal-header">
 						<h3 class="modal-title" id="exampleModalLabel">Végrehajtandó feladat hozzáadása</h3>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -378,7 +378,7 @@ if (isset($_POST["deleteTaskBtn"])) {
 
 <div class="modal fade" id="showTasks" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-fullscreen h-100 modal-dialog-centered">
-		<div class="modal-content bg-dark text-white fs-5">
+		<div class="modal-content bg-black text-white fs-55">
 			<div class="modal-header">
 				<h3 class="modal-title" id="exampleModalLabel">Befejezett feladatok</h3>
 				<button type="button" class="btn-close  bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -397,7 +397,8 @@ if (isset($_POST["deleteTaskBtn"])) {
         $th=1;
         ?>
 				<div class="table-responsive">
-					<table class="table table-dark table-hover table-striped border border-success border-5">
+					<table id="ptable"
+						class="table table-dark table-hover table-striped border border-success border-5">
 						<thead class="thead-light ">
 							<tr>
 								<th>#</th>
@@ -425,7 +426,7 @@ if (isset($_POST["deleteTaskBtn"])) {
 								<td class="align-middle">
 									<?php echo $row['taskCategory']; ?>
 								</td>
-								<td class="align-middle">
+								<td width=40% class="align-middle">
 									<?php echo $row['taskDesc']; ?>
 								</td>
 								<td class="align-middle bold">

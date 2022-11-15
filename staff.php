@@ -3,8 +3,9 @@
   include_once 'navbar.php';
   include_once 'includes/dbh.inc.php';
   if (!isset($_SESSION["loggedin"])) {
-      header('location:Szakdoga/login.php');
-  }
+    echo '<script> location.replace("login.php"); </script>';
+    
+}
   
  
 ?>

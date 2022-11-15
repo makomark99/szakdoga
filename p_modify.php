@@ -7,7 +7,7 @@
     include_once 'includes/SweetAlert.php';
 
     if (!isset($_SESSION["loggedin"])) {
-        header('location: ../Szakdoga/login.php');
+        echo '<script> location.replace("login.php"); </script>';
     }
 
     if (isset($_POST["modify"])) {
@@ -168,12 +168,12 @@
 	<div class="col-md-6 col-lg-3">
 		<label for="email1" class="form-label">1. E-mail</label>
 		<input name="pPEmail" type="email" class="form-control" id="email1"
-			vlaue="<?php echo $row['pPEmail']; ?>">
+			value="<?php echo $row['pPEmail']; ?>">
 	</div>
 	<div class="col-md-6 col-lg-3">
 		<label for="email2" class="form-label">2. E-mail</label>
 		<input name="pEmail" type="email" class="form-control" id="email2"
-			vlaue="<?php echo $row['pEmail']; ?>">
+			value="<?php echo $row['pEmail']; ?>">
 	</div>
 	<div class="col-md-4 col-lg-2 ">
 		<label for="tel1" class="form-label">1. Telefonszám</label>
