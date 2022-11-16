@@ -1,3 +1,4 @@
+//how to generate a password in javascript? 
 
 $(document).ready(function() {
 	$('#ptable').DataTable({
@@ -12,6 +13,8 @@ $(document).ready(function() {
                 "previous":   "Előző"
             },
             "info": "Mutatva _START_ - _END_-ig a _TOTAL_ találatból",
+            "infoFiltered":   "(szűrve _MAX_ találatból)",
+            "infoPostFix":    "",
             "zeroRecords": "A keresésnek nincs találata",
             "infoEmpty": "Nincs találat",
             "lengthMenu": '<select class="ps-1">'+
@@ -25,3 +28,4 @@ $(document).ready(function() {
         }
     })
 });
+

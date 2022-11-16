@@ -3,9 +3,8 @@
       include_once 'header.php';
       include_once 'check_user.php';
       if (!isset($_SESSION["loggedin"])) {
-        echo '<script> location.replace("login.php"); </script>';
-        
-    }
+          echo '<script> location.replace("login.php"); </script>';
+      }
      
     $sql = "SELECT * FROM staff WHERE sIsActive=1";
     $result=mysqli_query($conn, $sql);
@@ -13,6 +12,7 @@
     $th=1;
 
         ?>
+<p class="blue">Lorem, ipsum.</p>
 
 <div class="container-fluid mt-4">
 	<h1 class="text-center m-4">Munkatársak adatai</h1>

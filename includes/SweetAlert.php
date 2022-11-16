@@ -21,3 +21,4 @@ function errorAlert(string $message, string $url, bool $err)
 <?php
 }
 include_once "./footer.php";
+?>
