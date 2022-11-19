@@ -453,7 +453,7 @@ function clickToView(int $id)
               $time= strtotime($row['pBDate']);
               $age=floor((time()-$time)/(60*60*24)/365.2425);
               $id= $row['pId']; ?>
-						<tr>
+						<tr height="70px">
 							<a>
 
 								<td <?php clickToView($id); ?> width=2%
@@ -481,10 +481,6 @@ function clickToView(int $id)
 									class="align-middle">
 									<?php echo $age; ?>
 								</td>
-								<!-- <td class="align-middle">
-                    <?php echo $row['pArrival']; ?>
-								</td> -->
-
 								<td <?php clickToView($id); ?>
 									class="align-middle">
 
@@ -542,14 +538,14 @@ function clickToView(int $id)
 							<td class="align-middle">
 								<a href="p_modify.php?id=<?php echo $id; ?>"
 									title="Szerkesztés" class="btn btn-outline-warning 
-                  <?php if (!$sadmin||$gUser) {
+                  <?php if ($gUser) {
                 echo 'disabled';
             } ?>">
 									<?php include 'img/pencil.svg' ?>
 								</a>
-								<a title="Törlés" class="btn btn-outline-danger <?php if (!$sadmin||$gUser) {
+								<a title="Törlés" class="btn btn-outline-danger <?php if ($gUser) {
                 echo 'disabled';
-            } ?>" data-bs-toggle=" modal"
+            } ?>" data-bs-toggle="modal"
 									data-bs-target="#delete<?php echo $id; ?>">
 									<!--egyedi id kell, mert minding az elsőt találta meg-->
 									<?php include 'img/trash.svg' ?>

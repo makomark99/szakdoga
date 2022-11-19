@@ -74,15 +74,60 @@ if (isset($_POST["deleteTaskBtn"])) {
     echo '<script> location.replace("index.php?deletetask=none"); </script>';
 }
 
-
+$sql_bdate_categories="SELECT TIMESTAMPDIFF(YEAR, `pBDate`, NOW()) as 'kor', COUNT(*) as `count` FROM `players` INNER JOIN 
+( SELECT 0 as `start`, 5 as `end`, '0-5' as `group` UNION ALL SELECT 6, 7, '6-7' UNION ALL SELECT 8, 9, '8-9' UNION ALL SELECT 
+10, 11, '10-11' UNION ALL SELECT 12, 13, '12-13' UNION ALL SELECT 14, 15, '14-15' UNION ALL SELECT 16, 17, '16-17' UNION ALL SELECT 
+18, 19, '18-19' UNION ALL SELECT 20, 150, '20+' ) `players` ON TIMESTAMPDIFF(YEAR, `pBDate`, NOW()) BETWEEN `start` and `end` 
+WHERE pIsMember=1 GROUP BY `group` ORDER BY 'kor' ASC;";
+$res=mysqli_query($conn, $sql_bdate_categories);
+$queryResults=mysqli_num_rows($res);
+$array_with_counts=array();
+$players_sum=0;
+while ($row=mysqli_fetch_assoc($res)) {
+    $array_with_counts[] = $row['count'];
+    $players_sum+=$row['count'];
+}
+$sql_staff_counts="SELECT DISTINCT sPost, COUNT(*) as 'count' FROM `staff` WHERE sInternal=1 AND sIsActive=1 AND sPost!='Elnök' GROUP BY sPost;";
+$res2=mysqli_query($conn, $sql_staff_counts);
+$array_with_posts=array();
+$array_with_posts_label=array();
+$staff_sum=0;
+while ($row2=mysqli_fetch_assoc($res2)) {
+    $array_with_posts[] = $row2['count'];
+    $array_with_posts_label[] = $row2['sPost'];
+    $staff_sum+=$row2['count'];
+}
   ?>
+<script defer src="chart_hand.js"></script>
 
+<script defer src="chart_birth_dates.js"></script>
+<script>
+	const data_array = <?php echo json_encode($array_with_counts);?> ;
+	const data_array2 = <?php echo json_encode($array_with_posts);?> ;
+	const staff_labels = <?php echo json_encode($array_with_posts_label);?> ;
+	const staff_sum = <?php echo $staff_sum;?> ;
+	const players_sum = <?php echo $players_sum;?> ;
+</script>
 <h1 class='text-center '>Főoldal</h1>
+<div class="row">
+	<div class="my-3 col-md-4">
+		<div>
+			<canvas id="myChart"></canvas>
+		</div>
+	</div>
+	<div class="my-3 col-md-8">
+		<div>
+			<canvas id="myChart2"></canvas>
+		</div>
+	</div>
+</div>
+
 
 <nav class=" mt-5 ">
 
 	<div class="text-center m-3">
 		<h4>Google táblázatok</h4>
+
 	</div>
 	<div class="boxes row mt-1  ">
 
@@ -149,10 +194,10 @@ if (isset($_POST["deleteTaskBtn"])) {
 		</div>
 		<?php
 
-        if ($tasksToDo>=0 && !$sadmin) {
+        if ($tasksToDo>=0 && $gUser) {
             $userID=$_SESSION['userid'];
             $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='0' AND T.taskRef=$userID ORDER BY T.taskDeadline; ";
-        } elseif ($sadmin) {
+        } elseif ($sadmin||$admin) {
             $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='0' ORDER BY T.taskDeadline; ";
         }
         $result=mysqli_query($conn, $sql);
@@ -308,10 +353,10 @@ if (isset($_POST["deleteTaskBtn"])) {
 	</div>
 
 	<?php
-      if (!$sadmin) {
+      if ($gUser) {
           $userID=$_SESSION['userid'];
           $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' AND T.taskRef=$userID ORDER BY T.taskDoneDate DESC LIMIT 5;";
-      } elseif ($sadmin) {
+      } elseif ($sadmin||$admin) {
           $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate; ";
       }
         $result=mysqli_query($conn, $sql);
@@ -385,10 +430,10 @@ if (isset($_POST["deleteTaskBtn"])) {
 			</div>
 			<div class="modal-body">
 				<?php
-                if (!$sadmin) {
+                if ($gUser) {
                     $userID=$_SESSION['userid'];
                     $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' AND T.taskRef=$userID ORDER BY T.taskDoneDate DESC;";
-                } elseif ($sadmin) {
+                } elseif ($sadmin||$admin) {
                     $sql = "SELECT * FROM tasks T JOIN users U ON T.taskRef=U.usersId WHERE T.taskIsReady ='1' ORDER BY T.taskDoneDate DESC;";
                 }
        

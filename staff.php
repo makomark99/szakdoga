@@ -45,7 +45,7 @@
 						<th>Telefonszám</th>
 						<th>Beosztás</th>
 						<th
-							class="<?php echo ($sadmin)? : 'd-none'; ?>">
+							class="<?php echo (!$gUser)? : 'd-none'; ?>">
 							Műveletek</th>
 					</tr>
 				</thead>
@@ -54,7 +54,7 @@
             ?>
 
 					<tr
-						style='<?php echo (!$sadmin) ?  : "font-size:90%;"; ?>'>
+						style='<?php echo ($gUser) ?  : "font-size:90%;"; ?>'>
 						<td class="align-middle">
 							<?php echo $th++; ?>
 						</td>
@@ -73,20 +73,14 @@
 						<td class="align-middle ">
 							<?php echo $row['sEmail2']; ?>
 						</td>
-
-
-						<td class="align-middle ">
+						<td width=12% class="align-middle ">
 							<?php echo $row['sTel']; ?>
 						</td>
-
-
-
 						<td class="align-middle ">
 							<?php echo $row['sPost']; ?>
 						</td>
-
 						<td
-							class="<?php echo ($sadmin)? : 'd-none'; ?>">
+							class="<?php echo (!$gUser)? : 'd-none'; ?>">
 							<input type="hidden"
 								name="sLastModifiedBy<?php echo $row['sId']; ?>"
 								value="<?php echo $_SESSION['useruid']; ?>">

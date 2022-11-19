@@ -32,8 +32,6 @@ session_start();
 	<script defer type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 	<script defer type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js">
 	</script>
-
-
-
+	<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
