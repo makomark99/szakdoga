@@ -221,8 +221,8 @@
 	</div>
 	<div class="col-md-12 col-lg-6">
 		<label for="pPhoto" class="form-label">Arcképes fotó</label>
-		<input name="pPhoto" id="pPhoto" placeholder="https://mkcse.hu/assets/img/logo.png" type="url"
-			class="form-control" id="foto" value="https://cdn-icons-png.flaticon.com/512/2922/2922561.png">
+		<input name="pPhoto" id="pPhoto" type="url" class="form-control" id="foto"
+			value="https://cdn-icons-png.flaticon.com/512/2922/2922561.png">
 	</div>
 
 	<div class="col-md-auto mt-4 ">

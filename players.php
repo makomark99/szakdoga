@@ -712,7 +712,12 @@ function clickToView(int $id)
 														<label> <i class="text-secondary">Játékengedélyek</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php
-                    echo $row['pL1'];
+                                                            $isNull=false;
+              if ($row['pL1']!="") {
+                  echo $row['pL1'];
+              } else {
+                  $isNull=true;
+              }
               if ($row['pL2']!="") {
                   echo ";\t ";
                   echo $row['pL2'];
@@ -720,6 +725,9 @@ function clickToView(int $id)
               if ($row['pL3']!="") {
                   echo ";\t ";
                   echo $row['pL3'];
+              }
+              if ($isNull) {
+                  echo "nincs játékengedély";
               } ?>
 														</h4>
 													</div>
