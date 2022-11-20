@@ -5,7 +5,7 @@
     data: {
       labels: ['0-5', '6-7', '8-9', '10-11', '12-13', '14-15', '16-17', '18-19', '20+'],
       datasets: [{
-        label: players_sum + ' játékos korcsoportjának eloszlása',
+        label: 'Játékosok száma',
         data: data_array.reverse(),
          
       }]
@@ -16,11 +16,20 @@
             labels: {
                 // This more specific font property overrides the global property
                 font: {
-                  size: 18,
-                  family:'Nunito'
+                  size: 14,
+                  family:'Nunito',
               },
             }
         },
+        title: {
+          display: true,
+          text: players_sum + ' játékos korcsoportjának eloszlása',
+          font: {
+            size: 18,
+            family:'Nunito'
+        },
+        color:'white',
+      },
     },
       responsive: true,
       scales: {

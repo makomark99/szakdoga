@@ -108,7 +108,7 @@ while ($row2=mysqli_fetch_assoc($res2)) {
 	const staff_sum = <?php echo $staff_sum;?> ;
 	const players_sum = <?php echo $players_sum;?> ;
 </script>
-<h1 class='text-center '>Főoldal</h1>
+<h1 class='text-center mb-3 '>Főoldal</h1>
 <div class="row">
 	<div class="my-3 col-md-4">
 		<div>

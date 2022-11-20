@@ -603,44 +603,44 @@ function clickToView(int $id)
 
 												<div class="col-lg-9 col-md-12 row d-flex mt-5">
 													<div class="col-lg-3 col-md-6    ">
-														<label> <i>MKSZ Személy kód</i> </label>
+														<label> <i class="text-secondary">MKSZ Személy kód</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo $row['pCode']; ?>
 														</h4>
-														<label> <i>Születési hely</i> </label>
+														<label> <i class="text-secondary">Születési hely</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo mb_convert_case($row['pBPlace'], MB_CASE_TITLE, "UTF-8"); ?>
 														</h4>
-														<label> <i>Születési dátum</i> </label>
+														<label> <i class="text-secondary">Születési dátum</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo $row['pBDate']; ?>
 														</h4>
-														<label> <i>Anyja neve</i> </label>
+														<label> <i class="text-secondary">Anyja neve</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo mb_convert_case($row['pMsN'], MB_CASE_TITLE, "UTF-8"); ?>
 														</h4>
-														<label> <i>Nemzetiség</i> </label>
+														<label> <i class="text-secondary">Nemzetiség</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo $row['pNat']; ?>
 														</h4>
 													</div>
 													<div class="col-lg-3 col-md-6  ">
 														</h4>
-														<label> <i> Sportorvosi dátum</i></label>
+														<label> <i class="text-secondary"> Sportorvosi dátum</i></label>
 														<h4 class="mb-4 mt-1"><?php if ($row['pLMCDate']!="" && $row['pLMCDate']!=0000-00-00) {
                     echo $row['pLMCDate'];
                 } else {
                     echo "Még nem volt vizsgálaton";
                 } ?>
 														</h4>
-														<label> <i>Sportorvos</i> </label>
+														<label> <i class="text-secondary">Sportorvos</i> </label>
 														<h4 class="mb-4 mt-1"><?php if ($row['pMCD']!="") {
                     echo $row['pMCD'];
                 } else {
                     echo "nincs megadva";
                 } ?>
 														</h4>
-														<label> <i>Edző neve</i> </label>
+														<label> <i class="text-secondary">Edző neve</i> </label>
 														<h4 class="mb-4 mt-1"><?php if ($row['pTId']!="") {
                     $sql2="SELECT * FROM staff S INNER JOIN trainers T ON S.sId=T.sId WHERE T.tIsCoach=1;";
                     $result2=mysqli_query($conn, $sql2);
@@ -656,11 +656,11 @@ function clickToView(int $id)
                     echo "nincs megadva";
                 } ?>
 														</h4>
-														<label> <i>Igazolás dátuma</i> </label>
+														<label> <i class="text-secondary">Igazolás dátuma</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo $row['pArrival']; ?>
 														</h4>
-														<label> <i>Lakhely</i> </label>
+														<label> <i class="text-secondary">Lakhely</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php if ($row['pHA']!="") {
                     echo $row['pHA'];
@@ -675,41 +675,41 @@ function clickToView(int $id)
 														<h4 class="mb-4 mt-1">
 															<?php echo ($row['pSH'])?'igen':'nem'; ?>
 														</h4>
-														<label> <i>Telefonszám</i> </label>
+														<label> <i class="text-secondary">Telefonszám</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo ($row['pTel']=='')?'nincs megdva':$row['pTel']; ?>
 														</h4>
-														<label> <i>Szülő elefonszám</i> </label>
+														<label> <i class="text-secondary">Szülő telefonszám</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo ($row['pPTel']=='')?'nincs megdva':$row['pPTel']; ?>
 														</h4>
-														<label> <i>E-mail</i> </label>
+														<label> <i class="text-secondary">E-mail</i> </label>
 														<h5 class="mb-4 mt-1">
 															<?php echo ($row['pEmail']=='')?'nincs megdva':$row['pEmail']; ?>
 														</h5>
-														<label> <i>Szülő e-mail</i> </label>
+														<label> <i class="text-secondary">Szülő e-mail</i> </label>
 														<h5 class="mb-4 mt-1">
 															<?php echo ($row['pPEmail']=='')?'nincs megdva':$row['pPEmail']; ?>
 														</h5>
 													</div>
 													<div class="col-lg-3 col-md-6  ">
-														<label> <i>Pólóméret</i> </label>
+														<label> <i class="text-secondary">Pólóméret</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo ($row['pTSize']=='')?'nincs megdva':$row['pTSize']; ?>
 														</h4>
-														<label> <i>Tajszám</i> </label>
+														<label> <i class="text-secondary">Tajszám</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo ($row['pSsn']=='')?'nincs megdva':$row['pSsn']; ?>
 														</h4>
-														<label> <i>Ügyesebbik kéz</i> </label>
+														<label> <i class="text-secondary">Ügyesebbik kéz</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo ($row['pPHand']=='')?'nincs megdva':$row['pPHand']; ?>
 														</h4>
-														<label> <i>Poszt</i> </label>
+														<label> <i class="text-secondary">Poszt</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php echo ($row['pPost']=='')?'nincs megdva':$row['pPost']; ?>
 														</h4>
-														<label> <i>Játékengedélyek</i> </label>
+														<label> <i class="text-secondary">Játékengedélyek</i> </label>
 														<h4 class="mb-4 mt-1">
 															<?php
                     echo $row['pL1'];
@@ -728,7 +728,7 @@ function clickToView(int $id)
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
+										<button type="button" class="btn btn-outline-secondary"
 											data-bs-dismiss="modal">Bezár</button>
 									</div>
 								</div>
