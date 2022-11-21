@@ -38,36 +38,27 @@
 								<div class="modal-body">
 									<div class="row g-2 d-flex">
 										<div class="col-md-6 mb-3">
-											<?php
-    $sql5="SELECT DISTINCT pL1 as pl FROM players WHERE pIsMember=1 ORDER BY pl";
-    $result5=mysqli_query($conn, $sql5);
-    $qres5=mysqli_num_rows($result5);
-    ?>
 											<label class="form-label">Csapat kiválasztása
-												(<?php echo $qres5-1; ?>
+												(<?php echo count($teams);$j=0;?>
 												csapat
 												közül)</label>
 											<select name="pL" class="form-select">
-												<option value="NULL">Nincs játékengedély kiválasztva</option>';
-												<?php
-          if ($qres5>0) {
-              $i=0;
-              while ($row5=mysqli_fetch_assoc($result5)) {
-                  echo '<option value="'.$row5['pl'].'">';
-                  
-                  if (($i==0) && ($row5['pl']==null)) {
-                      echo "Nincs kikérve";
-                      $i+=1;
-                  } else {
-                      echo $row5['pl'];
-                  } ?>
+												<option value="NULL">Nincs játékengedély kiválasztva</option>;
+												<?php while ($j!=count($teams)) {
+    $tmp=$teams[$j]; ?>
+												<option
+													value="<?php echo $tmp; ?>">
+													<?php if ($tmp=="") {
+        echo "Nincs kikérve";
+    } else {
+        echo $tmp;
+    } ?>
 												</option>
-												<?php
-              }
-          }
-          ?>
+												<?php $j++;
+} ?>
 											</select>
 										</div>
+
 										<div class="col-md-6 mb-3">
 											<?php
             $sql="SELECT * FROM staff S INNER JOIN trainers T ON S.sId= T.sId

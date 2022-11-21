@@ -1,4 +1,6 @@
 <?php
+   require_once 'dbh.inc.php';
+   require_once 'functions.inc.php';
 if (isset($_POST["submit"])) {
     $pName= mb_strtoupper($_POST['pName'], "UTF-8");
     $pCode=$_POST['pCode'];
@@ -28,8 +30,6 @@ if (isset($_POST["submit"])) {
     $pLastModifiedBy=$_POST['pLastModifiedBy'];
     $pLastModifiedAt=date("Y-m-d");
 
-    require_once 'dbh.inc.php';
-    require_once 'functions.inc.php';
 
     if (pCodeExists($conn, $pCode)!==false) {
         header("location: ../p_add.php?error=pcodeexists");
