@@ -12,11 +12,11 @@ function errorAlert(string $message, string $url, bool $err)
 		icon: "<?php echo ($err==true)? "error" : "success";?>",
 		background: "#343a40",
 		color: "#fff",
-		timer: 3000
+		timer: 2500
 	})
 	setTimeout(function() {
 		document.location.href = "<?php echo $url; ?>";
-	}, 3000)
+	}, 2500)
 </script>
 <?php
 }

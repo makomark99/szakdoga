@@ -209,7 +209,7 @@
 						</div>
 						<button
 							id="modify-<?php echo $row['usersId']; ?>"
-							type="submit" name="modifyUserRole" class="btn btn-outline-primary d-none">Módoít</button>
+							type="submit" name="modifyUserRole" class="btn btn-outline-primary d-none">Módosít</button>
 						<input type="hidden"
 							value="<?php echo $row['usersId']; ?>"
 							name="userId">

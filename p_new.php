@@ -6,7 +6,6 @@
    
     if (!isset($_SESSION["loggedin"])) {
         echo '<script> location.replace("login.php"); </script>';
-        
     }
     if (isset($_POST["submit"])) {
         $npName=mysqli_real_escape_string($conn, $_POST['npName']);
@@ -66,6 +65,35 @@
         mysqli_stmt_execute($stmt);
         echo '<script> location.replace("p_new.php?nextstatus=none"); </script>';
     }
+     if (isset($_POST["deleteNP"])) {
+         $npId=($_POST['npID']);
+         $date=date("Y-m-d");
+         $set="DELETE FROM new_players WHERE npID=?;";
+         $stmt=mysqli_stmt_init($conn);
+         if (!mysqli_stmt_prepare($stmt, $set)) {
+             echo '<script> location.replace("p_new.php?delete_error=stmtfailed"); </script>';
+             exit();
+         }
+         mysqli_stmt_bind_param($stmt, 's', $npId);
+         mysqli_stmt_execute($stmt);
+         mysqli_stmt_close($stmt);
+         echo '<script> location.replace("p_new.php?delete_error=none"); </script>';
+     }
+      if (isset($_POST["modifyComment"])) {
+          $npID=($_POST['npID']);
+          $npComment=mysqli_real_escape_string($conn, $_POST['npComment']);
+          $date=date("Y-m-d");
+          $set="UPDATE new_players SET npComment='$npComment' WHERE npID=?;";
+          $stmt=mysqli_stmt_init($conn);
+          if (!mysqli_stmt_prepare($stmt, $set)) {
+              echo '<script> location.replace("p_new.php?modify_error=stmtfailed"); </script>';
+              exit();
+          }
+          mysqli_stmt_bind_param($stmt, 's', $npID);
+          mysqli_stmt_execute($stmt);
+          mysqli_stmt_close($stmt);
+          echo '<script> location.replace("p_new.php?modify_error=none"); </script>';
+      }
 ?>
 <div class="container">
 
@@ -113,17 +141,44 @@
                     $queryResults=mysqli_num_rows($result);
                     if ($queryResults>0) {
                         while ($row=mysqli_fetch_assoc($result)) {
-                            ?>
-	<div class="row" style="width:90%;">
-		<label class="col-md-3 mt-3 me-2"><b>Név:</b>
+                            $done= ($row['npStatusCode']==10)?true:false; ?>
+	<div class="row " style="margin:0;">
+		<label class=" ms-0 p-0 col-md-3 mt-3 "><b>Név:</b>
 			<?php echo $row['npName'] ?></label>
-		<label class="col-md-3 mt-3 me-2"><b>Bejegyezve:</b>
+		<label class="col-md-3 mt-3 "><b>Bejegyezve:</b>
 			<?php echo $row['npDate']; ?></label>
-		<label class="col-md-3 mt-3 me-2"><b>Megjegyzés:</b>
-			<?php echo $row['npComment']; ?></label>
-		<label class="col-md-6 mt-3 "><b>Aktuális folyamat:</b>
+		<div class="col-md-5 mt-3 ">
+			<form action="p_new.php" method="post">
+				<div class="input-group input-group-sm">
+					<span class="input-group-text bg-dark text-white"
+						id="inputGroup-sizing-sm"><?php echo($done)?'Befejezve':'Megjegyzés' ?></span>
+					<input type="text"
+						<?php echo ($done)?'readonly':''; ?>
+					class="form-control
+					<?php echo ($done)? 'bg-success text-dark':'' ; ?>"
+					aria-label="Sizing example input" name="npComment" aria-describedby="inputGroup-sizing-sm"
+					value="<?php echo ($done)?$row['npSignedDate'] :$row['npComment'] ; ?>">
+					<input type="hidden"
+						value="<?php echo $row['npID']; ?>"
+						name="npID">
+					<button
+						class="btn btn-outline-primary <?php echo ($gUser)?'d-none':''; ?>"
+						<?php echo ($done)?'disabled' :''; ?>
+						type="submit" title="mentés" name="modifyComment"
+						id="button-addon2"><?php include "img/check-lg.svg"; ?></button>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-1 d-flex justify-content-end me-0 p-0 mt-3">
+			<button
+				class="btn btn-sm btn-outline-danger <?php echo ($gUser||$done)?'d-none':'' ?>"
+				type="button" title="törlés" data-bs-toggle="modal"
+				data-bs-target="#delete<?php echo $row['npID']; ?>"
+				id="button-addon2"><?php include "img/trash.svg"; ?></button>
+		</div>
+		<label class="ms-0 p-0 col-md-6 mt-3 "><b>Aktuális folyamat:</b>
 			<?php echo $status[$row['npStatusCode']]; ?></label>
-		<label class="col-md-6 mt-3"><b>Következő folyamat:</b>
+		<label class="me-0 p-0 col-md-6 mt-3"><b>Következő folyamat:</b>
 			<?php echo ($row['npStatusCode']!=10)? $status[$row['npStatusCode']+1] : "Nincs"; ?></label>
 	</div>
 	<form action="p_new.php" method="post">
@@ -154,6 +209,33 @@
 			</div>
 		</div>
 	</form>
+	<!-- Modal -->
+	<div class="modal"
+		id="delete<?php echo $row['npID']; ?>"
+		data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="deleteLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content text-dark fs-5">
+				<div class="modal-header">
+					<h4 class="modal-title" id="deleteLabel">Leigazolási folyamat törlése</h4>
+					<button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<?php
+                            echo 'Biztosan szeretné <strong>TÖRÖLNI</strong> a következő nevű új játékost: '.$row['npName'].' ?'; ?>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezár</button>
+					<form action="p_new.php" method="post">
+						<input type="hidden"
+							value="<?php echo $row['npID']; ?>"
+							name="npID">
+						<button type="submit" name="deleteNP" class="btn btn-danger">Törlés</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<hr class="border border-warning border-2 opacity-75">
 	<?php
                         }
@@ -173,6 +255,20 @@ if (isset($_GET["error"])) {
                             errorAlert("Valami nem stimmel, próbálkozz újra!", "p_new.php", true);
                         } elseif (($_GET["nextstatus"]=="none")||($_GET["prevstatus"]=="none")) {
                             errorAlert("A nyilvántartásba vételi folyamat sikeresen frissítve !", "p_new.php", false);
+                        }
+                    }
+                    if (isset($_GET["delete_error"])||isset($_GET["prevstatus"])) {
+                        if (($_GET["delete_error"]=="stmtfailed")) {
+                            errorAlert("Valami nem stimmel, próbálkozz újra!", "p_new.php", true);
+                        } elseif (($_GET["delete_error"]=="none")) {
+                            errorAlert("A folyamat sikeresen törölve!", "p_new.php", false);
+                        }
+                    }
+                    if (isset($_GET["modify_error"])||isset($_GET["prevstatus"])) {
+                        if (($_GET["modify_error"]=="stmtfailed")) {
+                            errorAlert("Valami nem stimmel, próbálkozz újra!", "p_new.php", true);
+                        } elseif (($_GET["modify_error"]=="none")) {
+                            errorAlert("A folyamat megjegyzése sikeresen frissítve!", "p_new.php", false);
                         }
                     }
 ?>

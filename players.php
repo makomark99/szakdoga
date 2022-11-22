@@ -295,8 +295,8 @@
 							</div>
 						</div>
 						<hr class="m-2">
-						<table class="table table-bordered border border-secondary border-1">
-							<thead class="fs-6">
+						<table class="table table-bordered border border-secondary border-1 fs-6">
+							<thead class="">
 								<tr>
 									<th>Életkor</th>
 									<th>Egyesületben eltöltött évek</th>
