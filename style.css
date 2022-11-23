@@ -65,23 +65,16 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
    
   }
 
-  /* .tooltip-inner {
+ /* .tooltip-inner {
     color:white !important;
     background-color: #212529;
     opacity: 1 !important;
-}
-.tooltip-arrow::before {
+} */
+/* .tooltip-arrow::before {
     border-bottom-color: #212529 !important;
     border-left-color: #212529 !important;
 } */
-.modal-bg{
-    background-color: black;
-    color: white;
-}
-/* .boxes{
-    display: flex;
-    flex-wrap: wrap;
-} */
+
 .max-h{
     width:100vw !important;
     max-width: 100% !important;
@@ -116,3 +109,7 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
  #ptable_ellipsis>a{
     background-color: black !important;
  }
+
+ @media only screen and (max-width: 400px) {
+    .mobile-height {height:300px;}
+  }

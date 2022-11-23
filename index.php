@@ -110,12 +110,13 @@ while ($row2=mysqli_fetch_assoc($res2)) {
 </script>
 <h1 class='text-center mb-3 '>Főoldal</h1>
 <div class="row">
-	<div class="my-3 col-md-4">
+	<div class="my-3 col-md-4 col-sm-12">
 		<div>
 			<canvas id="myChart"></canvas>
 		</div>
 	</div>
-	<div class="my-3 col-md-8">
+
+	<div class="my-3 col-md-8 col-sm-12 ">
 		<div>
 			<canvas id="myChart2"></canvas>
 		</div>
@@ -361,7 +362,7 @@ while ($row2=mysqli_fetch_assoc($res2)) {
       }
         $result=mysqli_query($conn, $sql);
         $queryResults=mysqli_num_rows($result);
-        if ($queryResults<1 || $tasksToDo!=0) {
+        if ($queryResults<1) {
             echo "<div class='mx-auto p-0 my-2 w-50 border rounded-pill border-2 border-warning text-center '> <h4 class='my-2'> Jelenleg nincs általad befejezett feladat</h4> </div>";
         } else {
             $th=1; ?>

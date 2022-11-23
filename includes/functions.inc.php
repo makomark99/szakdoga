@@ -1,15 +1,15 @@
 <?php
 //signup functions
-function invalidUid($username)
-{
-    $result;
-    if (!preg_match('/^[a-zA-Z0-9]*$/', $username)) { //*:>=0 előfordulás
-        $result=true;
-    } else {
-        $result=false;
-    }
-    return $result;
-}
+// function invalidUid($username)
+// {
+//     $result;
+//     if (!preg_match('/^[a-zA-Z0-9]*$/', $username)) { //*:>=0 előfordulás
+//         $result=true;
+//     } else {
+//         $result=false;
+//     }
+//     return $result;
+// }
 
 function pwdMatch($pwd, $pwdRepeat)
 {

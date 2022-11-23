@@ -11,10 +11,10 @@ if (isset($_POST["submit"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
     
-    if (invalidUid($username)!==false) {
-        header("location: ../signup.php?error=invaliduid");
-        exit();
-    }
+    // if (invalidUid($username)!==false) {
+    //     header("location: ../signup.php?error=invaliduid");
+    //     exit();
+    // }
     if (pwdMatch($pwd, $pwdrep)!==false) {
         header("location: ../signup.php?error=passworderror");
         exit();

@@ -1,5 +1,12 @@
 
   const ctx2 = document.getElementById('myChart2');
+  let chart=document.getElementById("myChart2");
+  if (screen.width <= 400) {
+    chart.setAttribute("height", "300");
+  }
+  else{
+    chart.removeAttribute("height");
+  }
   new Chart(ctx2, {
     type: 'bar',
     data: {
