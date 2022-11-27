@@ -110,13 +110,13 @@ while ($row2=mysqli_fetch_assoc($res2)) {
 </script>
 <h1 class='text-center mb-3 '>Főoldal</h1>
 <div class="row">
-	<div class="my-3 col-md-4 col-sm-12">
+	<div class="my-3 col-lg-4 col-md-12">
 		<div>
 			<canvas id="myChart"></canvas>
 		</div>
 	</div>
 
-	<div class="my-3 col-md-8 col-sm-12 ">
+	<div class="my-3 col-lg-8 col-md-12 ">
 		<div>
 			<canvas id="myChart2"></canvas>
 		</div>

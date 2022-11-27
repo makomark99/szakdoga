@@ -65,5 +65,7 @@ $GLOBALS['categories'] = array(
     "Tábor",
     "Edzőmérkőzés",
     "Időpontegyeztetés",
-    "Adminisztráció"
+    "Adminisztráció",
+    "EHF",
+    "Tábor"
 );

@@ -2,6 +2,22 @@
   include_once 'header.php';
   include_once 'navbar.php';
 ?>
+<script defer>
+	function checkPwdMatch() {
+		alert("bent vagyunk");
+		let pwd1 = document.getElementById('Pass');
+		let pwd2 = document.getElementById('PassR');
+		messageBox = document.getElementById('error');
+		alert((pwd1.value != pwd2.value))
+		if (pwd1.value != pwd2.value) {
+			messageBox
+				.innerHTML = <?php echo "<p class='red'>A két jelszó nem azonos!</p>" ?> ;
+		} else {
+			messageBox.innerHTML = '';
+		}
+
+	}
+</script>
 <div class="container" id="signup">
 	<div class="row ">
 		<div class="panel panel-danger col-md-4 col-xs-10 col-sm-9 mx-auto">
@@ -13,7 +29,7 @@
 					<div class="form-group">
 						<label class="mt-5" for="Wname">Teljes név*</label>
 						<input id="Wname" class="form-control mb-3" type="text" name="name"
-							placeholder="Vezetéknév Keresztnév " required>
+							placeholder="Vezetéknév Keresztnév" required>
 					</div>
 					<div class="form-group">
 						<label for="Email">E-mail cím*</label>
@@ -32,8 +48,8 @@
 					</div>
 					<div class="form-group">
 						<label for="PassR">Jelszó ismét*</label>
-						<input id="PassR" class="form-control mb-3" type="password" name="pwdrepeat"
-							placeholder="Jelszó ismét" required>
+						<input oninput="checkPwdMatch()" id="PassR" class="form-control mb-3" type="password"
+							name="pwdrepeat" placeholder="Jelszó ismét" required>
 					</div>
 					<div class="form-group">
 						<label for="Token">Regisztrációs token*</label>
@@ -46,7 +62,7 @@
 						<div class=" ms-auto mt-2 col-auto"><small>&copy; Mosonmagyaróvári KC</small></div>
 
 					</div>
-					<div class="text-center">
+					<div id="error" class="text-center">
 						<?php
                 if (isset($_GET["error"])) { //olyan adatot ellenőriz, amit látunk az URL-ben
                     if ($_GET["error"]== "invaliduid") {
@@ -55,6 +71,7 @@
                     if ($_GET["error"]== "passworderror") {
                         echo "<p class='red'> A két jelszó nem azonos!</p>";
                     }
+                   
                     if ($_GET["error"]== "usernametaken") {
                         echo "<p class='red'>A megadot felhasználónév, vagy e-mail cím már foglalt!</p>";
                     }

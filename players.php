@@ -9,6 +9,17 @@
 ?>
 	<script defer src="calculate.js">
 	</script>
+	<script defer>
+		function enableMonth() {
+			let yearSelect = document.getElementById("pArr").value;
+			const monthSelect = document.getElementById("pArrM");
+			if (yearSelect != "") {
+				monthSelect.removeAttribute("disabled", "");
+			} else {
+				monthSelect.setAttribute("disabled", "");
+			}
+		}
+	</script>
 
 	<div class="col-md-12  justify-content-end">
 		<div class="d-flex  row">
@@ -109,7 +120,7 @@
          $qres2=mysqli_num_rows($result3);
         ?>
 											<label class="form-label">Keresés igazolás dátum alapján (év) </label>
-											<select name="pArr" class="form-select">
+											<select onclick="enableMonth()" name="pArr" id="pArr" class="form-select">
 												<option value="">Nincs év kiválasztva</option>
 												<?php
             if ($qres2>0) {
@@ -124,7 +135,7 @@
 										</div>
 										<div class="col-md-6 mb-3">
 											<label class="form-label">Keresés igazolás dátum alapján (hónap)</label>
-											<select name="pArrM" class="form-select">
+											<select name="pArrM" id="pArrM" class="form-select" disabled>
 												<option value="">Nincs hónap kiválasztva</option>
 												<?php $m=1;
               while ($m!=13) {
@@ -539,8 +550,7 @@ function clickToView(int $id)
             if (!$leaver) { ?>
 								</a>
 								<td class="align-middle">
-									<a data-bs-toggle="tooltip" data-bs-placement="left" title="Játékos szerkesztése"
-										href="p_modify.php?id=<?php echo $id; ?>"
+									<a href="p_modify.php?id=<?php echo $id; ?>"
 										class="btn btn-outline-warning 
                   <?php if ($gUser) {
                 echo 'disabled';
@@ -548,7 +558,7 @@ function clickToView(int $id)
 										<?php include 'img/pencil.svg' ?>
 									</a>
 
-									<a data-bs-toggle="tooltip" data-bs-placement="right" title="Játékos törlése" class="btn btn-outline-danger <?php if ($gUser) {
+									<a class="btn btn-outline-danger <?php if ($gUser) {
                 echo 'disabled';
             } ?>" data-bs-toggle="modal"
 										data-bs-target="#delete<?php echo $id; ?>">

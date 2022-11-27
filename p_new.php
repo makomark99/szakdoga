@@ -119,7 +119,6 @@
 					<option value="7">Aláírt dokumentumok egyesítve, feltöltve MKSZ rendszerbe</option>
 					<option value="8">MKSZ által jóváhagyva</option>
 					<option value="9">Igazolás kép feltöltve, jóváhagyásra vár</option>
-					<option value="10">Kép jóváhagyva, amatőr/tagsági szerződés feltöltve</option>
 				</select>
 			</div>
 			<div class="col-md-4 col-lg-3 mt-1">
@@ -171,7 +170,7 @@
 		</div>
 		<div class="col-md-1 d-flex justify-content-end me-0 p-0 mt-3">
 			<button
-				class="btn btn-sm btn-outline-danger <?php echo ($gUser||$done)?'d-none':'' ?>"
+				class="btn btn-sm btn-outline-danger <?php echo ($gUser)?'d-none':'' ?>"
 				type="button" title="törlés" data-bs-toggle="modal"
 				data-bs-target="#delete<?php echo $row['npID']; ?>"
 				id="button-addon2"><?php include "img/trash.svg"; ?></button>
