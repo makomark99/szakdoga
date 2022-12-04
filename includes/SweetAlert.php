@@ -6,10 +6,10 @@ function errorAlert(string $message, string $url, bool $err)
 <script>
 	Swal.fire({
 		position: "center",
-		type: "<?php echo ($err==true)? "error" : "success";?>",
+		type: "<?php echo ($err==true)? "error" : "success"; ?>",
 		title: "<?php echo $message; ?>",
 		showConfirmButton: false,
-		icon: "<?php echo ($err==true)? "error" : "success";?>",
+		icon: "<?php echo ($err==true)? "error" : "success"; ?>",
 		background: "#343a40",
 		color: "#fff",
 		timer: 2500

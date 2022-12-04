@@ -14,7 +14,7 @@
     }
         //add task
         if (isset($_POST["addTask"])) {
-            $task=mysqli_real_escape_string($conn, $_POST['task']);
+            $task= $_POST['task'];
             $ref=$_POST['ref'];
             $deadline=$_POST['deadline'];
             $category=$_POST['category'];
@@ -60,7 +60,7 @@
         mysqli_stmt_execute($stmt);
         echo '<script> location.replace("index.php?taskisdone=none"); </script>';
     }
-    // task mark as done end
+    // task delete
 if (isset($_POST["deleteTaskBtn"])) {
     $id=$_POST["deleteTask"];
     $delete="DELETE FROM tasks WHERE taskId=?;";
@@ -165,14 +165,10 @@ while ($row2=mysqli_fetch_assoc($res2)) {
 				href="https://docs.google.com/spreadsheets/d/1XUQonFIpyV_0sVrMOEQILWZm-7RVmPwt/edit#gid=774448911"
 				target="_blank" class="btn btn-outline-primary btn">Mezszámok</a>
 		</div>
-		<div class="col-auto mb-2"> <a type="button"
-				href="https://docs.google.com/spreadsheets/d/1S5bHnh4hf0NBIvTZgptxVbeBRFxEfth4uMbPFpnI7NE/edit#gid=0"
-				target="_blank" class="btn btn-outline-primary btn">Leltár</a>
-		</div>
 	</div>
 	<div class="row mt-5 ">
 		<div class="col-auto">
-			<h4>Email rendelések:</h4>
+			<h4>E-mail rendelések:</h4>
 		</div>
 		<div class="col-auto ">
 			<a type="button" href="food.php" class="btn btn-outline-primary ">Hidegcsomag</a>
@@ -561,6 +557,7 @@ while ($row2=mysqli_fetch_assoc($res2)) {
 		background: "#343a40",
 		color: "#fff",
 		timer: 2500
+		<?php $show=false;?>
 	})
 </script>
 

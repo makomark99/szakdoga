@@ -6,7 +6,6 @@
    
     if (!isset($_SESSION["loggedin"])) {
         echo '<script> location.replace("login.php"); </script>';
-        
     }
 if (isset($_POST["submit"])) {
     $sName=$_POST['sName'];

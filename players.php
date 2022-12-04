@@ -257,7 +257,7 @@
 							<div class="text-center">
 								<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
 									<input type="radio" class="btn-check " name="btnradio" id="nb1" autocomplete="off"
-										checked="" />
+										checked />
 									<label class="btn   btn-outline-primary" for="nb1">NB I</label>
 
 									<input type="radio" class="btn-check " name="btnradio" id="nb1b" autocomplete="off" />
@@ -280,7 +280,7 @@
 							<div class="text-center">
 								<div class="mt-1" role="group" aria-label="Basic radio toggle button group">
 									<input type="radio" class="btn-check" name="btnradio2" id="none" autocomplete="off"
-										checked="" />
+										checked />
 									<label class="btn  btn-outline-primary" for="none">Nincs</label>
 
 									<input type="radio" class="btn-check" name="btnradio2" id="ifi" autocomplete="off" />
