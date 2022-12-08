@@ -273,7 +273,7 @@
 								<div>Válogatottság kiválasztása
 									<a type="button" data-bs-toggle="tooltip" data-bs-placement="left"
 										data-bs-title="Válogatottság után járó szorzó akkor vehető figyelembe, ha a játékos legalább 3
-								hivatalos válogatott mérkőzésen szerepelt a jegyzőkönyvvben."><?php include "img/info-square.svg";?>
+								hivatalos válogatott mérkőzésen szerepelt a jegyzőkönyvben."><?php include "img/info-square.svg";?>
 									</a>
 								</div>
 							</div>

@@ -1,27 +1,17 @@
 <?php
 //signup functions
 
-function pwdMatch($pwd, $pwdRepeat)
-{
-    $result;
-    if ($pwd!==$pwdRepeat) {
-        $result=true;
-    } else {
-        $result=false;
-    }
-    return $result;
-}
+// function pwdMatch($pwd, $pwdRepeat)
+// {
+//     $result;
+//     if ($pwd!==$pwdRepeat) {
+//         $result=true;
+//     } else {
+//         $result=false;
+//     }
+//     return $result;
+// }
 
-function pwdIsStrong($pwd)
-{
-    $result;
-    if (!preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z]{8,30}$/', $pwd)) {
-        $result=true;
-    } else {
-        $result=false;
-    }
-    return $result;
-}
 
 function uidExists($conn, $username, $email)
 {

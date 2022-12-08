@@ -3,19 +3,38 @@
   include_once 'navbar.php';
 ?>
 <script defer>
-	function checkPwdMatch() {
-		alert("bent vagyunk");
+	function pwdMatchCheck() {
 		let pwd1 = document.getElementById('Pass');
 		let pwd2 = document.getElementById('PassR');
-		messageBox = document.getElementById('error');
-		alert((pwd1.value != pwd2.value))
+		result = false;
 		if (pwd1.value != pwd2.value) {
-			messageBox
-				.innerHTML = <?php echo "<p class='red'>A két jelszó nem azonos!</p>" ?> ;
+			result = true;
+			pwd1.setAttribute("style", "background-color:red;color:white;")
+			pwd1.setAttribute("title", "Az értékek megegyeznek!")
+			pwd2.setAttribute("style", "background-color:red;color:white;")
+			pwd2.setAttribute("title", "Az értékek megegyeznek!")
 		} else {
-			messageBox.innerHTML = '';
+			result = false;
 		}
-
+		if (result) {
+			Swal.fire({
+				position: "center",
+				type: "warning",
+				title: "A két jelszó nem azonos!",
+				showConfirmButton: false,
+				icon: "warning",
+				background: "#343a40",
+				color: "#fff",
+				timer: 3000
+			})
+			document.getElementById('btn').setAttribute("disabled", "")
+		} else {
+			document.getElementById('btn').removeAttribute("disabled", "")
+			pwd1.removeAttribute("style", "border:2px solid red;")
+			pwd2.removeAttribute("style", "border:2px solid red;")
+			pwd1.removeAttribute("title", "Az értékek megegyeznek!")
+			pwd2.removeAttribute("title", "Az értékek megegyeznek!")
+		}
 	}
 </script>
 <div class="container" id="signup">
@@ -38,18 +57,18 @@
 					</div>
 					<div class="form-group">
 						<label for="Uid">Felhasználónév*</label>
-						<input id="Uid" class="form-control mb-3" pattern="^[a-zA-Z áéíóöőúüűÁÉÍŰÚŐÖÜÓ\s.]*$"
+						<input id="Uid" class="form-control mb-3" pattern="^[a-zA-Z0-9áéíóöőúüűÁÉÍŰÚŐÖÜÓ_-]*$"
 							type="text" name="uid" placeholder="felhasznalonev" required>
 					</div>
 					<div class="form-group">
 						<label for="Pass">Jelszó*</label>
-						<input id="Pass" class="form-control mb-3" type="password" name="pwd" placeholder="Jelszó"
-							required>
+						<input id="Pass" name="pwd" type="password" class="form-control mb-3" minlength="8"
+							maxlength="30" placeholder="Jelszó" required>
 					</div>
 					<div class="form-group">
 						<label for="PassR">Jelszó ismét*</label>
-						<input oninput="checkPwdMatch()" id="PassR" class="form-control mb-3" type="password"
-							name="pwdrepeat" placeholder="Jelszó ismét" required>
+						<input onblur="pwdMatchCheck()" id="PassR" class="form-control mb-3" minlength="8"
+							maxlength="30" type="password" name="pwdrepeat" placeholder="Jelszó ismét" required>
 					</div>
 					<div class="form-group">
 						<label for="Token">Regisztrációs token*</label>
@@ -57,7 +76,7 @@
 							placeholder="Regisztrációs token" required>
 					</div>
 					<div class="panel-footer m-auto row  ">
-						<button type="submit" name="submit"
+						<button type="submit" name="submit" id="btn"
 							class="btn btn-outline-primary  mb-2 col-auto">Regisztráció</button>
 						<div class=" ms-auto mt-2 col-auto"><small>&copy; Mosonmagyaróvári KC</small></div>
 

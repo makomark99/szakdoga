@@ -47,3 +47,5 @@
 			pL3.setAttribute("title", "Az értékek megegyeznek!")
 		}
 	}
+
+
