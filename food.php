@@ -5,7 +5,6 @@
     include_once 'includes/arrays.php';
     if (!isset($_SESSION["loggedin"])) {
         echo '<script> location.replace("login.php"); </script>';
-        
     }
 ?>
 <script src="food_dataservice.js" defer></script>
@@ -19,7 +18,8 @@
 				<div class="row g-3 my-1">
 					<div class="col-md-6">
 						<label class="form-label" for="Date">Dátum*</label>
-						<input type="date" class="form-control" onchange="getDayName()" id="fDate" min=<?php echo date('Y-m-d') ?>
+						<input type="date" class="form-control" onchange="getDayName()" id="fDate"
+							min=<?php echo date('Y-m-d') ?>
 						max=9999-12-31
 						name="data[fDate]"
 						required>
@@ -101,7 +101,8 @@
 				</div>
 				<div class="col-12 mt-4 ">
 					<button type="submit" name="submit" class="me-5 btn btn-primary">Rögzítés</button>
-					<a target="_blank" href="https://docs.google.com/spreadsheets/d/1LuH9r4tKx77pAaxClUiv08suHrAdQiWE76L1plFjRRA/edit#gid=40044938"
+					<a target="_blank"
+						href="https://docs.google.com/spreadsheets/d/1LuH9r4tKx77pAaxClUiv08suHrAdQiWE76L1plFjRRA/edit#gid=40044938"
 						class="ms-3 btn btn-primary">Hidegcsomagok megrendelése</a>
 				</div>
 				<div class="mt-4 col-md-auto">

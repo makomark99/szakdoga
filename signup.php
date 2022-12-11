@@ -2,40 +2,8 @@
   include_once 'header.php';
   include_once 'navbar.php';
 ?>
-<script defer>
-	function pwdMatchCheck() {
-		let pwd1 = document.getElementById('Pass');
-		let pwd2 = document.getElementById('PassR');
-		result = false;
-		if (pwd1.value != pwd2.value) {
-			result = true;
-			pwd1.setAttribute("style", "background-color:red;color:white;")
-			pwd1.setAttribute("title", "Az értékek megegyeznek!")
-			pwd2.setAttribute("style", "background-color:red;color:white;")
-			pwd2.setAttribute("title", "Az értékek megegyeznek!")
-		} else {
-			result = false;
-		}
-		if (result) {
-			Swal.fire({
-				position: "center",
-				type: "warning",
-				title: "A két jelszó nem azonos!",
-				showConfirmButton: false,
-				icon: "warning",
-				background: "#343a40",
-				color: "#fff",
-				timer: 3000
-			})
-			document.getElementById('btn').setAttribute("disabled", "")
-		} else {
-			document.getElementById('btn').removeAttribute("disabled", "")
-			pwd1.removeAttribute("style", "border:2px solid red;")
-			pwd2.removeAttribute("style", "border:2px solid red;")
-			pwd1.removeAttribute("title", "Az értékek megegyeznek!")
-			pwd2.removeAttribute("title", "Az értékek megegyeznek!")
-		}
-	}
+<script defer src="pwd_match_check.js">
+
 </script>
 <div class="container" id="signup">
 	<div class="row ">
@@ -62,8 +30,8 @@
 					</div>
 					<div class="form-group">
 						<label for="Pass">Jelszó*</label>
-						<input id="Pass" name="pwd" type="password" class="form-control mb-3" minlength="8"
-							maxlength="30" placeholder="Jelszó" required>
+						<input onblur="pwdMatchCheck()" id="Pass" name="pwd" type="password" class="form-control mb-3"
+							minlength="8" maxlength="30" placeholder="Jelszó" required>
 					</div>
 					<div class="form-group">
 						<label for="PassR">Jelszó ismét*</label>

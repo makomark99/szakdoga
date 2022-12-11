@@ -37,6 +37,35 @@ $GLOBALS['sizes'] = array(
     "3XL",
     "4XL"
 );
+$GLOBALS['adidasSizes'] = array(
+    "",
+    "128",
+    "140",
+    "152",
+    "164",
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL",
+);
+$GLOBALS['otherSizes'] = array(
+    "",
+    "122",
+    "134",
+    "146",
+    "158",
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL",
+    "4XL",
+);
 $GLOBALS['posts'] = array(
     "",
     "Balátlövő",

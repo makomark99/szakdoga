@@ -113,3 +113,8 @@ input::-webkit-outer-spin-button, /*Formoknál a szám típusnál kiveszi a gör
  @media only screen and (max-width: 400px) {
     .mobile-height {height:300px;}
   }
+#equipments{
+    position: absolute;
+    width: 100%;
+    left: 0;
+}

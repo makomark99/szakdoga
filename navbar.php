@@ -38,6 +38,10 @@ include_once 'includes/SweetAlert.php';
               <a class="nav-link text-light  " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Munkatársak" href="staff.php"><img 
               src="img\teamwork.svg" alt="Munkatársak" ></a>
             </li>';
+                echo ' <li class="nav-item ">
+              <a class="nav-link text-light " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Felszerelések" href="equipment.php"><img 
+              src="img\clothes.svg" alt="Felszerelések" ></a>
+            </li>';
                 if ($sadmin) {
                     echo '<li class="nav-item ">
             <a class="nav-link text-light " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jogosultságok kezelése" href="manage_users.php"><img 
